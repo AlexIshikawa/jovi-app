@@ -1,5 +1,7 @@
 class AppButton extends HTMLElement {
     connectedCallback() {
+        this.classList.add("block");
+
         const href = this.getAttribute("href") || "#";
 
         const link = document.createElement("a");
