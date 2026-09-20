@@ -4,3 +4,5 @@ import '../components/app-button.js';
 import '../components/gradient-text.js';
 import '../components/brand-logo.js';
 import '../components/feature-card.js';
+import '../components/back-button.js';
+import '../components/header.js';
