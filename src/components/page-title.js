@@ -1,4 +1,4 @@
-class PageTitle extends HTMLElement {
+class AppPageTitle extends HTMLElement {
     connectedCallback() {
         const text = this.innerHTML;
         this.className = `flex items-center justify-center`;
@@ -9,4 +9,4 @@ class PageTitle extends HTMLElement {
     }
 }
 
-customElements.define('page-title', PageTitle);
+customElements.define('app-page-title', AppPageTitle);
