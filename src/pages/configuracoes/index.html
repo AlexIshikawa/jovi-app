@@ -10,9 +10,71 @@
 </head>
 
 <body>
-    <page-title class="flex items-center justify-center">Configurações</page-title>
-    <main class="m-4">
-        <!-- conteúdo da página vem aqui depois -->
+    <app-page-title class="flex items-center justify-center">Configurações</app-page-title>
+    <main class="m-4 flex flex-col gap-4">
+        <app-feature-card no-padding class="p-0 overflow-hidden">
+            <img src="/src/assets/config.png" alt="Jovi AI Camera Experience" class="w-full h-full object-cover">
+        </app-feature-card>
+        <div class="flex flex-col justify-center items-center gap-2">
+            <app-gradient-text class="text-xl">IA Camera Experience</app-gradient-text>
+            <p class="card-paragraph">
+                Escolha um recurso para configurar
+            </p>
+        </div>
+        <app-feature-card>
+            <div class="flex flex-col gap-2">
+                <div>
+                    <h3>Presets da Lockscreen</h3>
+                    <p class="text-xs font-light text-white/80">
+                        Sua câmera já aberta do seu jeito
+                    </p>
+                </div>
+                <p class="card-paragraph">
+                    Configure até 4 gestos na lockscreen e abra a câmera direto no modo
+                    que você quer — selfie, noturno, criador ou viagem.
+                </p>
+                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
+                    Configurar meus gestos
+                    <span>></span>
+                </app-gradient-text>
+            </div>
+        </app-feature-card>
+        <app-feature-card>
+            <div class="flex flex-col gap-2">
+                <div>
+                    <h3>Best Angle Assistant</h3>
+                    <p class="text-xs font-light text-white/80">
+                        A IA qu te faz sair bem em toda foto
+                    </p>
+                </div>
+                <p class="card-paragraph">
+                    Envie suas fotos favoritas. A JOVI aprende seu melhor ângulo, lado do rosto e poses para te guiar em
+                    tempo real.
+                </p>
+                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
+                    Treinar meu ângulo
+                    <span>></span>
+                </app-gradient-text>
+            </div>
+        </app-feature-card>
+        <app-feature-card>
+            <div class="flex flex-col gap-2">
+                <div>
+                    <h3>Smart Capture Flow</h3>
+                    <p class="text-xs font-light text-white/80">
+                        Decida o que acontece depois do clique
+                    </p>
+                </div>
+                <p class="card-paragraph">
+                    Salvar, pré-visualizar ou compartilhar. Configure uma ação ou sequência e a IA adapta ao seu
+                    contexto.
+                </p>
+                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
+                    Configurar meu fluxo
+                    <span>></span>
+                </app-gradient-text>
+            </div>
+        </app-feature-card>
     </main>
 </body>
 

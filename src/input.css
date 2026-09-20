@@ -25,4 +25,8 @@
     .card-description {
         @apply text-sm font-normal text-white/70 leading-[150%];
     }
+
+    .card-paragraph {
+        @apply text-xs font-normal text-white/50 leading-[150%];
+    }
 }
