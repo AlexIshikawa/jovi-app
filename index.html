@@ -10,7 +10,9 @@
 </head>
 
 <body>
+
     <page-title>AI Camera</page-title>
+
     <main class="m-4">
         <app-card>
             <h2 class="card-title mb-2">
@@ -19,22 +21,30 @@
                 do seu jeito
             </h2>
             <p class="card-description mb-6">
-                Configure gestos rápidos na lockscreen, ensine a IA seu melhor ângulo, escolha o que acontece apóscada
-                foto
+                Configure gestos rápidos na lockscreen, ensine a IA seu melhor ângulo, escolha o que acontece após cada foto 
                 e deixe a JOVI organizar suas memórias por pessoas, lugares e viagens, tudo sem abrir um menu.
             </p>
 
-            <img src="./src/assets/selfie.jpg" class="rounded-xl mb-6 w-full" alt="Selfie">
+            <img src="/src/assets/selfie.jpg" class="rounded-xl mb-6 w-full" alt="Selfie">
 
             <div class="flex flex-col items-center gap-2">
-                <a href="/src/pages/configuracoes/index.html"> Ativar modo viagem </a>
+
+                <app-button href="/src/pages/configuracoes/index.html">
+                    Ativar Modo Viagem
+                </app-button>
+
                 <app-brand-logo icon="/src/assets/logo-jovi.png">
                     JOVI AI CAMERA
                 </app-brand-logo>
-                <page-title class="flex items-center justify-center">Powered by Jovi AI - Origins</page-title>
+
+                <page-title class="flex items-center justify-center">
+                    Powered by Jovi AI - Origins
+                </page-title>
+
             </div>
         </app-card>
     </main>
+
 </body>
 
 </html>
