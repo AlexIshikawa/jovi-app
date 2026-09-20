@@ -9,6 +9,14 @@ class AppGradientText extends HTMLElement {
       "text-transparent",
       "font-bold"
     );
+
+    const href = this.getAttribute("href");
+    if (href) {
+      this.classList.add("cursor-pointer");
+      this.addEventListener("click", () => {
+        window.location.href = href;
+      });
+    }
   }
 }
 
