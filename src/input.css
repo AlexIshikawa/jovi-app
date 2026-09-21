@@ -25,4 +25,12 @@
     .card-description {
         @apply text-sm font-normal text-white/70 leading-[150%];
     }
+
+    .card-paragraph {
+        @apply text-xs font-normal text-white/50 leading-[150%];
+    }
+
+    .page-title-text {
+        @apply font-light uppercase text-sm tracking-[0.2em] opacity-60 mt-6 mb-2;
+    }
 }
