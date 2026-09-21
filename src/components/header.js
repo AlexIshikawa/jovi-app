@@ -7,7 +7,7 @@ class AppHeader extends HTMLElement {
         `;
 
         this.innerHTML = `
-            <app-back-button class="absolute left-4 top-1/2 -translate-y-1/2"><</app-back-button>
+            <app-back-button class="absolute left-4 top-1/2 -translate-y-1/2"><img src="/src/assets/icons/arrow-left.png" alt="Arrow Left" ></app-back-button>
             <app-page-title class="m-0">${title}</app-page-title>
         `;
     }
