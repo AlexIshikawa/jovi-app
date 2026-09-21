@@ -5,7 +5,7 @@ class AppIconAicam extends HTMLElement {
         this.innerHTML = `
             <img src="${icon}" alt="" 
             class="mx-auto 
-            rounded-xl w-20 h-20 p-2 mt-4
+            rounded-xl w-20 h-20 p-2
             bg-gradient-to-r from-brand-blue to-brand-purple
             object-cover">
         `;
