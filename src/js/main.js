@@ -6,3 +6,4 @@ import '../components/brand-logo.js';
 import '../components/feature-card.js';
 import '../components/back-button.js';
 import '../components/header.js';
+import '../components/icon-aicam.js';
