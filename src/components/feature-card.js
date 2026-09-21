@@ -13,7 +13,7 @@ class AppFeatureCard extends HTMLElement {
         );
 
         if (!noPadding) {
-            this.classList.add("p-6");
+            this.classList.add("p-4");
         }
     }
 }

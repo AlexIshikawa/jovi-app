@@ -22,7 +22,8 @@
                 Escolha um recurso para configurar
             </p>
         </div>
-        <app-feature-card>
+        <app-feature-card class="flex gap-3">
+            <app-icon icon="/src/assets/icons/deck.png" class="w-10 h-10" alt="Modo Viagem"></app-icon>
             <div class="flex flex-col gap-2">
                 <div>
                     <h3>Modo Viagem</h3>
@@ -41,7 +42,8 @@
                 </app-gradient-text>
             </div>
         </app-feature-card>
-        <app-feature-card>
+        <app-feature-card class="flex gap-3">
+            <app-icon icon="/src/assets/icons/lock.png" class="w-10 h-10" alt="Modo Viagem"></app-icon>
             <div class="flex flex-col gap-2">
                 <div>
                     <h3>Presets da Lockscreen</h3>
@@ -53,13 +55,15 @@
                     Configure até 4 gestos na lockscreen e abra a câmera direto no modo
                     que você quer — selfie, noturno, criador ou viagem.
                 </p>
-                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
+                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2"
+                    href="/src/pages/presets-lockscreen/index.html">
                     Configurar meus gestos
                     <span>></span>
                 </app-gradient-text>
             </div>
         </app-feature-card>
-        <app-feature-card>
+        <app-feature-card class="flex gap-3">
+            <app-icon icon="/src/assets/icons/points.png" class="w-10 h-10" alt="Best Angle Assistant"></app-icon>
             <div class="flex flex-col gap-2">
                 <div>
                     <h3>Best Angle Assistant</h3>
@@ -71,32 +75,14 @@
                     Envie suas fotos favoritas. A JOVI aprende seu melhor ângulo, lado do rosto e poses para te guiar em
                     tempo real.
                 </p>
-                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
+                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2"
+                    href="/src/pages/best-angle-assistant/index.html">
                     Treinar meu ângulo
                     <span>></span>
                 </app-gradient-text>
             </div>
         </app-feature-card>
-        <app-feature-card>
-            <div class="flex flex-col gap-2">
-                <div>
-                    <h3>Smart Capture Flow</h3>
-                    <p class="text-xs font-light text-white/80">
-                        Decida o que acontece depois do clique
-                    </p>
-                </div>
-                <p class="card-paragraph">
-                    Salvar, pré-visualizar ou compartilhar. Configure uma ação ou sequência e a IA adapta ao seu
-                    contexto.
-                </p>
-                <app-gradient-text class="text-xs cursor-pointer font-medium flex items-center gap-2">
-                    Configurar meu fluxo
-                    <span>></span>
-                </app-gradient-text>
-            </div>
-        </app-feature-card>
     </main>
-
 </body>
 
 </html>

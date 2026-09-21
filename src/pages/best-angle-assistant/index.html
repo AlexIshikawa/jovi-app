@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Angle Assistant</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script type="module" src="/src/js/main.js"></script>
+</head>
+
+<body>
+    <div class="relative min-h-screen overflow-hidden">
+        <div class="relative z-10">
+            <app-header title="Best Angle Assistant"></app-header>
+            <main class="m-4">
+                <div class="flex items-center gap-2">
+                    <app-icon icon="/src/assets/icons/camera.png" class="w-10 h-10"
+                        alt="Best Angle Assistant"></app-icon>
+                    <div>
+                        <h2 class="card-title">
+                            Best Angle Assistant
+                        </h2>
+                        <p class="card-description">
+                            A IA que te faz sair bem em toda foto
+                        </p>
+                    </div>
+                </div>
+                <p class="card-paragraph mt-4">
+                    Escolha suas melhores fotos. A JOVI aprende seus padrões e sugere os melhores ângulos e poses em
+                    tempo real.
+                </p>
+                <section class="flex items-center gap-2">
+
+                    <img src="/src/assets/angle-assistant.png" alt="Best Angle Assistant"
+                        class="w-full h-full object-cover">
+                </section>
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-2">
+                        <app-icon-badge icon="/src/assets/icons/profile.png" alt="Perfil"></app-icon-badge>
+                        <div>
+                            <h3 class="text-sm">Ângulo Perfeito</h3>
+                            <p class="card-paragraph text-xs">
+                                Analisamos sua posição e te mostramos o melhor ângulo para o seu rosto.
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <app-icon-badge icon="/src/assets/icons/sun.png" alt="Iluminação ideal"></app-icon-badge>
+                        <div>
+                            <h3 class="text-sm">Iluminação ideal</h3>
+                            <p class="card-paragraph text-xs">
+                                Indicamos a melhor luz para uma foto mais nítida e equilibrada.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <app-icon-badge icon="/src/assets/icons/crop.png" alt="Enquadramento"></app-icon-badge>
+                        <div>
+                            <h3 class="text-sm">Enquadramento</h3>
+                            <p class="card-paragraph text-xs">
+                                Ajudamos a posicionar melhor o seu corpo e o cenário na cena.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <app-icon-badge icon="/src/assets/icons/flower.png"
+                            alt="Resultado em tempo real"></app-icon-badge>
+                        <div>
+                            <h3 class="text-sm">Resultado em tempo real</h3>
+                            <p class="card-paragraph text-xs">
+                                Tudo isso acontecendo diretamente na sua tela, conforme você aponta a câmera.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <app-feature-card class="flex gap-3 my-4">
+                    <app-icon icon="/src/assets/icons/lightbulb.png" class="w-10 h-10"
+                        alt="Resultado em tempo real"></app-icon>
+                    <div>
+                        <h3 class="text-sm">
+                            Seu melhor ângulo, em qualquer lugar
+                        </h3>
+                        <p class="card-paragraph text-xs">
+                            Deixe a nossa IA cuidar dos detalhes enquanto você foca no que realmente importa, o momento.
+                        </p>
+                    </div>
+                </app-feature-card>
+                <app-button class="w-full mt-4">Ativar Best Angle Assistant</app-button>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
