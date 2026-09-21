@@ -4,13 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JOVI AI CAMERA</title>
     <link rel="stylesheet" href="dist/output.css">
-    <script src="src/js/main.js"></script>
+    <script type="module" src="src/js/main.js"></script>
 </head>
 
 <body>
-    <h1 class="text-3xl font-bold">Challenge Jovi</h1>
+    <app-page-title>AI Camera</app-page-title>
+    <main class="m-4">
+        <app-card>
+            <h2 class="card-title mb-2">
+                Sua câmera,
+                <br />
+                do seu jeito
+            </h2>
+            <p class="card-description mb-6">
+                Configure gestos rápidos na lockscreen, ensine a IA seu melhor ângulo, escolha o que acontece após cada
+                foto
+                e deixe a JOVI organizar suas memórias por pessoas, lugares e viagens, tudo sem abrir um menu.
+            </p>
+
+            <img src="/src/assets/selfie.jpg" class="rounded-xl mb-6 w-full" alt="Selfie">
+
+            <div class="flex flex-col items-center gap-2">
+
+                <app-button href="/src/pages/configuracoes/index.html" class="w-full mb-4">
+                    Personalizar Agora
+                </app-button>
+
+                <app-brand-logo icon="/src/assets/logo-jovi.png">
+                    JOVI AI CAMERA
+                </app-brand-logo>
+                <app-page-title class="text-xs opacity-40">Powered by Jovi AI - Origins</app-page-title>
+            </div>
+        </app-card>
+    </main>
+
 </body>
 
 </html>

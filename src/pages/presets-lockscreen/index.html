@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presets da Lockscreen</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script type="module" src="/src/js/main.js"></script>
+</head>
+
+<body>
+    <div class="relative min-h-screen overflow-hidden">
+        <div class="relative z-10">
+            <app-header title="Presets da Lockscreen"></app-header>
+            <main class="m-4">
+                <div class="flex items-center gap-2">
+                    <app-icon icon="/src/assets/icons/lock.png" class="w-10 h-10"
+                        alt="Presets da Lockscreen"></app-icon>
+                    <div>
+                        <h2 class="card-title">
+                            Presets da Lockscreen
+                        </h2>
+                        <p class="card-description">
+                            Sua câmera já aberta do seu jeito
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="card-paragraph">
+                        Configure até 4 gestos na lockscreen e abra a câmera direto no modo
+                        que você quer — selfie, noturno, criador ou viagem.
+                    </p>
+                </div>
+                <img src="/src/assets/lockscreen.png" alt="Presets da Lockscreen"
+                    class="w-full h-full object-cover mt-4">
+                <app-feature-card class="flex gap-3">
+                    <app-icon icon="/src/assets/icons/lightbulb.png" class="w-10 h-10"
+                        alt="Presets da Lockscreen"></app-icon>
+                    <div>
+                        <h3 class="text-sm">
+                            Mais praticidade, mais fotos incríveis
+                        </h3>
+                        <p class="card-paragraph text-xs">
+                            Escolha seu preset favorito e tenha a câmera sempre pronta para o momento certo.
+                        </p>
+                    </div>
+                </app-feature-card>
+                <app-button class="w-full mt-4" href="/src/pages/not-ready/index.html">Configurar meus
+                    gestos</app-button>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

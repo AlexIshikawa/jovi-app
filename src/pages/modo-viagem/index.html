@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Viagem</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script type="module" src="/src/js/main.js"></script>
+</head>
+
+<body>
+    <div class="relative min-h-screen overflow-hidden">
+        <img src="/src/assets/travel-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-brand-dark-deep/40"></div>
+        <div class="relative z-10">
+            <app-header title="Modo Viagem"></app-header>
+            <main class="m-4">
+                <app-card>
+                    <h2 class="card-title mb-2">
+                        Sua câmera pronta para explorar o mundo
+                    </h2>
+                    <p class="card-description mb-6">
+                        Ative o Modo Viagem e transforme sua câmera em uma assistente inteligente para registrar,
+                        descobrir e
+                        compartilhar cada momento da jornada.
+                    </p>
+                    <img src="/src/assets/travel-girl.jpg" class="rounded-xl mb-6 w-full h-80 object-cover"
+                        alt="Travel Mode">
+                    <div class="flex flex-col items-center gap-2">
+                        <app-button href="/src/pages/modo-viagem/ia-guia/index.html" class="w-full mb-4">
+                            Ativar Modo Viagem
+                        </app-button>
+                        <app-brand-logo icon="/src/assets/logo-jovi.png">
+                            JOVI AI CAMERA
+                        </app-brand-logo>
+                        <app-page-title class="text-xs opacity-40">Powered by Jovi AI - Origins</app-page-title>
+                    </div>
+                </app-card>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
