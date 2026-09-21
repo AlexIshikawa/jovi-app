@@ -6,7 +6,8 @@
   "scripts": {
     "css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch",
     "serve": "npx live-server --port=5500 --no-browser",
-    "dev": "concurrently \"npm run css\" \"npm run serve\""
+    "dev": "concurrently \"npm run css\" \"npm run serve\"",
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify && npx esbuild src/js/main.js --bundle --minify --outfile=dist/bundle.js"
   },
   "repository": {
     "type": "git",
