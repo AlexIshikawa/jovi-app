@@ -18,8 +18,20 @@ const TAP_MAX_MS = 300;
 const TOAST_MS = 1500;
 
 export function initCameraMenu() {
+    const PAGES = {
+        configuracoes: '/configuracoes/index.html',
+        camera: '/camera/index.html',
+        video: '/video/index.html',
+        selfie: '/selfie/index.html',
+        camera: '/camera/index.html',
+        video: '/video/index.html',
+        selfie: '/selfie/index.html',
+    };
+
+    const NAVIGATION_DELAY_MS = 1000;
     const menu = document.querySelector('[data-camera-menu]');
     if (!menu) return;
+
 
     const trigger = menu.querySelector('[data-camera-trigger]');
     const shortcuts = [...menu.querySelectorAll('[data-shortcut]')];
@@ -74,15 +86,20 @@ export function initCameraMenu() {
     /* ---------- Ação ---------- */
 
     function activate(action, label) {
-        // Evento personalizado: outras partes do projeto podem escutar
-        // menu.addEventListener('camera:shortcut', (e) => e.detail.action)
         menu.dispatchEvent(
             new CustomEvent('camera:shortcut', { detail: { action }, bubbles: true }),
         );
 
         showToast(`Abrindo ${label}`);
-    }
 
+        const page = PAGES[action];
+        console.log(page, "PAGEEEEEE");
+        if (page) {
+            setTimeout(() => {
+                window.location.href = page;
+            }, 0);
+        }
+    }
     function showToast(message) {
         if (!toast) return;
 
