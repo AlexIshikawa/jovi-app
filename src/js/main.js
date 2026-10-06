@@ -8,3 +8,6 @@ import '../components/back-button.js';
 import '../components/header.js';
 import '../components/icon.js';
 import '../components/icon-badge.js';
+import { initCameraMenu } from './camera-menu.js';
+
+initCameraMenu();

@@ -9,6 +9,22 @@
     --color-brand-dark-light: #1A0D6B;
     --color-brand-dark: #0B0F3F;
     --color-brand-dark-deep: #090B2D;
+
+    --font-clock: "Outfit", system-ui, sans-serif;
+
+    --animate-wave: wave 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+
+    @keyframes wave {
+        0% {
+            transform: scale(1);
+            opacity: 0.9;
+        }
+
+        100% {
+            transform: scale(2.6);
+            opacity: 0;
+        }
+    }
 }
 
 @layer base {
@@ -94,4 +110,25 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@custom-variant aceso {
+    .group:active & {
+        @slot;
+    }
+
+    .group:has(:focus-visible) & {
+        @slot;
+    }
+
+    .group[data-open] & {
+        @slot;
+    }
+}
+
+@utility gradient-ring {
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+    mask: radial-gradient(closest-side,
+            transparent calc(100% - var(--ring-width, 3px)),
+            #000 calc(100% - var(--ring-width, 3px) + 0.5px));
 }

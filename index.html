@@ -1,45 +1,270 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>JOVI AI CAMERA</title>
+
+    <!-- Fonte do relógio -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="dist/output.css">
     <script src="dist/bundle.js" defer></script>
 </head>
 
-<body>
-    <app-page-title>AI Camera</app-page-title>
-    <main class="m-4">
-        <app-card>
-            <h2 class="card-title mb-2">
-                Sua câmera,
-                <br />
-                do seu jeito
-            </h2>
-            <p class="card-description mb-6">
-                Configure gestos rápidos na lockscreen, ensine a IA seu melhor ângulo, escolha o que acontece após cada
-                foto
-                e deixe a JOVI organizar suas memórias por pessoas, lugares e viagens, tudo sem abrir um menu.
+<body class="h-dvh overflow-hidden bg-brand-dark-deep">
+
+    <main class="relative h-dvh w-full overflow-hidden select-none">
+
+        <img src="src/assets/wallpaper2.png" alt="" class="absolute inset-0 size-full object-cover" draggable="false" />
+
+        <!-- Relógio e data -->
+        <section class="absolute inset-0 flex flex-col items-center pt-[22%] text-white">
+
+            <time id="clock"
+                class="font-clock font-extralight text-[88px] leading-none tracking-tight drop-shadow-[0_2px_8px_rgba(80,30,0,0.35)]">
+                --:--
+            </time>
+
+            <p id="date"
+                class="font-clock font-normal text-[15px] mt-2 opacity-90 drop-shadow-[0_1px_4px_rgba(80,30,0,0.35)]">
             </p>
 
-            <img src="src/assets/selfie.jpg" class="rounded-xl mb-6 w-full" alt="Selfie">
+        </section>
 
-            <div class="flex flex-col items-center gap-2">
+        <!-- Botão da câmera com ondas, centralizado na tela -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
 
-                <app-button href="src/pages/configuracoes/index.html" class="w-full mb-4">
-                    Personalizar Agora
-                </app-button>
+            <!-- "group": todos os filhos reagem ao estado deste elemento via aceso: -->
+            <div data-camera-menu class="group relative size-18 pointer-events-auto">
 
-                <app-brand-logo icon="src/assets/logo-jovi.png">
-                    JOVI AI CAMERA
-                </app-brand-logo>
-                <app-page-title class="text-xs opacity-40">Powered by Jovi AI - Origins</app-page-title>
+                <!-- Brilho atrás do botão: só aparece no estado aceso -->
+                <span aria-hidden="true"
+                    class="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(85,183,255,0.45)_0%,rgba(217,119,255,0.2)_45%,transparent_70%)] blur-md opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                </span>
+
+                <!-- Ondas: discretas por padrão, intensas no estado aceso -->
+                <div aria-hidden="true"
+                    class="absolute inset-0 opacity-30 transition-opacity duration-300 aceso:opacity-100 motion-reduce:hidden">
+                    <span
+                        class="absolute inset-0 rounded-full border border-brand-purple transition-shadow duration-300 aceso:shadow-[0_0_12px_var(--color-brand-blue)] animate-wave">
+                    </span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-brand-blue transition-shadow duration-300 aceso:shadow-[0_0_12px_var(--color-brand-purple)] animate-wave [animation-delay:0.8s]">
+                    </span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-brand-purple transition-shadow duration-300 aceso:shadow-[0_0_12px_var(--color-brand-blue)] animate-wave [animation-delay:1.6s]">
+                    </span>
+                </div>
+
+                <!-- Área invisível que mantém o menu aberto enquanto o mouse vai até os atalhos -->
+                <span aria-hidden="true"
+                    class="absolute -inset-36 pointer-events-none aceso:pointer-events-auto"></span>
+
+                <!-- Setas: indicam as direções dos atalhos -->
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 size-4 text-white drop-shadow-[0_0_4px_var(--color-brand-purple)] opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                    <path d="M6 15l6-6 6 6" />
+                </svg>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="absolute left-full top-1/2 -translate-y-1/2 ml-1.5 rotate-90 size-4 text-white drop-shadow-[0_0_4px_var(--color-brand-purple)] opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                    <path d="M6 15l6-6 6 6" />
+                </svg>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 rotate-180 size-4 text-white drop-shadow-[0_0_4px_var(--color-brand-purple)] opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                    <path d="M6 15l6-6 6 6" />
+                </svg>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="absolute right-full top-1/2 -translate-y-1/2 mr-1.5 -rotate-90 size-4 text-white drop-shadow-[0_0_4px_var(--color-brand-purple)] opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                    <path d="M6 15l6-6 6 6" />
+                </svg>
+
+                <!-- Atalhos: invisíveis por padrão, surgem do centro no estado aceso -->
+                <!-- Atalho: Selfie -->
+                <button type="button" data-shortcut="selfie" data-direction="up" data-label="Selfie"
+                    class="group/sat absolute bottom-[calc(100%+64px)] left-1/2 -translate-x-1/2 translate-y-6 size-12 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,translate,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:translate-y-0 outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                    <!-- Corpo do círculo: cresce quando selecionado (arraste) ou com hover -->
+                    <span
+                        class="relative flex size-full items-center justify-center rounded-full transition-[scale] duration-200 ease-out group-hover/sat:scale-125 group-data-selected/sat:scale-125">
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full bg-brand-dark-deep/80 shadow-[0_0_14px_rgba(217,119,255,0.4)] transition-shadow duration-200 group-hover/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)] group-data-selected/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)]"></span>
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full gradient-ring [--ring-width:2px]"></span>
+                        <span aria-hidden="true"
+                            class="absolute -inset-1.5 rounded-full border-2 border-white opacity-0 group-focus-visible/sat:opacity-100"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                            class="relative size-6 text-white" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 20c0-3.5 3.6-5.5 8-5.5s8 2 8 5.5" />
+                        </svg>
+                    </span>
+
+                    <span
+                        class="absolute left-1/2 top-full mt-2.5 -translate-x-1/2 whitespace-nowrap font-clock text-[13px] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Selfie</span>
+                </button>
+
+                <!-- Atalho: Configurações -->
+                <button type="button" data-shortcut="configuracoes" data-direction="right" data-label="Configurações"
+                    class="group/sat absolute left-[calc(100%+48px)] top-1/2 -translate-y-1/2 -translate-x-6 size-12 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,translate,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:translate-x-0 aceso:delay-[40ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                    <!-- Corpo do círculo: cresce quando selecionado (arraste) ou com hover -->
+                    <span
+                        class="relative flex size-full items-center justify-center rounded-full transition-[scale] duration-200 ease-out group-hover/sat:scale-125 group-data-selected/sat:scale-125">
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full bg-brand-dark-deep/80 shadow-[0_0_14px_rgba(217,119,255,0.4)] transition-shadow duration-200 group-hover/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)] group-data-selected/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)]"></span>
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full gradient-ring [--ring-width:2px]"></span>
+                        <span aria-hidden="true"
+                            class="absolute -inset-1.5 rounded-full border-2 border-white opacity-0 group-focus-visible/sat:opacity-100"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                            class="relative size-6 text-white" aria-hidden="true">
+                            <path d="M4 7h10M18 7h2M4 17h4M12 17h8" />
+                            <circle cx="16" cy="7" r="2" />
+                            <circle cx="10" cy="17" r="2" />
+                        </svg>
+                    </span>
+
+                    <span
+                        class="absolute left-1/2 top-full mt-2.5 -translate-x-1/2 whitespace-nowrap font-clock text-[13px] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Configurações</span>
+                </button>
+
+                <!-- Atalho: Vídeo -->
+                <button type="button" data-shortcut="video" data-direction="down" data-label="Vídeo"
+                    class="group/sat absolute top-[calc(100%+64px)] left-1/2 -translate-x-1/2 -translate-y-6 size-12 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,translate,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:translate-y-0 aceso:delay-[80ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                    <!-- Corpo do círculo: cresce quando selecionado (arraste) ou com hover -->
+                    <span
+                        class="relative flex size-full items-center justify-center rounded-full transition-[scale] duration-200 ease-out group-hover/sat:scale-125 group-data-selected/sat:scale-125">
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full bg-brand-dark-deep/80 shadow-[0_0_14px_rgba(217,119,255,0.4)] transition-shadow duration-200 group-hover/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)] group-data-selected/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)]"></span>
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full gradient-ring [--ring-width:2px]"></span>
+                        <span aria-hidden="true"
+                            class="absolute -inset-1.5 rounded-full border-2 border-white opacity-0 group-focus-visible/sat:opacity-100"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                            class="relative size-6 text-white" aria-hidden="true">
+                            <rect x="3" y="7" width="12" height="10" rx="2" />
+                            <path d="M15 11l6-3v8l-6-3z" />
+                        </svg>
+                    </span>
+
+                    <span
+                        class="absolute left-1/2 top-full mt-2.5 -translate-x-1/2 whitespace-nowrap font-clock text-[13px] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Vídeo</span>
+                </button>
+
+                <!-- Atalho: Panorama -->
+                <button type="button" data-shortcut="panorama" data-direction="left" data-label="Panorama"
+                    class="group/sat absolute right-[calc(100%+48px)] top-1/2 -translate-y-1/2 translate-x-6 size-12 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,translate,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:translate-x-0 aceso:delay-[120ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                    <!-- Corpo do círculo: cresce quando selecionado (arraste) ou com hover -->
+                    <span
+                        class="relative flex size-full items-center justify-center rounded-full transition-[scale] duration-200 ease-out group-hover/sat:scale-125 group-data-selected/sat:scale-125">
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full bg-brand-dark-deep/80 shadow-[0_0_14px_rgba(217,119,255,0.4)] transition-shadow duration-200 group-hover/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)] group-data-selected/sat:shadow-[0_0_22px_rgba(217,119,255,0.75)]"></span>
+                        <span aria-hidden="true"
+                            class="absolute inset-0 rounded-full gradient-ring [--ring-width:2px]"></span>
+                        <span aria-hidden="true"
+                            class="absolute -inset-1.5 rounded-full border-2 border-white opacity-0 group-focus-visible/sat:opacity-100"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                            class="relative size-6 text-white" aria-hidden="true">
+                            <path d="M3 18l5.5-7.5 4 5 2.5-3 6 5.5z" />
+                            <circle cx="16" cy="6.5" r="1.5" />
+                        </svg>
+                    </span>
+
+                    <span
+                        class="absolute left-1/2 top-full mt-2.5 -translate-x-1/2 whitespace-nowrap font-clock text-[13px] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Panorama</span>
+                </button>
+
+                <!-- Botão -->
+                <button type="button" aria-label="Abrir câmera" data-camera-trigger
+                    class="touch-none [-webkit-touch-callout:none] relative flex size-full items-center justify-center rounded-full opacity-60 transition-[opacity,box-shadow,scale] duration-300 aceso:opacity-100 aceso:shadow-[0_0_24px_rgba(85,183,255,0.6),0_0_48px_rgba(217,119,255,0.35)] active:scale-95 outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                    <!-- Fundo escuro: transparente por padrão, aparece no estado aceso -->
+                    <span aria-hidden="true"
+                        class="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_35%,var(--color-brand-dark-light),var(--color-brand-dark-deep)_75%)] opacity-0 transition-opacity duration-300 aceso:opacity-100">
+                    </span>
+
+                    <!-- Anel em gradiente (com miolo vazado) -->
+                    <span aria-hidden="true" class="absolute inset-0 rounded-full gradient-ring"></span>
+
+                    <!-- Contorno de foco para navegação por teclado -->
+                    <span aria-hidden="true"
+                        class="absolute -inset-2 rounded-full border-2 border-white opacity-0 group-has-[:focus-visible]:opacity-100">
+                    </span>
+
+                    <!-- Ícone de câmera -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                        class="relative size-8 text-white transition-[filter] duration-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)] aceso:drop-shadow-[0_0_6px_var(--color-brand-blue)]"
+                        aria-hidden="true">
+                        <path
+                            d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.55 3.5h2.9a1.5 1.5 0 0 1 1.25.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" />
+                        <circle cx="12" cy="12.5" r="3.5" />
+                    </svg>
+                </button>
             </div>
-        </app-card>
+        </div>
+
+        <!-- Aviso rápido de qual atalho foi ativado -->
+        <p id="toast" role="status" aria-live="polite"
+            class="absolute bottom-[12%] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand-dark-deep/85 px-4 py-2 font-clock text-sm text-white opacity-0 translate-y-2 transition-[opacity,translate] duration-300 data-visible:opacity-100 data-visible:translate-y-0">
+        </p>
     </main>
 
+    <script>
+        const clockEl = document.getElementById('clock');
+        const dateEl = document.getElementById('date');
+
+        const timeFormatter = new Intl.DateTimeFormat('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+
+        const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+        });
+
+        function updateClock() {
+            const now = new Date();
+
+            clockEl.textContent = timeFormatter.format(now);           // ex.: 09:41
+            clockEl.setAttribute('datetime', now.toISOString());       // acessibilidade/semântica
+
+            dateEl.textContent = dateFormatter.format(now).replace(',', '');
+        }
+
+        function scheduleNextTick() {
+            const now = new Date();
+            const msUntilNextMinute =
+                (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+
+            setTimeout(() => {
+                updateClock();
+                scheduleNextTick();
+            }, msUntilNextMinute);
+        }
+
+        updateClock();
+        scheduleNextTick();
+
+        // Safari no iOS só aplica :active em toques se existir um listener de touch na página
+        document.addEventListener('touchstart', () => { }, { passive: true });
+    </script>
 </body>
 
 </html>
