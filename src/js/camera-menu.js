@@ -17,16 +17,25 @@ const TAP_MAX_MS = 300;
 // Tempo (ms) que o aviso fica na tela
 const TOAST_MS = 1500;
 
+const VIDEOS = {
+    selfie: {
+        src: 'src/assets/videos/selfie.mp4',
+        next: 'configuracoes/',
+    },
+};
+
+const PAGES = {
+    configuracoes: '/configuracoes/index.html',
+    camera: '/camera/index.html',
+    video: '/video/index.html',
+    selfie: '/selfie/index.html',
+    camera: '/camera/index.html',
+    video: '/video/index.html',
+    selfie: '/selfie/index.html',
+};
+
+
 export function initCameraMenu() {
-    const PAGES = {
-        configuracoes: '/configuracoes/index.html',
-        camera: '/camera/index.html',
-        video: '/video/index.html',
-        selfie: '/selfie/index.html',
-        camera: '/camera/index.html',
-        video: '/video/index.html',
-        selfie: '/selfie/index.html',
-    };
 
     const NAVIGATION_DELAY_MS = 1000;
     const menu = document.querySelector('[data-camera-menu]');
@@ -40,6 +49,13 @@ export function initCameraMenu() {
     // { up: <button>, right: <button>, ... }
     const shortcutByDirection = Object.fromEntries(
         shortcuts.map((el) => [el.dataset.direction, el]),
+    );
+
+    const videoPlayers = Object.fromEntries(
+        Object.entries(VIDEOS).map(([action, config]) => [
+            action,
+            createVideoPlayer(config),
+        ]),
     );
 
     let activePointerId = null;
@@ -90,16 +106,22 @@ export function initCameraMenu() {
             new CustomEvent('camera:shortcut', { detail: { action }, bubbles: true }),
         );
 
+        const player = videoPlayers[action];
+        if (player) {
+            playVideo(player, VIDEOS[action].next);
+            return;
+        }
+
         showToast(`Abrindo ${label}`);
 
         const page = PAGES[action];
-        console.log(page, "PAGEEEEEE");
         if (page) {
             setTimeout(() => {
                 window.location.href = page;
-            }, 0);
+            }, NAVIGATION_DELAY_MS);
         }
     }
+
     function showToast(message) {
         if (!toast) return;
 
@@ -111,6 +133,45 @@ export function initCameraMenu() {
             delete toast.dataset.visible;
         }, TOAST_MS);
     }
+
+    function createVideoPlayer({ src }) {
+        const video = document.createElement('video');
+
+        video.src = src;
+        video.preload = 'auto';
+        video.playsInline = true;
+        video.setAttribute('aria-hidden', 'true');
+        video.className =
+            'fixed inset-0 z-50 size-full object-cover bg-black ' +
+            'invisible opacity-0 transition-[opacity,visibility] duration-200 ' +
+            'data-playing:visible data-playing:opacity-100';
+
+        document.body.append(video);
+        return video;
+    }
+
+    function playVideo(video, nextRoute) {
+        video.currentTime = 0;
+        video.dataset.playing = '';
+
+        video.addEventListener(
+            'ended',
+            () => {
+                window.location.href = nextRoute;
+            },
+            { once: true },
+        );
+
+        video.play().catch(() => {
+            video.muted = true;
+            return video.play();
+        }).catch((error) => {
+            console.error('Não foi possível tocar o vídeo:', error);
+            delete video.dataset.playing;
+            showToast('Não foi possível abrir o vídeo');
+        });
+    }
+
 
     /* ---------- Gesto: segurar, arrastar e soltar ---------- */
 

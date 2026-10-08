@@ -132,3 +132,7 @@
             transparent calc(100% - var(--ring-width, 3px)),
             #000 calc(100% - var(--ring-width, 3px) + 0.5px));
 }
+
+@view-transition {
+    navigation: auto;
+}
