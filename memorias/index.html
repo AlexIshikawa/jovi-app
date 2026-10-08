@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Memórias</title>
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="min-h-dvh text-white antialiased">
+    <app-header title="Galeria"></app-header>
+    <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-4">
+        <h1 class="text-2xl font-semibold tracking-tight">Memórias</h1>
+
+        <button type="button" aria-label="Buscar nas memórias"
+            class="-mr-2 flex size-10 items-center justify-center rounded-full transition-colors active:bg-white/10 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-3.5-3.5" />
+            </svg>
+        </button>
+    </header>
+    <main class="flex flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+
+        <!-- Álbuns Inteligentes -->
+        <section aria-labelledby="titulo-albuns">
+            <div class="mb-3 flex items-center justify-between">
+                <h2 id="titulo-albuns" class="text-lg font-semibold">Álbuns Inteligentes</h2>
+
+                <button type="button"
+                    class="text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    Ver todos
+                </button>
+            </div>
+            <ul class="grid grid-cols-2 gap-2.5">
+                <li>
+                    <a type="button" data-album="viagens" href="./galeria/index.html"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                        <img src="../src/assets/gallery/viagens/cristo.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
+                            <span class="text-lg font-semibold leading-tight">Viagens</span>
+                            <span class="text-sm text-white/80">6 itens</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <button type="button" data-album="selfies"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                        <img src="../src/assets/gallery/selfies/selfie.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
+                            <span class="text-lg font-semibold leading-tight">Selfies</span>
+                            <span class="text-sm text-white/80">15 itens</span>
+                        </span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-album="pets"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+
+                        <img src="../src/assets/gallery/pets/pets.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
+                            <span class="text-lg font-semibold leading-tight">Tobias</span>
+                            <span class="text-sm text-white/80">22 itens</span>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Best Moments: carrossel horizontal que rola com o dedo -->
+        <section aria-labelledby="titulo-best-moments">
+            <div class="mb-3 flex items-center justify-between">
+                <h2 id="titulo-best-moments" class="text-lg font-semibold">Best Moments</h2>
+
+                <button type="button"
+                    class="text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    Ver todos
+                </button>
+            </div>
+
+            <!-- -mx-4 + px-4: a rolagem vai até a borda da tela, mas o 1º card começa alinhado ao título -->
+            <ul
+                class="-mx-4 flex gap-2 overflow-x-auto px-4 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <li class="w-[22%] min-w-20 shrink-0 snap-start">
+                    <button type="button" data-moment
+                        class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/selfies/selfie.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            loading="lazy" decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
+                        <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-4 text-pink-400" aria-hidden="true">
+                                <path
+                                    d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
+                            </svg>
+                            128<span class="sr-only"> curtidas</span>
+                        </span>
+                    </button>
+                </li>
+                <li class="w-[22%] min-w-20 shrink-0 snap-start">
+                    <a type="button" data-moment href="./galeria/index.html"
+                        class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/viagens/cristo.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            loading="lazy" decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
+                        <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-4 text-pink-400" aria-hidden="true">
+                                <path
+                                    d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
+                            </svg>
+                            96<span class="sr-only"> curtidas</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="w-[22%] min-w-20 shrink-0 snap-start">
+                    <button type="button" data-moment
+                        class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            loading="lazy" decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
+                        <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-4 text-pink-400" aria-hidden="true">
+                                <path
+                                    d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
+                            </svg>
+                            75<span class="sr-only"> curtidas</span>
+                        </span>
+                    </button>
+                </li>
+                <li class="w-[22%] min-w-20 shrink-0 snap-start">
+                    <button type="button" data-moment
+                        class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/viagens/por-do-sol-praia.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            loading="lazy" decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
+                        <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-4 text-pink-400" aria-hidden="true">
+                                <path
+                                    d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
+                            </svg>
+                            70<span class="sr-only"> curtidas</span>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+
+</html>

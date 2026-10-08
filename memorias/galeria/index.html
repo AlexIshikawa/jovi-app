@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Buscar</title>
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="min-h-dvh text-white antialiased">
+    <app-header title="Galeria"></app-header>
+    <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-4">
+        <h1 class="text-2xl font-semibold tracking-tight">Buscar</h1>
+
+        <!-- Lupa: abre e fecha o campo de busca -->
+        <button type="button" aria-label="Buscar nas memórias" data-search-toggle aria-controls="search-panel"
+            aria-expanded="false"
+            class="-mr-2 flex size-10 items-center justify-center rounded-full transition-colors active:bg-white/10 aria-expanded:bg-white/10 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-3.5-3.5" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- Campo de busca: fechado por padrão (inert), abre com animação de altura -->
+    <div id="search-panel" data-search-panel inert
+        class="grid grid-rows-[0fr] px-4 opacity-0 transition-[grid-template-rows,opacity] duration-300 ease-out data-open:grid-rows-[1fr] data-open:opacity-100">
+        <div class="overflow-hidden">
+            <form role="search" class="pb-4">
+                <label for="search-input" class="sr-only">Buscar fotos</label>
+
+                <div
+                    class="flex h-12 items-center gap-3 rounded-full border border-white/15 bg-white/5 pl-4 pr-2 transition-colors focus-within:border-white/40">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 shrink-0 text-white/90" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20l-3.5-3.5" />
+                    </svg>
+
+                    <input id="search-input" type="search" data-search-input placeholder="Busque suas fotos"
+                        autocomplete="off" enterkeyhint="search"
+                        class="peer min-w-0 flex-1 bg-transparent text-base text-white placeholder:text-white/50 outline-none [&::-webkit-search-cancel-button]:appearance-none" />
+
+                    <!-- "x": só aparece quando há texto digitado -->
+                    <button type="button" data-search-clear aria-label="Limpar busca"
+                        class="flex size-8 shrink-0 items-center justify-center rounded-full peer-placeholder-shown:hidden active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-6" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" fill="currentColor" class="text-white/80" />
+                            <path d="M9 9l6 6M15 9l-6 6" stroke="black" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <main class="flex flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+
+        <!-- Resultados -->
+        <section aria-labelledby="titulo-resultados">
+            <div class="mb-3 flex items-center justify-between">
+                <p id="titulo-resultados" data-results-count aria-live="polite" class="text-sm font-medium">6 itens
+                    encontrados</p>
+                <button type="button"
+                    class="text-sm font-medium transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    Ordenar
+                </button>
+            </div>
+            <ul class="grid grid-cols-2 gap-2.5">
+                <li data-tags="cristo redentor rio de janeiro monumento">
+                    <button type="button" data-photo="cristo"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/cristo.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+                <li data-tags="coqueiros palmeiras árvores natureza">
+                    <button type="button" data-photo="coqueiros"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/coqueiros.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+                <li data-tags="coco água de coco bebida">
+                    <button type="button" data-photo="coco"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/coco.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+                <li data-tags="pão de açúcar morro rio de janeiro">
+                    <button type="button" data-photo="pao-de-acucar"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+                <li data-tags="pôr do sol praia entardecer mar">
+                    <button type="button" data-photo="por-do-sol-praia"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/por-do-sol-praia.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+                <li data-tags="pôr do sol praia entardecer mar">
+                    <button type="button" data-photo="por-do-sol-praia-2"
+                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../../src/assets/gallery/viagens/por-do-sol-praia-2.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Mensagem quando a busca não encontra nada -->
+            <p data-results-empty hidden class="py-12 text-center text-sm text-white/60">
+                Nenhuma foto encontrada. Tente outra palavra.
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>

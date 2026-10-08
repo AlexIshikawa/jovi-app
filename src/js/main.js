@@ -8,3 +8,10 @@ import '../components/back-button.js';
 import '../components/header.js';
 import '../components/icon.js';
 import '../components/icon-badge.js';
+import { initCameraMenu } from './camera-menu.js';
+import { initSearchBar } from './search-bar.js';
+import { initGalleryFilter } from './gallery-filter.js';
+
+initCameraMenu();
+initSearchBar();
+initGalleryFilter();
