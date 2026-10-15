@@ -3,6 +3,7 @@
 
 @theme {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --container-app: 430px;
 
     --color-brand-blue: #55B7FF;
     --color-brand-purple: #D977FF;
@@ -23,6 +24,34 @@
         100% {
             transform: scale(2.6);
             opacity: 0;
+        }
+    }
+
+    --animate-pop: pop 0.35s cubic-bezier(0.2, 0.8, 0.3, 1.2);
+
+    @keyframes pop {
+        0% {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    --animate-reveal: reveal 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+    @keyframes reveal {
+        from {
+            opacity: 0;
+            transform: translateY(1.5rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 }
@@ -135,4 +164,44 @@
 
 @view-transition {
     navigation: auto;
+}
+
+[data-reveal] {
+    animation: var(--animate-reveal);
+    /* Cada bloco começa 250ms depois do anterior */
+    animation-delay: calc(var(--reveal-order, 0) * 250ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        animation: none;
+    }
+}
+
+[data-typewriter]:not([data-typing]) [data-type] {
+    visibility: hidden;
+}
+
+[data-typewriter-loader] {
+    visibility: visible;
+}
+
+html {
+    background-color: #03040f;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-app);
+    min-height: 100dvh;
+    margin-inline: auto;
+}
+
+@media (min-width: 480px) {
+    body {
+        box-shadow:
+            0 0 0 1px rgb(255 255 255 / 0.06),
+            0 24px 80px rgb(0 0 0 / 0.6);
+    }
 }
