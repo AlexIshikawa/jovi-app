@@ -1,3 +1,14 @@
+/**
+ * <app-gesture-wheel>
+ *
+ * Mostra os 5 gestos da lockscreen: o centro (toque) e 4 direções.
+ * É só a parte visual: quem decide o que vai em cada posição é o
+ * gesture-presets.js, chamando wheel.render(slots).
+ *
+ * slots: array com 5 posições, na ordem [centro, cima, direita, baixo, esquerda].
+ * Cada posição é null (vazia) ou { name: 'Selfie', icon: '<svg>...</svg>' }.
+ */
+
 const POSITIONS = ['Centro', 'Cima', 'Direita', 'Baixo', 'Esquerda'];
 const MAX_SLOTS = POSITIONS.length;
 
@@ -11,19 +22,19 @@ const CAMERA_ICON = `
 
 // Posição de cada satélite sobre o anel externo (centro do círculo no anel)
 const SATELLITE_POSITIONS = [
-    'left-1/2 top-[11%]', // cima
-    'left-[89%] top-1/2', // direita
-    'left-1/2 top-[89%]', // baixo
-    'left-[11%] top-1/2', // esquerda
+  'left-1/2 top-[11%]', // cima
+  'left-[89%] top-1/2', // direita
+  'left-1/2 top-[89%]', // baixo
+  'left-[11%] top-1/2', // esquerda
 ];
 
 class AppGestureWheel extends HTMLElement {
-    connectedCallback() {
-        if (this._slotEls) return; // monta só uma vez
+  connectedCallback() {
+    if (this._slotEls) return; // monta só uma vez
 
-        this.classList.add('block');
+    this.classList.add('block');
 
-        this.innerHTML = `
+    this.innerHTML = `
       <div aria-hidden="true" class="relative mx-auto aspect-square w-full max-w-80">
 
         <!-- Anéis guia -->
@@ -62,62 +73,62 @@ class AppGestureWheel extends HTMLElement {
       <p data-summary class="sr-only" aria-live="polite"></p>
     `;
 
-        const center = this.querySelector('.size-24 [data-slot-content]');
-        const satellites = [...this.querySelectorAll('[data-slot]')];
+    const center = this.querySelector('.size-24 [data-slot-content]');
+    const satellites = [...this.querySelectorAll('[data-slot]')];
 
-        // Mesma ordem dos slots: [centro, cima, direita, baixo, esquerda]
-        this._slotEls = [center, ...satellites.map((el) => el.querySelector('[data-slot-content]'))];
-        this._satellites = satellites;
-        this._current = Array(MAX_SLOTS).fill(undefined);
+    // Mesma ordem dos slots: [centro, cima, direita, baixo, esquerda]
+    this._slotEls = [center, ...satellites.map((el) => el.querySelector('[data-slot-content]'))];
+    this._satellites = satellites;
+    this._current = Array(MAX_SLOTS).fill(undefined);
 
-        this.render(Array(MAX_SLOTS).fill(null));
-    }
+    this.render(Array(MAX_SLOTS).fill(null));
+  }
 
-    render(slots) {
-        if (!this._slotEls) return;
+  render(slots) {
+    if (!this._slotEls) return;
 
-        slots.forEach((slot, index) => {
-            const name = slot?.name ?? null;
+    slots.forEach((slot, index) => {
+      const name = slot?.name ?? null;
 
-            // Só redesenha o que mudou, para a animação rodar apenas no slot novo
-            if (this._current[index] === name) return;
-            this._current[index] = name;
+      // Só redesenha o que mudou, para a animação rodar apenas no slot novo
+      if (this._current[index] === name) return;
+      this._current[index] = name;
 
-            const content = this._slotEls[index];
-            const isCenter = index === 0;
+      const content = this._slotEls[index];
+      const isCenter = index === 0;
 
-            if (isCenter) {
-                content.innerHTML = slot
-                    ? `<div class="flex flex-col items-center gap-1 animate-pop">
+      if (isCenter) {
+        content.innerHTML = slot
+          ? `<div class="flex flex-col items-center gap-1 animate-pop">
                <span class="size-8 [&>svg]:size-full">${slot.icon}</span>
-               <span class="text-[11px] font-semibold uppercase tracking-wider">${slot.name}</span>
+               <span class="max-w-20 text-center text-[11px] font-semibold uppercase leading-tight tracking-wider">${slot.name}</span>
              </div>`
-                    : `<span class="block size-9 opacity-80 [&>svg]:size-full">${CAMERA_ICON}</span>`;
-                return;
-            }
+          : `<span class="block size-9 opacity-80 [&>svg]:size-full">${CAMERA_ICON}</span>`;
+        return;
+      }
 
-            const satellite = this._satellites[index - 1];
-            satellite.toggleAttribute('data-filled', Boolean(slot));
+      const satellite = this._satellites[index - 1];
+      satellite.toggleAttribute('data-filled', Boolean(slot));
 
-            content.innerHTML = slot
-                ? `<div class="flex flex-col items-center gap-1 animate-pop">
+      content.innerHTML = slot
+        ? `<div class="flex flex-col items-center gap-1 animate-pop">
              <span class="size-5 [&>svg]:size-full">${slot.icon}</span>
-             <span class="text-[10px] font-medium leading-none">${slot.name}</span>
+             <span class="max-w-14 text-center text-[10px] font-medium leading-tight">${slot.name}</span>
            </div>`
-                : '';
-        });
+        : '';
+    });
 
-        const filled = slots.filter(Boolean).length;
+    const filled = slots.filter(Boolean).length;
 
-        this.querySelector('[data-caption]').textContent =
-            filled === 0
-                ? 'Selecione até 5 modos abaixo'
-                : `${filled} de ${MAX_SLOTS} gestos configurados`;
+    this.querySelector('[data-caption]').textContent =
+      filled === 0
+        ? 'Selecione até 5 modos abaixo'
+        : `${filled} de ${MAX_SLOTS} gestos configurados`;
 
-        this.querySelector('[data-summary]').textContent = slots
-            .map((slot, i) => `${POSITIONS[i]}: ${slot ? slot.name : 'vazio'}`)
-            .join('. ');
-    }
+    this.querySelector('[data-summary]').textContent = slots
+      .map((slot, i) => `${POSITIONS[i]}: ${slot ? slot.name : 'vazio'}`)
+      .join('. ');
+  }
 }
 
 customElements.define('app-gesture-wheel', AppGestureWheel);

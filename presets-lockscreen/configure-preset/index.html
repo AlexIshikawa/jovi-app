@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lockscreen</title>
+    <title>Meus Gestos</title>
 
     <link rel="stylesheet" href="/dist/output.css">
     <script src="/dist/bundle.js" defer></script>
@@ -14,7 +14,7 @@
     <app-header title="Lockscreen"></app-header>
     <main class="m-4 flex flex-col gap-4">
         <div class="flex flex-col justify-center items-center gap-2">
-            <app-gradient-text class="text-xl">Presets da Lockscreen</app-gradient-text>
+            <app-gradient-text class="text-xl">Meus Gestos</app-gradient-text>
             <p class="card-paragraph">
                 Escolha um gesto e defina qual modo de câmera ele abre direto da tela de bloqueio
             </p>
@@ -32,6 +32,37 @@
             <legend class="sr-only">Escolha até 5 modos de câmera para os gestos</legend>
 
             <div class="grid grid-cols-2 gap-3">
+                <!-- Câmera frontal -->
+                <label data-preset-option
+                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="checkbox" name="preset-mode" value="camera-frontal" data-name="Frontal"
+                        class="sr-only">
+
+                    <app-icon variant="outline" shape="circle" class="size-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.55 3.5h2.9a1.5 1.5 0 0 1 1.25.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" />
+                            <path d="M9.5 12.5a2.5 2.5 0 0 1 4.3-1.7M14.5 12.5a2.5 2.5 0 0 1-4.3 1.7" />
+                            <path d="M13.8 9.2v1.6h-1.6M10.2 15.8v-1.6h1.6" />
+                        </svg>
+                    </app-icon>
+
+                    <span class="flex min-w-0 flex-col gap-0.5">
+                        <span class="flex items-center gap-1.5 text-sm font-semibold">
+                            Câmera frontal
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
+                                <path d="M5 12.5l4.5 4.5L19 7.5" />
+                            </svg>
+                        </span>
+                        <span class="text-xs leading-snug text-white/70">A câmera frontal padrão, sem ajustes</span>
+                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
+                        <span data-slot-label hidden
+                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
+                    </span>
+                </label>
                 <!-- Selfie -->
                 <label data-preset-option
                     class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
@@ -50,65 +81,11 @@
                             Selfie
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
                         </span>
-                        <span class="text-xs leading-snug text-white/70">Câmera frontal com beleza IA</span>
-                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
-                        <span data-slot-label hidden
-                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
-                    </span>
-                </label>
-                <!-- Noturno -->
-                <label data-preset-option
-                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="noturno" data-name="Noturno" class="sr-only">
-
-                    <app-icon variant="outline" shape="circle" class="size-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
-                        </svg>
-                    </app-icon>
-
-                    <span class="flex min-w-0 flex-col gap-0.5">
-                        <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Noturno
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
-                                <path d="M5 12.5l4.5 4.5L19 7.5" />
-                            </svg>
-                        </span>
-                        <span class="text-xs leading-snug text-white/70">Capture em baixa luz com IA</span>
-                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
-                        <span data-slot-label hidden
-                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
-                    </span>
-                </label>
-                <!-- Panorama -->
-                <label data-preset-option
-                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="panorama" data-name="Panorama" class="sr-only">
-
-                    <app-icon variant="outline" shape="circle" class="size-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 19l6-9 4 5 2-3 6 7z" />
-                        </svg>
-                    </app-icon>
-
-                    <span class="flex min-w-0 flex-col gap-0.5">
-                        <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Panorama
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
-                                <path d="M5 12.5l4.5 4.5L19 7.5" />
-                            </svg>
-                        </span>
-                        <span class="text-xs leading-snug text-white/70">Paisagens em ângulo amplo</span>
+                        <span class="text-xs leading-snug text-white/70">Seus melhores ângulos com IA</span>
                         <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
                         <span data-slot-label hidden
                             class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
@@ -132,67 +109,39 @@
                             Vídeo
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
                         </span>
-                        <span class="text-xs leading-snug text-white/70">Gravação rápida em 4K</span>
+                        <span class="text-xs leading-snug text-white/70">Grave seus momentos em alta qualidade</span>
                         <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
                         <span data-slot-label hidden
                             class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
                     </span>
                 </label>
-                <!-- Criador -->
+                <!-- Panorama -->
                 <label data-preset-option
                     class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="criador" data-name="Criador" class="sr-only">
+                    <input type="checkbox" name="preset-mode" value="panorama" data-name="Panorama" class="sr-only">
 
                     <app-icon variant="outline" shape="circle" class="size-10">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
-                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                            <path d="M2 8c6.5-2 13.5-2 20 0v8c-6.5 2-13.5 2-20 0z" />
+                            <path d="M6 14l3-3 2.5 2.5L14 11l4 3" />
                         </svg>
                     </app-icon>
 
                     <span class="flex min-w-0 flex-col gap-0.5">
                         <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Criador
+                            Panorama
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
                         </span>
-                        <span class="text-xs leading-snug text-white/70">Modo Pro para conteúdo</span>
-                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
-                        <span data-slot-label hidden
-                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
-                    </span>
-                </label>
-                <!-- Viagem -->
-                <label data-preset-option
-                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="viagem" data-name="Viagem" class="sr-only">
-
-                    <app-icon variant="outline" shape="circle" class="size-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 2L11 13" />
-                            <path d="M22 2l-7 20-4-9-9-4z" />
-                        </svg>
-                    </app-icon>
-
-                    <span class="flex min-w-0 flex-col gap-0.5">
-                        <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Viagem
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
-                                <path d="M5 12.5l4.5 4.5L19 7.5" />
-                            </svg>
-                        </span>
-                        <span class="text-xs leading-snug text-white/70">HDR + geo-tag automáticos</span>
+                        <span class="text-xs leading-snug text-white/70">Capture paisagens em ângulo amplo</span>
                         <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
                         <span data-slot-label hidden
                             class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
@@ -217,40 +166,95 @@
                             Retrato
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
                         </span>
-                        <span class="text-xs leading-snug text-white/70">Bokeh natural com IA</span>
+                        <span class="text-xs leading-snug text-white/70">Destaque pessoas com desfoque
+                            inteligente</span>
                         <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
                         <span data-slot-label hidden
                             class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
                     </span>
                 </label>
-                <!-- Dia -->
+                <!-- Noturno -->
                 <label data-preset-option
                     class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="dia" data-name="Dia" class="sr-only">
+                    <input type="checkbox" name="preset-mode" value="noturno" data-name="Noturno" class="sr-only">
 
                     <app-icon variant="outline" shape="circle" class="size-10">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="4" />
-                            <path
-                                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
                         </svg>
                     </app-icon>
 
                     <span class="flex min-w-0 flex-col gap-0.5">
                         <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Dia
+                            Noturno
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="hidden size-3.5 group-has-checked/card:block" aria-hidden="true">
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
                         </span>
-                        <span class="text-xs leading-snug text-white/70">Cores vivas em luz forte</span>
+                        <span class="text-xs leading-snug text-white/70">Fotos mais nítidas em ambientes escuros</span>
+                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
+                        <span data-slot-label hidden
+                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
+                    </span>
+                </label>
+                <!-- Paisagem -->
+                <label data-preset-option
+                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="checkbox" name="preset-mode" value="paisagem" data-name="Paisagem" class="sr-only">
+
+                    <app-icon variant="outline" shape="circle" class="size-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 19l5.5-7.5 4 5 2.5-3 6 5.5z" />
+                            <circle cx="16" cy="6.5" r="1.5" />
+                        </svg>
+                    </app-icon>
+
+                    <span class="flex min-w-0 flex-col gap-0.5">
+                        <span class="flex items-center gap-1.5 text-sm font-semibold">
+                            Paisagem
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
+                                <path d="M5 12.5l4.5 4.5L19 7.5" />
+                            </svg>
+                        </span>
+                        <span class="text-xs leading-snug text-white/70">Cores e iluminação otimizadas por IA</span>
+                        <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
+                        <span data-slot-label hidden
+                            class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
+                    </span>
+                </label>
+                <!-- Ask Mode -->
+                <label data-preset-option
+                    class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="checkbox" name="preset-mode" value="ask-mode" data-name="Ask Mode" class="sr-only">
+
+                    <app-icon variant="outline" shape="circle" class="size-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg>
+                    </app-icon>
+
+                    <span class="flex min-w-0 flex-col gap-0.5">
+                        <span class="flex items-center gap-1.5 text-sm font-semibold">
+                            Ask Mode
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
+                                <path d="M5 12.5l4.5 4.5L19 7.5" />
+                            </svg>
+                        </span>
+                        <span class="text-xs leading-snug text-white/70">Aponte, pergunte e descubra com IA</span>
                         <!-- Preenchido pelo JS com a posição do gesto (ex.: "Em uso: Cima") -->
                         <span data-slot-label hidden
                             class="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/45"></span>
