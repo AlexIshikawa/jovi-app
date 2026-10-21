@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Meus Gestos</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="min-h-dvh text-white antialiased">
+    <app-header title="Lockscreen"></app-header>
+
+    <main class="flex flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+
+        <!-- Título -->
+        <div class="flex flex-col gap-2">
+            <h1 class="text-4xl font-bold tracking-tight">
+                Meus
+                <span class="bg-linear-to-r from-brand-blue to-brand-purple bg-clip-text text-transparent">Gestos</span>
+            </h1>
+            <p class="text-base leading-snug text-white/60">
+                Escolha um gesto ou crie um novo para abrir rapidamente a câmera com o modo ideal.
+            </p>
+        </div>
+
+        <!-- Criar novo gesto: leva para a tela de configuração -->
+        <a href="/presets-lockscreen/configure-preset/index.html"
+            class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-colors active:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+            <span
+                class="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-white/25 text-white/70">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" class="size-7" aria-hidden="true">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="text-lg font-semibold">Criar novo gesto</span>
+                <span class="text-sm leading-snug text-white/65">
+                    Defina um gesto e personalize o modo de câmera do seu jeito.
+                </span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-white/60"
+                aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </a>
+
+        <!-- Gestos pré-configurados: só um pode ficar selecionado -->
+        <fieldset class="flex flex-col gap-3">
+            <legend class="mb-3 text-lg font-medium text-white/70">Gestos pré-configurados</legend>
+
+            <!-- Modo Viagem -->
+            <label
+                class="group/preset block rounded-2xl border border-white/10 bg-white/[0.03] p-4 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-(--accent) has-checked:bg-(--accent)/5 has-checked:shadow-[0_0_32px_-8px_var(--accent)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent] [--accent:var(--color-orange-400)]">
+                <input type="radio" name="gesture-preset" value="viagem" class="sr-only" checked>
+
+                <span class="flex items-start gap-4">
+                    <!-- Ícone na cor do modo -->
+                    <span
+                        class="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-(--accent) bg-(--accent)/10 text-(--accent)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M22 2L11 13" />
+                            <path d="M22 2l-7 20-4-9-9-4z" />
+                        </svg>
+                    </span>
+
+                    <span class="flex min-w-0 flex-1 flex-col gap-1">
+                        <span class="flex flex-wrap items-center gap-2">
+                            <span class="text-lg font-semibold">Modo Viagem</span>
+                            <!-- Selo: só aparece no card selecionado -->
+                            <span
+                                class="hidden items-center gap-1 rounded-full border border-(--accent)/60 bg-(--accent)/15 px-2 py-0.5 text-xs group-has-checked/preset:inline-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5 text-(--accent)" aria-hidden="true">
+                                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                                </svg>
+                                Selecionado
+                            </span>
+                        </span>
+                        <span class="text-sm leading-snug text-white/65">Tudo configurado para curtir sua viagem. Fotos
+                            incríveis, organização automática e informações com o modo Ask.</span>
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 shrink-0 self-center text-white/60" aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
+                </span>
+
+                <!-- Recursos do modo: só aparecem quando ele está selecionado -->
+                <ul class="mt-4 hidden grid-cols-4 gap-2 group-has-checked/preset:grid">
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/gallery/selfies/selfie.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="3.5" />
+                                    <path d="M5.5 19c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Selfie</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Retratos com beleza natural</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path d="M3 19l6-9 4 5 2-3 6 7z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Paisagem</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Fotos otimizadas para paisagens</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/gallery/viagens/cristo.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                                    <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Ask Mode</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Saiba mais sobre monumentos e
+                            lugares</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <span
+                            class="flex aspect-[4/5] items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                            <span
+                                class="flex size-12 items-center justify-center rounded-full bg-(--accent)/15 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-6" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Pasta Viagem</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Fotos e vídeos automaticamente em uma nova
+                            pasta</span>
+                    </li>
+                </ul>
+            </label>
+
+            <!-- Modo Estudos -->
+            <label
+                class="group/preset block rounded-2xl border border-white/10 bg-white/[0.03] p-4 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-(--accent) has-checked:bg-(--accent)/5 has-checked:shadow-[0_0_32px_-8px_var(--accent)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent] [--accent:var(--color-brand-blue)]">
+                <input type="radio" name="gesture-preset" value="estudos" class="sr-only">
+
+                <span class="flex items-start gap-4">
+                    <!-- Ícone na cor do modo -->
+                    <span
+                        class="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-(--accent) bg-(--accent)/10 text-(--accent)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M22 9L12 4 2 9l10 5 10-5z" />
+                            <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" />
+                            <path d="M22 9v6" />
+                        </svg>
+                    </span>
+
+                    <span class="flex min-w-0 flex-1 flex-col gap-1">
+                        <span class="flex flex-wrap items-center gap-2">
+                            <span class="text-lg font-semibold">Modo Estudos</span>
+                            <!-- Selo: só aparece no card selecionado -->
+                            <span
+                                class="hidden items-center gap-1 rounded-full border border-(--accent)/60 bg-(--accent)/15 px-2 py-0.5 text-xs group-has-checked/preset:inline-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5 text-(--accent)" aria-hidden="true">
+                                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                                </svg>
+                                Selecionado
+                            </span>
+                        </span>
+                        <span class="text-sm leading-snug text-white/65">Digitalize conteúdos, tire dúvidas com IA e
+                            mantenha tudo organizado para um estudo mais produtivo.</span>
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 shrink-0 self-center text-white/60" aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
+                </span>
+                <!-- Recursos do modo: só aparecem quando ele está selecionado -->
+                <ul class="mt-4 hidden grid-cols-4 gap-2 group-has-checked/preset:grid">
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/estudos/estudos3.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                                    <path d="M14 3v5h5" />
+                                    <path d="M9 13h6M9 17h6" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Documento</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Digitaliza e organiza seus estudos</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/estudos/estudos1.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                                    <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Ask Mode</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Explica conceitos e tira dúvidas com
+                            IA</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/estudos/estudos2.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <rect x="3" y="4" width="18" height="12" rx="1.5" />
+                                    <path d="M12 16v4M8 20h8" />
+                                    <path d="M7 12l3-3 2 2 4-4" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Quadro</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Melhora a leitura de anotações e
+                            lousas</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <span
+                            class="flex aspect-[4/5] items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                            <span
+                                class="flex size-12 items-center justify-center rounded-full bg-(--accent)/15 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-6" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Pasta Estudos</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Tudo salvo automaticamente em uma nova
+                            pasta</span>
+                    </li>
+                </ul>
+            </label>
+
+            <!-- Modo Creator -->
+            <label
+                class="group/preset block rounded-2xl border border-white/10 bg-white/[0.03] p-4 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-(--accent) has-checked:bg-(--accent)/5 has-checked:shadow-[0_0_32px_-8px_var(--accent)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent] [--accent:var(--color-violet-400)]">
+                <input type="radio" name="gesture-preset" value="creator" class="sr-only">
+
+                <span class="flex items-start gap-4">
+                    <!-- Ícone na cor do modo -->
+                    <span
+                        class="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-(--accent) bg-(--accent)/10 text-(--accent)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M8 5.5v13l11-6.5z" />
+                        </svg>
+                    </span>
+
+                    <span class="flex min-w-0 flex-1 flex-col gap-1">
+                        <span class="flex flex-wrap items-center gap-2">
+                            <span class="text-lg font-semibold">Modo Creator</span>
+                            <!-- Selo: só aparece no card selecionado -->
+                            <span
+                                class="hidden items-center gap-1 rounded-full border border-(--accent)/60 bg-(--accent)/15 px-2 py-0.5 text-xs group-has-checked/preset:inline-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5 text-(--accent)" aria-hidden="true">
+                                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                                </svg>
+                                Selecionado
+                            </span>
+                        </span>
+                        <span class="text-sm leading-snug text-white/65">Grave, edite e organize seus conteúdos com mais
+                            praticidade. Ferramentas otimizadas para criadores.</span>
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 shrink-0 self-center text-white/60" aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
+                </span>
+
+                <!-- Recursos do modo: só aparecem quando ele está selecionado -->
+                <ul class="mt-4 hidden grid-cols-4 gap-2 group-has-checked/preset:grid">
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/creator/creator1.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="3.5" />
+                                    <path d="M5.5 19c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Selfie</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Beleza natural e pronto para as
+                            redes</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/creator/creator2.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <rect x="3" y="7" width="12" height="10" rx="2" />
+                                    <path d="M15 11l6-3v8l-6-3z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Vídeo</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Gravação em 4K com estabilização
+                            inteligente</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <img src="/src/assets/creator/creator3.jpg" alt=""
+                            class="aspect-[4/5] w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <rect x="9" y="3" width="6" height="11" rx="3" />
+                                    <path d="M5 11a7 7 0 0 0 14 0" />
+                                    <path d="M12 18v3" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Creator Mode</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Ajustes ideais de luz e cor para
+                            conteúdo</span>
+                    </li>
+                    <li class="flex flex-col gap-2">
+                        <span
+                            class="flex aspect-[4/5] items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                            <span
+                                class="flex size-12 items-center justify-center rounded-full bg-(--accent)/15 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-6" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="flex items-center gap-1.5">
+                            <span
+                                class="flex size-6 shrink-0 items-center justify-center rounded-full border border-(--accent)/60 text-(--accent)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+                                    <path
+                                        d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium leading-tight">Pasta Creator</span>
+                        </span>
+                        <span class="text-[10px] leading-snug text-white/60">Fotos e vídeos automaticamente em uma nova
+                            pasta</span>
+                    </li>
+                </ul>
+            </label>
+        </fieldset>
+
+        <app-button class="w-full">Salvar meus gestos</app-button>
+    </main>
+</body>
+
+</html>
