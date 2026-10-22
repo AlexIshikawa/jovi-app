@@ -15,6 +15,9 @@ import { initGalleryFilter } from './gallery-filter.js';
 import { initGesturePresets } from './gesture-presets.js';
 import { initTypewriter } from '../components/type-writter.js';
 import { initPhotoDetail } from './photo-detail.js';
+import { initAskModeSheet } from './ask-mode-sheet.js';
+import { initGestureModeSave } from './gesture-mode-save.js';
+
 
 initCameraMenu();
 initSearchBar();
@@ -22,3 +25,5 @@ initGalleryFilter();
 initGesturePresets();
 initTypewriter();
 initPhotoDetail();
+initAskModeSheet();
+initGestureModeSave();

@@ -2,9 +2,15 @@
  * Menu radial da câmera (Jovi)
  *
  * Gesto: segurar o botão central, arrastar na direção de um atalho
- * e soltar para ativá-lo. Um toque rápido no centro abre a câmera.
+ * e soltar para ativá-lo. Um toque rápido no centro abre a câmera
+ * (ou a ação definida em data-tap-action / data-tap-label no botão central).
  *
  * Também funciona com teclado (Tab até o botão ou atalho + Enter).
+ *
+ * Direções: por padrão, 4 direções (data-direction="up|right|down|left").
+ * Se os atalhos tiverem data-angle (em graus: 0 = direita, 90 = baixo,
+ * 180 = esquerda, -90 = cima), vale o atalho mais próximo do ângulo do arraste,
+ * o que permite diagonais e mais de 4 atalhos.
  */
 
 // Distância mínima (px) do centro para considerar que houve arraste
@@ -16,6 +22,9 @@ const TAP_MAX_MS = 300;
 // Tempo (ms) que o aviso fica na tela
 const TOAST_MS = 1500;
 
+// Diferença máxima (graus) entre o arraste e um atalho com data-angle
+const MAX_ANGLE_DIFF = 45;
+
 // Pausa (ms) antes de trocar de página, para o aviso aparecer
 const NAVIGATION_DELAY_MS = 1000;
 
@@ -26,13 +35,14 @@ const NAVIGATION_DELAY_MS = 1000;
    - 'cover': preenche a tela toda, cortando as bordas se a proporção for diferente.
 */
 const VIDEOS = {
+    // Caminhos absolutos (começando com /): funcionam em qualquer página que use o menu
     selfie: {
-        src: 'src/assets/videos/selfie.mp4',
-        next: 'memorias/',
+        src: '/src/assets/videos/selfie.mp4',
+        next: '/memorias/',
     },
     viagem: {
-        src: 'src/assets/videos/viagem.mp4',
-        next: 'modo-viagem/ia-guia/index.html',
+        src: '/src/assets/videos/viagem.mp4',
+        next: '/modo-viagem/ia-guia/index.html',
     },
 };
 
@@ -55,6 +65,10 @@ export function initCameraMenu() {
     if (!menu) return;
 
     const trigger = menu.querySelector('[data-camera-trigger]');
+
+    // O que o toque rápido no centro abre (padrão: câmera)
+    const tapAction = trigger.dataset.tapAction ?? 'camera';
+    const tapLabel = trigger.dataset.tapLabel ?? 'Câmera';
     const shortcuts = [...menu.querySelectorAll('[data-shortcut]')];
     const toast = document.getElementById('toast');
 
@@ -65,6 +79,11 @@ export function initCameraMenu() {
     const shortcutByDirection = Object.fromEntries(
         shortcuts.map((el) => [el.dataset.direction, el]),
     );
+
+    // Atalhos posicionados por ângulo (ex.: home do Modo Viagem, com diagonais)
+    const angledShortcuts = shortcuts
+        .filter((el) => el.dataset.angle !== undefined)
+        .map((el) => ({ el, angle: Number(el.dataset.angle) }));
 
     const videoPlayers = Object.fromEntries(
         Object.entries(VIDEOS).map(([action, config]) => [
@@ -112,6 +131,33 @@ export function initCameraMenu() {
             return dx > 0 ? 'right' : 'left';
         }
         return dy > 0 ? 'down' : 'up';
+    }
+
+    // Escolhe o atalho a partir do deslocamento do dedo
+    function shortcutFrom(dx, dy) {
+        if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return null;
+
+        if (angledShortcuts.length > 0) {
+            // atan2 devolve o ângulo do arraste em radianos; convertido para graus
+            const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+            let best = null;
+            let bestDiff = Infinity;
+
+            angledShortcuts.forEach((shortcut) => {
+                // Menor diferença entre dois ângulos, de 0 a 180 (trata a volta de 180 para -180)
+                const diff = Math.abs(((angle - shortcut.angle + 540) % 360) - 180);
+                if (diff < bestDiff) {
+                    best = shortcut.el;
+                    bestDiff = diff;
+                }
+            });
+
+            return bestDiff <= MAX_ANGLE_DIFF ? best : null;
+        }
+
+        const direction = directionFrom(dx, dy);
+        return direction ? shortcutByDirection[direction] : null;
     }
 
     /* ---------- Ação ---------- */
@@ -215,12 +261,7 @@ export function initCameraMenu() {
     trigger.addEventListener('pointermove', (event) => {
         if (event.pointerId !== activePointerId) return;
 
-        const direction = directionFrom(
-            event.clientX - origin.x,
-            event.clientY - origin.y,
-        );
-
-        select(direction ? shortcutByDirection[direction] : null);
+        select(shortcutFrom(event.clientX - origin.x, event.clientY - origin.y));
     });
 
     trigger.addEventListener('pointerup', (event) => {
@@ -234,7 +275,7 @@ export function initCameraMenu() {
         if (chosen) {
             activate(chosen.dataset.shortcut, chosen.dataset.label);
         } else if (wasQuickTap) {
-            activate('camera', 'Câmera');
+            activate(tapAction, tapLabel);
         }
         // Segurou e soltou no centro sem escolher: apenas fecha
     });
@@ -252,7 +293,7 @@ export function initCameraMenu() {
     // Enter/Espaço no botão central disparam "click" com detail === 0.
     // Cliques de mouse/toque já foram tratados no pointerup.
     trigger.addEventListener('click', (event) => {
-        if (event.detail === 0) activate('camera', 'Câmera');
+        if (event.detail === 0) activate(tapAction, tapLabel);
     });
 
     shortcuts.forEach((shortcut) => {

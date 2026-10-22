@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Foto</title>
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<!-- data-photo-set: escolhe a lista de fotos (aqui, as de estudos) -->
+
+<body data-photo-set="estudos" class="min-h-dvh bg-brand-dark-deep text-white antialiased">
+
+    <!-- Foto com os controles por cima -->
+    <div class="relative h-[55dvh] min-h-80">
+        <!-- src e alt vêm de photos.js -->
+        <img data-photo-img alt="" class="size-full bg-white/5 object-cover" decoding="async" />
+
+        <!-- Escurece só o topo, para os botões ficarem legíveis -->
+        <span aria-hidden="true"
+            class="absolute inset-x-0 top-0 h-28 bg-linear-to-b from-black/40 to-transparent"></span>
+
+        <!-- Barra superior -->
+        <div
+            class="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))]">
+            <button type="button" aria-label="Voltar" onclick="history.back()"
+                class="flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" />
+                </svg>
+            </button>
+
+            <div class="flex items-center gap-2">
+                <button type="button" aria-label="Favoritar" aria-pressed="false" data-favorite-toggle
+                    class="group/fav flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 transition-colors group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                        aria-hidden="true">
+                        <path
+                            d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                    </svg>
+                </button>
+                <button type="button" aria-label="Mais opções"
+                    class="flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.6" />
+                        <circle cx="12" cy="12" r="1.6" />
+                        <circle cx="12" cy="19" r="1.6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Próxima foto -->
+        <a href="#" data-photo-next aria-label="Próxima anotação"
+            class="absolute right-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </a>
+
+        <!-- Posição no álbum -->
+        <span
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 rounded-full bg-black/45 px-3.5 py-1 text-sm ring-1 ring-white/10 backdrop-blur-md">
+            <span data-photo-counter></span>
+        </span>
+
+        <!-- Selo de vídeo: só aparece quando a foto é um vídeo -->
+        <span data-video-badge hidden
+            class="absolute bottom-10 left-4 flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1 text-xs ring-1 ring-white/10 backdrop-blur-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-3"
+                aria-hidden="true">
+                <path d="M8 5.5v13l11-6.5z" />
+            </svg>
+            Vídeo
+        </span>
+
+        <!-- Abrir em tela cheia -->
+        <button type="button" aria-label="Ver em tela cheia" data-viewer-open
+            class="absolute bottom-9 right-4 flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path
+                    d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4" />
+                <rect x="9" y="9" width="6" height="6" rx="1.5" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Painel de informações: sobe por cima da foto -->
+    <main
+        class="relative -mt-6 flex flex-col gap-4 rounded-t-3xl border-t border-white/10 bg-brand-dark-deep px-4 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+
+        <!-- Alça do painel -->
+        <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
+
+        <!-- Título e informações -->
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between gap-3">
+                <h1 data-photo-title class="text-2xl font-bold tracking-tight"></h1>
+                <button type="button"
+                    class="flex shrink-0 items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-sm ring-1 ring-white/10 transition-colors active:bg-white/10 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
+                        <path d="M13.5 6.5l4 4" />
+                    </svg>
+                    Renomear
+                </button>
+            </div>
+
+            <p class="text-sm text-white/70">
+                <time data-photo-date></time>
+            </p>
+            <p class="flex items-center gap-1.5 text-sm text-white/70">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0"
+                    aria-hidden="true">
+                    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                <span data-photo-location></span>
+            </p>
+
+            <!-- Dados técnicos da foto -->
+            <dl class="mt-1 flex flex-wrap gap-2 text-xs text-white/75">
+                <div
+                    class="flex items-center divide-x divide-white/15 rounded-full bg-white/5 py-1.5 ring-1 ring-white/10">
+                    <div class="flex items-center gap-1.5 px-3">
+                        <dt class="sr-only">Câmera</dt>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path
+                                d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.55 3.5h2.9a1.5 1.5 0 0 1 1.25.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" />
+                            <circle cx="12" cy="12.5" r="3.5" />
+                        </svg>
+                        <dd data-spec="model"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">Distância focal</dt>
+                        <dd data-spec="focal"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">Abertura</dt>
+                        <dd data-spec="aperture"></dd>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center divide-x divide-white/15 rounded-full bg-white/5 py-1.5 ring-1 ring-white/10">
+                    <div class="px-3">
+                        <dt class="sr-only">Velocidade do obturador</dt>
+                        <dd data-spec="shutter"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">ISO</dt>
+                        <dd data-spec="iso"></dd>
+                    </div>
+                </div>
+            </dl>
+        </div>
+
+        <!-- Ask Mode: perguntas sobre a anotação -->
+        <a href="#ask" data-photo-ask-link
+            class="flex items-center gap-3 rounded-2xl p-3.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] border border-sky-400/50 bg-linear-to-r from-sky-500/15 to-sky-500/[0.03] shadow-[0_0_24px_-8px_rgba(56,189,248,0.6)] active:from-sky-500/25">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-full border border-sky-400/70 bg-sky-500/10 text-sky-400">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                    <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                    <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                </svg>
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="flex flex-wrap items-center gap-2">
+                    <span class="text-sm font-semibold">Perguntar sobre esta imagem</span>
+                    <span
+                        class="flex items-center gap-1 rounded-full border border-sky-400/50 bg-sky-500/15 px-2 py-0.5 text-[10px] font-medium text-sky-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-3"
+                            aria-hidden="true">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg>
+                        Ask Mode
+                    </span>
+                </span>
+                <span data-photo-ask class="text-xs leading-snug text-white/65"></span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-white/60"
+                aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </a>
+
+        <!-- Resumo com IA -->
+        <button type="button"
+            class="flex items-center gap-3 rounded-2xl p-3.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] border border-fuchsia-400/40 bg-linear-to-r from-fuchsia-500/15 to-purple-500/[0.04] active:from-fuchsia-500/25 cursor-pointer">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-full border border-fuchsia-400/70 bg-fuchsia-500/10 text-fuchsia-400">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                    <path d="M14 3v5h5" />
+                    <path d="M9 12h6M9 15.5h6M9 19h3" />
+                </svg>
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="text-sm font-semibold">Criar resumo dos seus estudos</span>
+                <span class="text-xs leading-snug text-white/65">A Jovi gera um resumo organizado e com os principais
+                    pontos desta anotação.</span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-white/60"
+                aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </button>
+
+        <!-- Extrair texto: abre o painel com o texto da anotação (some se a foto não tiver texto) -->
+        <button type="button" data-extract-card data-extract-open
+            class="flex items-center gap-3 rounded-2xl p-3.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] border border-white/10 bg-white/[0.03] active:bg-white/[0.06] cursor-pointer">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-full border border-sky-300/50 bg-sky-400/5 text-sky-300">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                    <path d="M10 6h10M10 12h10M10 18h10" />
+                    <circle cx="5" cy="6" r="1.3" />
+                    <circle cx="5" cy="12" r="1.3" />
+                    <circle cx="5" cy="18" r="1.3" />
+                </svg>
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="text-sm font-semibold">Extrair texto desta imagem</span>
+                <span class="text-xs leading-snug text-white/65">Converte sua anotação em texto editável para você
+                    copiar, organizar e estudar.</span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-white/60"
+                aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </button>
+
+        <!-- Salvar em outros apps (por enquanto, simulado com um aviso) -->
+        <section aria-labelledby="titulo-salvar" class="flex flex-col gap-3">
+            <h2 id="titulo-salvar" class="text-base font-semibold">Salvar em</h2>
+            <ul class="grid grid-cols-5 gap-1">
+                <li>
+                    <button type="button" data-save-to="Google Drive"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/google-drive.png" alt=""
+                            class="size-12 rounded-full bg-white/5 object-contain p-2 ring-1 ring-white/15 transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">Google Drive</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-save-to="Notion"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/notion.png" alt=""
+                            class="size-12 rounded-full bg-white/5 object-contain p-2 ring-1 ring-white/15 transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">Notion</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-save-to="Obsidian"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/obsidian.jpg" alt=""
+                            class="size-12 rounded-full bg-white/5 object-contain p-2 ring-1 ring-white/15 transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">Obsidian</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-save-to="Notas"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-12 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/15 transition-transform active:scale-90 text-amber-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <rect x="5" y="3" width="14" height="18" rx="2.5" />
+                                <path d="M5 8h14" />
+                                <path d="M9 12.5h6M9 16h4" />
+                            </svg>
+                        </span>
+                        <span class="text-[11px] text-white/70">Notas</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="native"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-12 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/15 transition-transform active:scale-90 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <circle fill="currentColor" cx="5" cy="12" r="1.6" />
+                                <circle fill="currentColor" cx="12" cy="12" r="1.6" />
+                                <circle fill="currentColor" cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </span>
+                        <span class="text-[11px] text-white/70">Mais</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Visualizador em tela cheia -->
+    <dialog data-viewer aria-label="Foto em tela cheia"
+        class="m-auto h-dvh max-h-none w-full max-w-app bg-black p-0 text-white backdrop:bg-black">
+        <img data-photo-img alt="" class="size-full object-contain" />
+        <button type="button" aria-label="Fechar tela cheia" data-viewer-close
+            class="absolute right-4 top-[calc(1rem+env(safe-area-inset-top))] flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+        </button>
+    </dialog>
+
+    <!-- Painel com o texto extraído da anotação -->
+    <dialog data-text-sheet aria-labelledby="text-sheet-title"
+        class="mx-auto mt-auto mb-0 max-h-[80dvh] w-full max-w-app overflow-y-auto rounded-t-3xl border-t border-white/10 bg-brand-dark p-0 text-white translate-y-full transition-[translate,overlay,display] transition-discrete duration-300 ease-out open:translate-y-0 starting:open:translate-y-full backdrop:bg-black/60">
+        <div class="flex flex-col gap-4 px-4 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
+
+            <div class="flex items-center justify-between gap-3">
+                <h2 id="text-sheet-title" class="text-lg font-semibold">Texto extraído</h2>
+                <button type="button" data-copy-text
+                    class="flex items-center gap-1.5 rounded-full bg-sky-400/15 px-3 py-1.5 text-sm text-sky-300 ring-1 ring-sky-400/40 transition-colors active:bg-sky-400/25 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <rect x="8" y="8" width="12" height="12" rx="2.5" />
+                        <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                    </svg>
+                    Copiar texto
+                </button>
+            </div>
+
+            <!-- whitespace-pre-line: mantém as quebras de linha do texto -->
+            <p data-photo-text
+                class="whitespace-pre-line rounded-2xl bg-white/[0.04] p-4 text-sm leading-relaxed text-white/85 ring-1 ring-white/10 select-text">
+            </p>
+
+            <form method="dialog">
+                <button type="submit"
+                    class="w-full rounded-full px-4 py-3 text-sm text-white/70 transition-colors active:bg-white/5 cursor-pointer">
+                    Fechar
+                </button>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Aviso rápido (texto copiado, salvo em...) -->
+    <p id="toast" role="status" aria-live="polite"
+        class="invisible fixed bottom-8 left-1/2 z-50 -translate-x-1/2 translate-y-2 rounded-full bg-white/10 px-4 py-2 text-sm opacity-0 ring-1 ring-white/15 backdrop-blur-md transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+    </p>
+</body>
+
+</html>

@@ -3,7 +3,8 @@
  *
  * Combina dois filtros sobre os itens com data-tags:
  *  - busca por texto (campo [data-search-input]): todas as palavras precisam estar nas tags;
- *  - tipo (radios name="tipo"): all | photo | video | favorite.
+ *  - tipo (radios name="tipo"): "all", "favorite" ou qualquer valor de data-kind
+ *    (ex.: photo | video na viagem; document | board | summary nos estudos).
  *
  * Também atualiza a contagem de cada dia ([data-day] / [data-day-count])
  * e esconde os dias que ficam sem nenhum item visível.
@@ -54,10 +55,9 @@ export function initGalleryFilter() {
     }));
 
     function matchesType({ kind, favorite }, type) {
-        if (type === 'photo') return kind === 'photo';
-        if (type === 'video') return kind === 'video';
+        if (type === 'all') return true;
         if (type === 'favorite') return favorite;
-        return true; // "all"
+        return kind === type; // qualquer outro filtro compara com data-kind
     }
 
     function filter() {

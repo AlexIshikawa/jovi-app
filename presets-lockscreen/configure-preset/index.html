@@ -23,8 +23,24 @@
         <!-- Prévia dos gestos: preenchida conforme os modos marcados abaixo -->
         <app-gesture-wheel></app-gesture-wheel>
 
-        <div>
-            <h3>Modo para o gesto <app-gradient-text class="text-xl">Default 1</app-gradient-text></h3>
+        <!-- Nome do gesto: campo discreto, com a aparência do título em gradiente -->
+        <div class="flex flex-wrap items-baseline gap-x-2">
+            <label for="gesture-name">Modo para o gesto</label>
+            <span class="flex min-w-0 items-baseline gap-1.5">
+                <input id="gesture-name" name="gesture-name" type="text" value="Default 1" maxlength="24"
+                    autocomplete="off" spellcheck="false" placeholder="Nome do gesto"
+                    class="field-sizing-content min-w-[4ch] max-w-full border-b border-transparent bg-transparent bg-linear-to-r from-brand-blue to-brand-purple bg-clip-text text-xl font-semibold text-transparent caret-brand-purple outline-none transition-colors placeholder:text-white/30 hover:border-white/15 focus:border-brand-purple/60" />
+                <!-- Lápis: indica que o nome é editável (clicar nele também foca o campo) -->
+                <label for="gesture-name" class="cursor-text text-white/35">
+                    <span class="sr-only">Editar nome do gesto</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
+                        <path d="M13.5 6.5l4 4" />
+                    </svg>
+                </label>
+            </span>
         </div>
 
         <!-- Checkboxes: é possível escolher vários modos (até 5 ficam em uso) -->
@@ -235,7 +251,9 @@
                 <!-- Ask Mode -->
                 <label data-preset-option
                     class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
-                    <input type="checkbox" name="preset-mode" value="ask-mode" data-name="Ask Mode" class="sr-only">
+                    <!-- data-setup: ao marcar, abre o formulário do Ask Mode antes de entrar na roda -->
+                    <input type="checkbox" name="preset-mode" value="ask-mode" data-name="Ask Mode"
+                        data-setup="#ask-mode-sheet" class="sr-only">
 
                     <app-icon variant="outline" shape="circle" class="size-10">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -264,6 +282,83 @@
         </fieldset>
         <app-button class="w-full mt-4" href="./configure-preset/index.html">Salvar meus gestos</app-button>
     </main>
+
+    <!-- Bottom sheet: configuração do Ask Mode -->
+    <dialog id="ask-mode-sheet" data-ask-sheet data-success-message="Ask Mode salvo" aria-labelledby="ask-sheet-title"
+        class="mx-auto mt-auto mb-0 max-h-[85dvh] w-full max-w-app overflow-y-auto rounded-t-3xl border-t border-white/10 bg-brand-dark p-0 text-white translate-y-full transition-[translate,overlay,display] transition-discrete duration-300 ease-out open:translate-y-0 starting:open:translate-y-full backdrop:bg-black/60">
+
+        <!-- method="dialog": o botão clicado fecha o dialog e vira o returnValue ("save" ou "cancel") -->
+        <form method="dialog" class="flex flex-col gap-4 px-4 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
+
+            <div class="flex flex-col gap-1">
+                <h2 id="ask-sheet-title" class="text-lg font-semibold">Configurar Ask Mode</h2>
+                <p class="text-sm text-white/60">Escolha como a JOVI vai responder quando você usar este gesto.</p>
+            </div>
+
+            <!-- Radios: sempre exatamente uma das duas opções -->
+            <fieldset class="flex flex-col gap-2.5">
+                <legend class="sr-only">Tipo de Ask</legend>
+
+                <label
+                    class="group/opt flex cursor-pointer flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 transition-colors has-checked:border-brand-purple/60 has-checked:bg-brand-purple/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <span class="flex items-start gap-3">
+                        <input type="radio" name="ask-type" value="general" class="sr-only" checked>
+                        <span aria-hidden="true"
+                            class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-white/30 transition-colors group-has-checked/opt:border-brand-purple">
+                            <span
+                                class="size-2.5 scale-0 rounded-full bg-brand-purple transition-transform group-has-checked/opt:scale-100"></span>
+                        </span>
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-sm font-semibold">Ask Geral</span>
+                            <span class="text-xs leading-snug text-white/65">Descreve de forma geral o que a câmera está
+                                vendo.</span>
+                        </span>
+                    </span>
+                </label>
+
+                <!-- O campo de texto fica fora do <label>: dentro dele, o toque no campo marcaria o radio -->
+                <div
+                    class="group/opt flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 transition-colors has-checked:border-brand-purple/60 has-checked:bg-brand-purple/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white">
+                    <label class="flex cursor-pointer items-start gap-3 [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="ask-type" value="custom" class="sr-only">
+                        <span aria-hidden="true"
+                            class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-white/30 transition-colors group-has-checked/opt:border-brand-purple">
+                            <span
+                                class="size-2.5 scale-0 rounded-full bg-brand-purple transition-transform group-has-checked/opt:scale-100"></span>
+                        </span>
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-sm font-semibold">Ask com foco personalizado</span>
+                            <span class="text-xs leading-snug text-white/65">Descreva para a IA qual será o foco deste
+                                Ask.</span>
+                        </span>
+                    </label>
+
+                    <!-- Somente leitura até esta opção ser marcada; tocar nele já marca a opção -->
+                    <textarea name="ask-focus" rows="3" maxlength="200" readonly aria-label="Foco do Ask Mode"
+                        placeholder="Ex.: identifique plantas e diga se são seguras para pets"
+                        class="w-full resize-none rounded-xl border border-white/10 bg-black/20 p-3 text-base text-white placeholder:text-white/35 outline-none transition-[opacity,border-color] focus:border-brand-purple/60 read-only:opacity-40"></textarea>
+                </div>
+            </fieldset>
+
+            <div class="flex flex-col gap-2">
+                <button type="submit" value="save"
+                    class="w-full rounded-full bg-linear-to-r from-brand-blue to-brand-purple px-4 py-3 text-sm font-semibold text-brand-dark-deep transition-opacity active:opacity-80 cursor-pointer">
+                    Salvar Ask Mode customizado
+                </button>
+                <!-- formnovalidate: cancelar não exige o texto preenchido -->
+                <button type="submit" value="cancel" formnovalidate
+                    class="w-full rounded-full px-4 py-3 text-sm text-white/70 transition-colors active:bg-white/5 cursor-pointer">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Aviso rápido ("Ask Mode salvo") -->
+    <p id="toast" role="status" aria-live="polite"
+        class="invisible fixed bottom-8 left-1/2 z-50 -translate-x-1/2 translate-y-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white opacity-0 ring-1 ring-white/15 backdrop-blur-md transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+    </p>
 </body>
 
 </html>

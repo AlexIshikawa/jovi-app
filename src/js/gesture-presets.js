@@ -6,7 +6,9 @@
  * - desmarcar um modo libera a posição dele, e o próximo escolhido ocupa esse lugar;
  * - com as 5 posições cheias, um novo modo substitui o escolhido há mais tempo.
  *
- * Substitui o preset-picker.js.
+ * Modos que precisam de configuração antes de entrar (ex.: Ask Mode) têm
+ * data-setup="#id-do-dialog" no checkbox: ao marcar, o <dialog> abre, e o modo
+ * só entra na roda se a pessoa salvar. A configuração fica em data-setup-config.
  */
 
 const POSITIONS = ['Centro', 'Cima', 'Direita', 'Baixo', 'Esquerda'];
@@ -17,6 +19,16 @@ export function initGesturePresets() {
     if (!picker) return; // página sem presets
 
     const wheel = document.querySelector('app-gesture-wheel');
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+
+    function showToast(message) {
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.dataset.visible = '';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => delete toast.dataset.visible, 1800);
+    }
 
     // Lê uma vez os dados de cada card: valor, nome, ícone e elementos a atualizar
     const options = [...picker.querySelectorAll('[data-preset-option]')].map((card) => {
@@ -84,9 +96,45 @@ export function initGesturePresets() {
         );
     }
 
+    // Abre o formulário de configuração; o modo só entra se a pessoa salvar
+    function openSetup(input) {
+        const dialog = document.querySelector(input.dataset.setup);
+        const form = dialog?.querySelector('form');
+        if (!dialog || !form) return select(input); // sem formulário: entra direto
+
+        dialog.returnValue = ''; // limpa o resultado da abertura anterior
+        dialog.showModal();
+
+        dialog.addEventListener(
+            'close',
+            () => {
+                // returnValue = value do botão usado (<form method="dialog">); Esc ou fora = cancelado
+                if (dialog.returnValue !== 'save') return;
+
+                input.dataset.setupConfig = JSON.stringify(Object.fromEntries(new FormData(form)));
+                select(input);
+                showToast(dialog.dataset.successMessage);
+            },
+            { once: true },
+        );
+    }
+
+    function select(input) {
+        input.checked = true;
+        add(input.value);
+        render();
+    }
+
     picker.addEventListener('change', (event) => {
         const input = event.target;
         if (input.type !== 'checkbox') return;
+
+        // Modo com configuração: desfaz a marcação até o formulário ser salvo
+        if (input.checked && input.dataset.setup) {
+            input.checked = false;
+            openSetup(input);
+            return;
+        }
 
         if (input.checked) add(input.value);
         else remove(input.value);
