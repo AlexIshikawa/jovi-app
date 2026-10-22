@@ -4,106 +4,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Memórias</title>
+    <title>Galeria</title>
     <link rel="stylesheet" href="/dist/output.css">
     <script src="/dist/bundle.js" defer></script>
 </head>
 
 <body class="min-h-dvh text-white antialiased">
-    <app-header title="Galeria"></app-header>
+
+    <!-- Cabeçalho: título e ações -->
     <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-4">
-        <h1 class="text-2xl font-semibold tracking-tight">Memórias</h1>
+        <h1 class="text-3xl font-bold tracking-tight">Galeria</h1>
 
-        <button type="button" aria-label="Buscar nas memórias"
-            class="-mr-2 flex size-10 items-center justify-center rounded-full transition-colors active:bg-white/10 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <path d="M20 20l-3.5-3.5" />
-            </svg>
-        </button>
+        <div class="flex items-center gap-2">
+            <button type="button" aria-label="Buscar nas memórias"
+                class="flex size-10 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 transition-colors active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M20 20l-3.5-3.5" />
+                </svg>
+            </button>
+            <button type="button" aria-label="Favoritos"
+                class="flex size-10 items-center justify-center rounded-full bg-pink-400/10 text-pink-300 ring-1 ring-pink-400/40 transition-colors active:bg-pink-400/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <path
+                        d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                </svg>
+            </button>
+        </div>
     </header>
-    <main class="flex flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
 
-        <!-- Álbuns Inteligentes -->
+    <main class="flex flex-col gap-7 pb-[calc(1.5rem+env(safe-area-inset-bottom))] px-4">
+
+        <!-- Álbuns: grade de 2 linhas que rola para o lado -->
         <section aria-labelledby="titulo-albuns">
             <div class="mb-3 flex items-center justify-between">
-                <h2 id="titulo-albuns" class="text-lg font-semibold">Álbuns Inteligentes</h2>
-
+                <h2 id="titulo-albuns" class="text-lg font-semibold">Álbuns</h2>
                 <button type="button"
-                    class="text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    class="inline-flex items-center gap-0.5 text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
                     Ver todos
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
                 </button>
             </div>
-            <ul class="grid grid-cols-2 gap-2.5">
-                <li>
-                    <a type="button" data-album="viagens" href="./galeria/index.html"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
 
+            <ul
+                class="-mx-4 overflow-x-auto px-4 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden grid grid-flow-col grid-rows-2 auto-cols-[38%] gap-2.5">
+                <li class="snap-start">
+                    <a href="./galeria/viagens/index.html" data-album="viagens"
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
                         <img src="../src/assets/gallery/viagens/cristo.jpg" alt=""
                             class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
                             decoding="async" />
-
                         <span aria-hidden="true"
-                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
 
-                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
-                            <span class="text-lg font-semibold leading-tight">Viagens</span>
-                            <span class="text-sm text-white/80">6 itens</span>
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <path d="M22 2L11 13" />
+                                    <path d="M22 2l-7 20-4-9-9-4z" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Viagens</span>
+                                <span class="text-[11px] text-white/75">6 itens</span>
+                            </span>
                         </span>
                     </a>
                 </li>
-                <li>
-                    <button type="button" data-album="selfies"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-
-                        <img src="../src/assets/gallery/selfies/selfie.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-
-                        <span aria-hidden="true"
-                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
-
-                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
-                            <span class="text-lg font-semibold leading-tight">Selfies</span>
-                            <span class="text-sm text-white/80">15 itens</span>
-                        </span>
-                    </button>
-                </li>
-                <li>
+                <li class="snap-start">
                     <button type="button" data-album="pets"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
                         <img src="../src/assets/gallery/pets/pets.jpg" alt=""
                             class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
                             decoding="async" />
-
                         <span aria-hidden="true"
-                            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></span>
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
 
-                        <span class="absolute inset-x-0 bottom-0 flex flex-col p-3">
-                            <span class="text-lg font-semibold leading-tight">Tobias</span>
-                            <span class="text-sm text-white/80">22 itens</span>
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <circle cx="7" cy="9" r="1.6" />
+                                    <circle cx="11" cy="6" r="1.6" />
+                                    <circle cx="15.5" cy="6.5" r="1.6" />
+                                    <circle cx="18.5" cy="10.5" r="1.6" />
+                                    <path
+                                        d="M8.5 17.5c0-2.5 2-5 4.5-5s4.5 2.5 4.5 5c0 1.7-1.5 2.5-4.5 2.5s-4.5-.8-4.5-2.5z" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Tobias</span>
+                                <span class="text-[11px] text-white/75">22 itens</span>
+                            </span>
+                        </span>
+                    </button>
+                </li>
+                <li class="snap-start">
+                    <button type="button" data-album="selfies"
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/selfies/persona.png" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="3.5" />
+                                    <path d="M5.5 19c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Selfies</span>
+                                <span class="text-[11px] text-white/75">15 itens</span>
+                            </span>
+                        </span>
+                    </button>
+                </li>
+                <li class="snap-start">
+                    <button type="button" data-album="cidades"
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/cidades/cidades.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" />
+                                    <path d="M14 9h5a1 1 0 0 1 1 1v11" />
+                                    <path d="M3 21h18" />
+                                    <path d="M8 8h2M8 12h2M8 16h2" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Cidades</span>
+                                <span class="text-[11px] text-white/75">18 itens</span>
+                            </span>
+                        </span>
+                    </button>
+                </li>
+                <li class="snap-start">
+                    <button type="button" data-album="natureza"
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/natureza/natureza.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <path d="M11 20A7 7 0 0 1 4 13c0-6 6-9 16-9 0 10-3 16-9 16z" />
+                                    <path d="M4 21c4-4 7-7 11-11" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Natureza</span>
+                                <span class="text-[11px] text-white/75">42 itens</span>
+                            </span>
+                        </span>
+                    </button>
+                </li>
+                <li class="snap-start">
+                    <button type="button" data-album="comidas"
+                        class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/comidas/comidas.jpg" alt=""
+                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                            decoding="async" />
+                        <span aria-hidden="true"
+                            class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"></span>
+
+                        <span class="absolute inset-x-0 bottom-0 flex items-center gap-2 p-2.5">
+                            <span
+                                class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-black/35 ring-1 ring-white/15 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" class="size-4" aria-hidden="true">
+                                    <path d="M7 3v7a2 2 0 0 0 2 2v9" />
+                                    <path d="M5 3v6M9 3v6" />
+                                    <path d="M17 21V3c-2 1-3 4-3 8h3" />
+                                </svg>
+                            </span>
+                            <span class="flex min-w-0 flex-col">
+                                <span class="truncate text-sm font-semibold leading-tight">Comidas</span>
+                                <span class="text-[11px] text-white/75">26 itens</span>
+                            </span>
                         </span>
                     </button>
                 </li>
             </ul>
         </section>
 
-        <!-- Best Moments: carrossel horizontal que rola com o dedo -->
-        <section aria-labelledby="titulo-best-moments">
+        <!-- Pessoas -->
+        <section aria-labelledby="titulo-pessoas">
             <div class="mb-3 flex items-center justify-between">
-                <h2 id="titulo-best-moments" class="text-lg font-semibold">Best Moments</h2>
-
+                <h2 id="titulo-pessoas" class="text-lg font-semibold">Pessoas</h2>
                 <button type="button"
-                    class="text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    class="inline-flex items-center gap-0.5 text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
                     Ver todos
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
                 </button>
             </div>
 
-            <!-- -mx-4 + px-4: a rolagem vai até a borda da tela, mas o 1º card começa alinhado ao título -->
+            <ul class="flex justify-between">
+                <li>
+                    <button type="button" data-person="ana"
+                        class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/pessoas/ana.jpg" alt=""
+                            class="size-14 rounded-full object-cover ring-2 ring-white/10 transition-transform duration-200 active:scale-95"
+                            loading="lazy" decoding="async" />
+                        <span class="text-xs text-white/80">Ana</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-person="leo"
+                        class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/selfies/persona.png" alt=""
+                            class="size-14 rounded-full object-cover ring-2 ring-white/10 transition-transform duration-200 active:scale-95"
+                            loading="lazy" decoding="async" />
+                        <span class="text-xs text-white/80">Leo</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-person="tobias"
+                        class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/pets/pets.jpg" alt=""
+                            class="size-14 rounded-full object-cover ring-2 ring-white/10 transition-transform duration-200 active:scale-95"
+                            loading="lazy" decoding="async" />
+                        <span class="text-xs text-white/80">Tobias</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-person="Mãe"
+                        class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="../src/assets/gallery/pessoas/mother.jpg" alt=""
+                            class="size-14 rounded-full object-cover ring-2 ring-white/10 transition-transform duration-200 active:scale-95"
+                            loading="lazy" decoding="async" />
+                        <span class="text-xs text-white/80">Mãe</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" aria-label="Ver mais 9 pessoas"
+                        class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-14 items-center justify-center rounded-full bg-white/5 text-lg font-semibold ring-1 ring-white/15 transition-transform duration-200 active:scale-95">+9</span>
+                        <span class="text-xs text-white/80" aria-hidden="true">Mais</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Bibliotecas -->
+        <section aria-labelledby="titulo-bibliotecas">
+            <h2 id="titulo-bibliotecas" class="mb-3 text-lg font-semibold">Bibliotecas</h2>
+
+            <ul class="grid grid-cols-2 gap-2.5">
+                <li>
+                    <button type="button"
+                        class="flex w-full items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-left transition-colors active:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-brand-purple/15 text-brand-purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <rect x="5" y="11" width="14" height="10" rx="2" />
+                                <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
+                            </svg>
+                        </span>
+                        <span class="flex min-w-0 flex-1 flex-col">
+                            <span class="text-sm font-semibold leading-tight">Privado</span>
+                            <span class="text-[11px] text-white/60">58 fotos, 4 vídeos</span>
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 text-white/50" aria-hidden="true">
+                            <path d="M9 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <button type="button"
+                        class="flex w-full items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-left transition-colors active:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-brand-purple/15 text-brand-purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+                                <path d="M11 18.5h2" />
+                            </svg>
+                        </span>
+                        <span class="flex min-w-0 flex-1 flex-col">
+                            <span class="text-sm font-semibold leading-tight">Capturas</span>
+                            <span class="text-[11px] text-white/60">203 imagens</span>
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 text-white/50" aria-hidden="true">
+                            <path d="M9 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Melhores Momentos: carrossel horizontal -->
+        <section aria-labelledby="titulo-momentos">
+            <div class="mb-3 flex items-center justify-between">
+                <h2 id="titulo-momentos" class="text-lg font-semibold">Melhores Momentos</h2>
+                <button type="button"
+                    class="inline-flex items-center gap-0.5 text-sm font-medium text-brand-purple transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    Ver todos
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
+                </button>
+            </div>
+
             <ul
-                class="-mx-4 flex gap-2 overflow-x-auto px-4 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                class="-mx-4 overflow-x-auto px-4 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-2">
                 <li class="w-[22%] min-w-20 shrink-0 snap-start">
                     <button type="button" data-moment
                         class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
@@ -114,6 +364,7 @@
                             class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
                         <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
                                 class="size-4 text-pink-400" aria-hidden="true">
                                 <path
                                     d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
@@ -123,7 +374,7 @@
                     </button>
                 </li>
                 <li class="w-[22%] min-w-20 shrink-0 snap-start">
-                    <a type="button" data-moment href="./galeria/index.html"
+                    <a href="./galeria/viagens/index.html" data-moment
                         class="group relative block aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
                         <img src="../src/assets/gallery/viagens/cristo.jpg" alt=""
                             class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
@@ -132,6 +383,7 @@
                             class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
                         <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
                                 class="size-4 text-pink-400" aria-hidden="true">
                                 <path
                                     d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
@@ -150,6 +402,7 @@
                             class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
                         <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
                                 class="size-4 text-pink-400" aria-hidden="true">
                                 <path
                                     d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />
@@ -168,6 +421,7 @@
                             class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></span>
                         <span class="absolute bottom-2 left-2 flex items-center gap-1 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
                                 class="size-4 text-pink-400" aria-hidden="true">
                                 <path
                                     d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.1 8.9 3.9 10.8 5.1 12 7c1.2-1.9 3.1-3.1 5.4-2.9 3.7.4 5.7 4.3 4.2 7.7C19.5 16.4 12 21 12 21z" />

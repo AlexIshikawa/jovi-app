@@ -4,8 +4,7 @@
  * Gesto: segurar o botão central, arrastar na direção de um atalho
  * e soltar para ativá-lo. Um toque rápido no centro abre a câmera.
  *
- * Também funciona com mouse (hover + clique nos atalhos)
- * e com teclado (Tab até o botão ou atalho + Enter).
+ * Também funciona com teclado (Tab até o botão ou atalho + Enter).
  */
 
 // Distância mínima (px) do centro para considerar que houve arraste
@@ -17,10 +16,23 @@ const TAP_MAX_MS = 300;
 // Tempo (ms) que o aviso fica na tela
 const TOAST_MS = 1500;
 
+// Pausa (ms) antes de trocar de página, para o aviso aparecer
+const NAVIGATION_DELAY_MS = 1000;
+
+/*
+  Vídeos em tela cheia.
+  fit (opcional):
+   - 'contain' (padrão): mostra o vídeo inteiro, sem cortes (pode sobrar faixa preta);
+   - 'cover': preenche a tela toda, cortando as bordas se a proporção for diferente.
+*/
 const VIDEOS = {
     selfie: {
         src: 'src/assets/videos/selfie.mp4',
-        next: 'configuracoes/',
+        next: 'memorias/',
+    },
+    viagem: {
+        src: 'src/assets/videos/viagem.mp4',
+        next: 'modo-viagem/ia-guia/index.html',
     },
 };
 
@@ -29,22 +41,25 @@ const PAGES = {
     camera: '/camera/index.html',
     video: '/video/index.html',
     selfie: '/selfie/index.html',
-    camera: '/camera/index.html',
-    video: '/video/index.html',
-    selfie: '/selfie/index.html',
+    viagem: '/modo-viagem/ia-guia/index.html',
 };
 
+// Classes completas por extenso para o Tailwind encontrá-las no build
+const VIDEO_FIT_CLASSES = {
+    contain: 'object-contain',
+    cover: 'object-cover',
+};
 
 export function initCameraMenu() {
-
-    const NAVIGATION_DELAY_MS = 1000;
     const menu = document.querySelector('[data-camera-menu]');
     if (!menu) return;
-
 
     const trigger = menu.querySelector('[data-camera-trigger]');
     const shortcuts = [...menu.querySelectorAll('[data-shortcut]')];
     const toast = document.getElementById('toast');
+
+    // O vídeo fica dentro da "tela do celular" (o <main>), e não sobre a janela inteira
+    const stage = menu.closest('main') ?? document.body;
 
     // { up: <button>, right: <button>, ... }
     const shortcutByDirection = Object.fromEntries(
@@ -134,19 +149,24 @@ export function initCameraMenu() {
         }, TOAST_MS);
     }
 
-    function createVideoPlayer({ src }) {
+    /* ---------- Vídeo ---------- */
+
+    function createVideoPlayer({ src, fit = 'contain' }) {
         const video = document.createElement('video');
 
         video.src = src;
         video.preload = 'auto';
         video.playsInline = true;
         video.setAttribute('aria-hidden', 'true');
-        video.className =
-            'fixed inset-0 z-50 size-full object-cover bg-black ' +
-            'invisible opacity-0 transition-[opacity,visibility] duration-200 ' +
-            'data-playing:visible data-playing:opacity-100';
+        video.className = [
+            // absolute (e não fixed): cobre só o <main>, que tem "relative"
+            'absolute inset-0 z-50 size-full bg-black',
+            VIDEO_FIT_CLASSES[fit] ?? VIDEO_FIT_CLASSES.contain,
+            'invisible opacity-0 transition-[opacity,visibility] duration-200',
+            'data-playing:visible data-playing:opacity-100',
+        ].join(' ');
 
-        document.body.append(video);
+        stage.append(video);
         return video;
     }
 
@@ -171,7 +191,6 @@ export function initCameraMenu() {
             showToast('Não foi possível abrir o vídeo');
         });
     }
-
 
     /* ---------- Gesto: segurar, arrastar e soltar ---------- */
 
@@ -228,7 +247,7 @@ export function initCameraMenu() {
         closeMenu();
     }
 
-    /* ---------- Teclado e mouse ---------- */
+    /* ---------- Teclado ---------- */
 
     // Enter/Espaço no botão central disparam "click" com detail === 0.
     // Cliques de mouse/toque já foram tratados no pointerup.
@@ -237,7 +256,8 @@ export function initCameraMenu() {
     });
 
     shortcuts.forEach((shortcut) => {
-        shortcut.addEventListener('click', () => {
+        shortcut.addEventListener('click', (event) => {
+            event.preventDefault(); // se o atalho for um <a>, evita navegar duas vezes
             activate(shortcut.dataset.shortcut, shortcut.dataset.label);
         });
     });

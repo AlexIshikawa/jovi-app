@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -16,40 +16,57 @@
         <div class="relative z-10">
             <app-header title="Modo Viagem - IA GUIA"></app-header>
             <main class="m-4 flex flex-col gap-4">
-                <app-feature-card no-padding class="p-0 overflow-hidden">
-                    <img src="/src/assets/cristo.jpg" alt="Jovi AI Camera Experience" class="w-full h-96 object-cover">
+
+                <!-- 1º: imagem -->
+                <app-feature-card no-padding class="p-0 overflow-hidden" data-reveal style="--reveal-order: 0">
+                    <img src="/src/assets/gallery/viagens/cristo.jpg"
+                        alt="Cristo Redentor visto de baixo, de braços abertos" class="w-full h-96 object-cover">
                 </app-feature-card>
-                <app-feature-card no-padding class="p-4">
+
+                <!-- 2º: card do texto (a digitação começa depois de todas as entradas) -->
+                <app-feature-card no-padding class="p-4" data-reveal style="--reveal-order: 1">
                     <div class="flex gap-2">
                         <app-icon icon="/src/assets/icons/points.png" class="w-10 h-10"
                             alt="JOVI Travel Guide"></app-icon>
-                        <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-2" data-typewriter>
                             <div>
                                 <app-gradient-text class="text-xs">JOVI Travel Guide</app-gradient-text>
                                 <span class="text-xs text-white/50 bg-gray-800 p-1 rounded-full">IA</span>
                             </div>
-                            <div class="flex items-center gap-1">
+                            <div class="relative flex items-center gap-1" data-type>
+                                <!-- Indicador "pensando...": some quando a digitação começa -->
+                                <span data-typewriter-loader role="status"
+                                    class="absolute left-0 top-1/2 flex -translate-y-1/2 items-center gap-1">
+                                    <span class="sr-only">Gerando resposta</span>
+                                    <span
+                                        class="size-1.5 rounded-full bg-white/70 animate-bounce [animation-delay:-0.3s]"></span>
+                                    <span
+                                        class="size-1.5 rounded-full bg-white/70 animate-bounce [animation-delay:-0.15s]"></span>
+                                    <span class="size-1.5 rounded-full bg-white/70 animate-bounce"></span>
+                                </span>
                                 <strong class="text-xs">Cristo Redentor</strong>
                                 -
                                 <p class="card-paragraph">
                                     Rio de Janeiro, Brasil
                                 </p>
                             </div>
-                            <p class="card-paragraph">
+                            <p class="card-paragraph" data-type>
                                 Inaugurado em <strong>12 de outubro de 1931</strong>, no topo do Morro do Corcovado a
                                 710m de altitude. Em estilo Art Déco, mede <strong>38m de altura</strong> e pesa
-                                <strong>1.145 tonelada.</strong> Projeto do engenheiro Heitor da Silva Costa e do
-                                escultor Francês Paul Landowski.
+                                <strong>1.145 toneladas.</strong> Projeto do engenheiro Heitor da Silva Costa e do
+                                escultor francês Paul Landowski.
                             </p>
-                            <p class="card-paragraph">
+                            <p class="card-paragraph" data-type>
                                 Eleito uma das 7 Maravilhas do Mundo Moderno em 2007.
                             </p>
-                            <p class="card-paragraph">
+                            <p class="card-paragraph" data-type>
                                 Melhor horário para visita: amanhecer ou pôr do sol.
                             </p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 justify-between mt-4">
+
+                    <!-- 3º: botões do card -->
+                    <div class="flex items-center gap-2 justify-between mt-4" data-reveal style="--reveal-order: 2">
                         <app-button variant="secondary" class="text-[9px]">
                             Ouvir mais
                         </app-button>
@@ -61,7 +78,13 @@
                         </app-button>
                     </div>
                 </app-feature-card>
-                <app-button href="../../not-ready/index.html">Tirar outra foto</app-button>
+
+                <!-- 4º: botão principal -->
+                <app-button href="../../not-ready/index.html" data-reveal style="--reveal-order: 3">Tirar outra
+                    foto</app-button>
             </main>
         </div>
     </div>
+</body>
+
+</html>

@@ -8,10 +8,17 @@ import '../components/back-button.js';
 import '../components/header.js';
 import '../components/icon.js';
 import '../components/icon-badge.js';
+import './gesture-wheel.js';
 import { initCameraMenu } from './camera-menu.js';
 import { initSearchBar } from './search-bar.js';
 import { initGalleryFilter } from './gallery-filter.js';
+import { initGesturePresets } from './gesture-presets.js';
+import { initTypewriter } from '../components/type-writter.js';
+import { initPhotoDetail } from './photo-detail.js';
 
 initCameraMenu();
 initSearchBar();
 initGalleryFilter();
+initGesturePresets();
+initTypewriter();
+initPhotoDetail();
