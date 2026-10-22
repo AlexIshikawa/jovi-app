@@ -4,26 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Buscar</title>
+    <title>Rio de Janeiro</title>
     <link rel="stylesheet" href="/dist/output.css">
     <script src="/dist/bundle.js" defer></script>
 </head>
 
-<body class="min-h-dvh text-white antialiased">
-    <app-header title="Galeria"></app-header>
-    <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-4">
-        <h1 class="text-2xl font-semibold tracking-tight">Buscar</h1>
+<body class="min-h-dvh bg-brand-dark-deep text-white antialiased">
 
-        <!-- Lupa: abre e fecha o campo de busca -->
-        <button type="button" aria-label="Buscar nas memórias" data-search-toggle aria-controls="search-panel"
-            aria-expanded="false"
-            class="-mr-2 flex size-10 items-center justify-center rounded-full transition-colors active:bg-white/10 aria-expanded:bg-white/10 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <path d="M20 20l-3.5-3.5" />
-            </svg>
-        </button>
+    <!-- Capa: foto do álbum com título, informações e ações -->
+    <header class="relative isolate overflow-hidden pb-6">
+        <img src="../../src/assets/gallery/viagens/cristo.jpg" alt=""
+            class="absolute inset-0 -z-10 size-full object-cover" decoding="async" />
+        <!-- Escurece a foto em cima (barra) e embaixo (texto), terminando na cor da página -->
+        <span aria-hidden="true"
+            class="absolute inset-0 -z-10 bg-linear-to-b from-black/50 via-black/10 to-brand-dark-deep"></span>
+
+        <!-- Barra superior -->
+        <div class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))]">
+            <button type="button" aria-label="Voltar" onclick="history.back()"
+                class="flex size-10 items-center justify-center rounded-full bg-black/35 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" />
+                </svg>
+            </button>
+
+            <span class="text-xs font-medium uppercase tracking-[0.3em] text-white/60">Galeria</span>
+
+            <div class="flex items-center gap-2">
+                <!-- Lupa: abre e fecha o campo de busca -->
+                <button type="button" aria-label="Buscar no álbum" data-search-toggle aria-controls="search-panel"
+                    aria-expanded="false"
+                    class="flex size-10 items-center justify-center rounded-full bg-black/35 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent] aria-expanded:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"
+                        aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20l-3.5-3.5" />
+                    </svg>
+                </button>
+                <button type="button" aria-label="Mais opções do álbum"
+                    class="flex size-10 items-center justify-center rounded-full bg-black/35 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.6" />
+                        <circle cx="12" cy="12" r="1.6" />
+                        <circle cx="12" cy="19" r="1.6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Título e informações -->
+        <div class="mt-24 flex flex-col gap-1 px-4">
+            <h1 class="text-4xl font-bold tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">Rio de Janeiro</h1>
+            <p class="text-base text-white/80">142 fotos • 12 vídeos</p>
+            <p class="text-sm text-white/60">12 a 18 de ago de 2024</p>
+        </div>
+
+        <!-- Ações rápidas: rolam para o lado se não couberem -->
+        <div class="mt-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <button type="button"
+                class="flex shrink-0 items-center gap-2 rounded-full bg-black/35 px-3.5 py-2 text-sm ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
+                    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                Ver no mapa
+            </button>
+            <a href="/modo-viagem/ia-guia/index.html"
+                class="flex shrink-0 items-center gap-2 rounded-full bg-black/35 px-3.5 py-2 text-sm ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] relative">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
+                    <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                    <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                </svg>
+                Modo Viagem
+                <!-- Ponto de novidade -->
+                <span aria-hidden="true" class="absolute right-2 top-1.5 size-1.5 rounded-full bg-orange-500"></span>
+            </a>
+            <button type="button"
+                class="flex shrink-0 items-center gap-2 rounded-full bg-black/35 px-3.5 py-2 text-sm ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent] cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
+                    <path d="M12 3v12" />
+                    <path d="M8 7l4-4 4 4" />
+                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+                </svg>
+                Compartilhar
+            </button>
+        </div>
     </header>
 
     <!-- Campo de busca: fechado por padrão (inert), abre com animação de altura -->
@@ -61,70 +133,300 @@
 
     <main class="flex flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
 
-        <!-- Resultados -->
-        <section aria-labelledby="titulo-resultados">
-            <div class="mb-3 flex items-center justify-between">
-                <p id="titulo-resultados" data-results-count aria-live="polite" class="text-sm font-medium">6 itens
-                    encontrados</p>
-                <button type="button"
-                    class="text-sm font-medium transition-opacity active:opacity-70 cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                    Ordenar
-                </button>
-            </div>
-            <ul class="grid grid-cols-2 gap-2.5">
-                <li data-tags="cristo redentor rio de janeiro monumento">
-                    <button type="button" data-photo="cristo"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/cristo.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-                <li data-tags="coqueiros palmeiras árvores natureza">
-                    <button type="button" data-photo="coqueiros"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/coqueiros.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-                <li data-tags="coco água de coco bebida">
-                    <button type="button" data-photo="coco"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/coco.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-                <li data-tags="pão de açúcar morro rio de janeiro">
-                    <button type="button" data-photo="pao-de-acucar"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-                <li data-tags="pôr do sol praia entardecer mar">
-                    <button type="button" data-photo="por-do-sol-praia"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/por-do-sol-praia.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-                <li data-tags="pôr do sol praia entardecer mar">
-                    <button type="button" data-photo="por-do-sol-praia-2"
-                        class="group relative block aspect-[5/4] w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../../src/assets/gallery/viagens/por-do-sol-praia-2.jpg" alt=""
-                            class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
-                            decoding="async" />
-                    </button>
-                </li>
-            </ul>
+        <!-- Filtros por tipo + ordenar -->
+        <div
+            class="-mx-4 flex items-center gap-2 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <fieldset class="flex gap-2">
+                <legend class="sr-only">Mostrar</legend>
+                <label
+                    class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-white/80 transition-colors has-checked:border-brand-blue/60 has-checked:bg-brand-blue/20 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="tipo" value="all" class="sr-only" checked>
 
-            <!-- Mensagem quando a busca não encontra nada -->
+                    Todas
+                </label>
+                <label
+                    class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-white/80 transition-colors has-checked:border-brand-blue/60 has-checked:bg-brand-blue/20 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="tipo" value="photo" class="sr-only">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="16" rx="2.5" />
+                        <circle cx="8.5" cy="9.5" r="1.5" />
+                        <path d="M21 16l-5-5-9 9" />
+                    </svg>
+                    Fotos
+                </label>
+                <label
+                    class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-white/80 transition-colors has-checked:border-brand-blue/60 has-checked:bg-brand-blue/20 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="tipo" value="video" class="sr-only">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M8 5.5v13l11-6.5z" />
+                    </svg>
+                    Vídeos
+                </label>
+                <label
+                    class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-white/80 transition-colors has-checked:border-brand-blue/60 has-checked:bg-brand-blue/20 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="tipo" value="favorite" class="sr-only">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path
+                            d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                    </svg>
+                    Favoritas
+                </label>
+            </fieldset>
+
+            <button type="button"
+                class="ml-auto flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-white/80 transition-colors active:bg-white/10 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
+                    <path d="M7 4v16M3 8l4-4 4 4" />
+                    <path d="M17 20V4M13 16l4 4 4-4" />
+                </svg>
+                Ordenar
+            </button>
+        </div>
+
+        <!-- Itens agrupados por dia -->
+        <section aria-label="Fotos e vídeos do álbum" class="flex flex-col gap-6">
+            <!-- 18 de ago de 2024 -->
+            <details open data-day class="group/day">
+                <summary
+                    class="mb-3 flex cursor-pointer list-none items-center justify-between rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [&::-webkit-details-marker]:hidden">
+                    <h2 class="text-lg font-semibold">18 de ago de 2024</h2>
+                    <span class="flex items-center gap-1.5 text-sm text-white/60">
+                        <span data-day-count></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 -rotate-90 transition-transform duration-200 group-open/day:rotate-0"
+                            aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </span>
+                </summary>
+
+                <!-- Grade em mosaico: linhas de altura fixa, fotos ocupando 1 ou 2 células -->
+                <ul class="grid grid-flow-dense grid-cols-3 auto-rows-[7.5rem] gap-1.5">
+                    <li data-tags="cristo redentor rio de janeiro monumento" data-kind="photo" data-favorite
+                        class="relative col-span-2 row-span-2">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=cristo" data-photo="cristo" aria-label="Abrir Cristo Redentor"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/cristo.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <button type="button" aria-label="Favoritar Cristo Redentor" aria-pressed="true"
+                            class="group/fav absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                            </svg>
+                        </button>
+                        <button type="button" aria-label="Mais opções de Cristo Redentor"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                    <li data-tags="pão de açúcar morro rio de janeiro" data-kind="photo" class="relative ">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=pao-de-acucar" data-photo="pao-de-acucar"
+                            aria-label="Abrir Pão de Açúcar"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <button type="button" aria-label="Favoritar Pão de Açúcar" aria-pressed="false"
+                            class="group/fav absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                            </svg>
+                        </button>
+                        <button type="button" aria-label="Mais opções de Pão de Açúcar"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                    <li data-tags="pôr do sol praia entardecer mar" data-kind="photo" data-favorite class="relative ">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=por-do-sol-praia-2" data-photo="por-do-sol-praia-2"
+                            aria-label="Abrir pôr do sol na praia"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/por-do-sol-praia-2.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <button type="button" aria-label="Favoritar pôr do sol na praia" aria-pressed="true"
+                            class="group/fav absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                            </svg>
+                        </button>
+                        <button type="button" aria-label="Mais opções de pôr do sol na praia"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                    <li data-tags="coqueiros palmeiras árvores natureza" data-kind="photo" class="relative col-span-3">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=coqueiros" data-photo="coqueiros" aria-label="Abrir coqueiros"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/coqueiros.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <button type="button" aria-label="Favoritar coqueiros" aria-pressed="false"
+                            class="group/fav absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                            </svg>
+                        </button>
+                        <button type="button" aria-label="Mais opções de coqueiros"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </details>
+
+            <!-- 17 de ago de 2024 -->
+            <details open data-day class="group/day">
+                <summary
+                    class="mb-3 flex cursor-pointer list-none items-center justify-between rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [&::-webkit-details-marker]:hidden">
+                    <h2 class="text-lg font-semibold">17 de ago de 2024</h2>
+                    <span class="flex items-center gap-1.5 text-sm text-white/60">
+                        <span data-day-count></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 -rotate-90 transition-transform duration-200 group-open/day:rotate-0"
+                            aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </span>
+                </summary>
+
+                <!-- Grade em mosaico: linhas de altura fixa, fotos ocupando 1 ou 2 células -->
+                <ul class="grid grid-flow-dense grid-cols-3 auto-rows-[7.5rem] gap-1.5">
+                    <li data-tags="pôr do sol praia entardecer mar video" data-kind="video"
+                        class="relative col-span-2 row-span-2">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=por-do-sol-praia" data-photo="por-do-sol-praia"
+                            aria-label="Abrir vídeo do pôr do sol na praia"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/por-do-sol-praia.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <span
+                            class="pointer-events-none absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 translate-x-px" aria-hidden="true">
+                                <path d="M8 5.5v13l11-6.5z" />
+                            </svg>
+                            <span class="sr-only">Vídeo</span>
+                        </span>
+                        <button type="button" aria-label="Mais opções de vídeo do pôr do sol na praia"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                    <li data-tags="coco água de coco bebida" data-kind="photo" class="relative row-span-2">
+                        <!-- Foto: abre o detalhe (photo-detail/?foto=ID) -->
+                        <a href="photo-detail/?foto=coco" data-photo="coco" aria-label="Abrir água de coco"
+                            class="group block size-full overflow-hidden rounded-2xl bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                            <img src="../../src/assets/gallery/viagens/coco.jpg" alt=""
+                                class="size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
+                                loading="lazy" decoding="async" />
+                        </a>
+
+                        <!-- Ações sobre a foto (irmãs do botão, nunca dentro dele) -->
+                        <button type="button" aria-label="Favoritar água de coco" aria-pressed="false"
+                            class="group/fav absolute bottom-2 left-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5 group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                            </svg>
+                        </button>
+                        <button type="button" aria-label="Mais opções de água de coco"
+                            class="absolute bottom-2 right-2 flex size-7 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-sm cursor-pointer active:scale-90 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-3.5" aria-hidden="true">
+                                <circle cx="5" cy="12" r="1.6" />
+                                <circle cx="12" cy="12" r="1.6" />
+                                <circle cx="19" cy="12" r="1.6" />
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </details>
+
+            <!-- Mensagem quando a busca/filtro não encontra nada -->
             <p data-results-empty hidden class="py-12 text-center text-sm text-white/60">
-                Nenhuma foto encontrada. Tente outra palavra.
+                Nenhuma foto encontrada. Tente outra palavra ou filtro.
             </p>
         </section>
     </main>

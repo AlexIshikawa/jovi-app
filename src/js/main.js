@@ -14,9 +14,11 @@ import { initSearchBar } from './search-bar.js';
 import { initGalleryFilter } from './gallery-filter.js';
 import { initGesturePresets } from './gesture-presets.js';
 import { initTypewriter } from '../components/type-writter.js';
+import { initPhotoDetail } from './photo-detail.js';
 
 initCameraMenu();
 initSearchBar();
 initGalleryFilter();
 initGesturePresets();
 initTypewriter();
+initPhotoDetail();

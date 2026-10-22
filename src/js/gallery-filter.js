@@ -1,12 +1,15 @@
 /**
  * Filtro da galeria
  *
- * Escuta o campo de busca e mostra só as fotos cujas tags
- * (atributo data-tags) contêm todas as palavras digitadas.
- * Ignora acentos, maiúsculas e palavras genéricas ("foto", "da", "no"...).
+ * Combina dois filtros sobre os itens com data-tags:
+ *  - busca por texto (campo [data-search-input]): todas as palavras precisam estar nas tags;
+ *  - tipo (radios name="tipo"): all | photo | video | favorite.
+ *
+ * Também atualiza a contagem de cada dia ([data-day] / [data-day-count])
+ * e esconde os dias que ficam sem nenhum item visível.
  */
 
-// Palavras que não ajudam a filtrar e seriam ignoradas na busca
+// Palavras que não ajudam a filtrar e são ignoradas na busca
 const STOPWORDS = new Set([
     'a', 'o', 'as', 'os', 'e', 'em', 'com', 'um', 'uma',
     'de', 'da', 'do', 'das', 'dos', 'no', 'na', 'nos', 'nas',
@@ -16,8 +19,8 @@ const STOPWORDS = new Set([
 // "Pôr do Sol" -> "por do sol"
 function normalize(text) {
     return text
-        .normalize('NFD')                 // separa letras e acentos: "ô" -> "o" + "^"
-        .replace(/[\u0300-\u036f]/g, '')  // remove os acentos
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .trim();
 }
@@ -28,11 +31,17 @@ function toKeywords(query) {
         .filter((word) => word && !STOPWORDS.has(word));
 }
 
-export function initGalleryFilter() {
-    const input = document.querySelector('[data-search-input]');
-    const items = [...document.querySelectorAll('[data-tags]')];
-    if (!input || items.length === 0) return; // página sem filtro
+function plural(total) {
+    return total === 1 ? '1 item' : `${total} itens`;
+}
 
+export function initGalleryFilter() {
+    const items = [...document.querySelectorAll('[data-tags]')];
+    if (items.length === 0) return; // página sem itens filtráveis
+
+    const input = document.querySelector('[data-search-input]');
+    const typeRadios = [...document.querySelectorAll('input[name="tipo"]')];
+    const days = [...document.querySelectorAll('[data-day]')];
     const countEl = document.querySelector('[data-results-count]');
     const emptyEl = document.querySelector('[data-results-empty]');
 
@@ -40,32 +49,50 @@ export function initGalleryFilter() {
     const searchable = items.map((item) => ({
         item,
         text: normalize(item.dataset.tags),
+        kind: item.dataset.kind ?? 'photo',
+        favorite: item.hasAttribute('data-favorite'),
     }));
 
-    function updateCount(total) {
-        if (!countEl) return;
-
-        if (total === 0) countEl.textContent = 'Nenhum item encontrado';
-        else if (total === 1) countEl.textContent = '1 item encontrado';
-        else countEl.textContent = `${total} itens encontrados`;
+    function matchesType({ kind, favorite }, type) {
+        if (type === 'photo') return kind === 'photo';
+        if (type === 'video') return kind === 'video';
+        if (type === 'favorite') return favorite;
+        return true; // "all"
     }
 
     function filter() {
-        const keywords = toKeywords(input.value);
+        const keywords = toKeywords(input?.value ?? '');
+        const type = typeRadios.find((radio) => radio.checked)?.value ?? 'all';
         let visible = 0;
 
-        searchable.forEach(({ item, text }) => {
-            // Sem palavras-chave, mostra tudo; com elas, todas precisam aparecer
-            const matches = keywords.every((word) => text.includes(word));
-            item.hidden = !matches;
+        searchable.forEach((entry) => {
+            const matches =
+                matchesType(entry, type) &&
+                keywords.every((word) => entry.text.includes(word));
+
+            entry.item.hidden = !matches;
             if (matches) visible += 1;
         });
 
-        updateCount(visible);
+        // Cada dia mostra quantos itens sobraram; dias vazios somem
+        days.forEach((day) => {
+            const total = day.querySelectorAll('[data-tags]:not([hidden])').length;
+            day.hidden = total === 0;
+
+            const dayCount = day.querySelector('[data-day-count]');
+            if (dayCount) dayCount.textContent = plural(total);
+        });
+
+        if (countEl) {
+            countEl.textContent = visible === 0 ? 'Nenhum item encontrado' : `${plural(visible)} encontrados`;
+        }
         if (emptyEl) emptyEl.hidden = visible > 0;
     }
 
-    // "input" dispara a cada letra digitada, apagada ou colada,
-    // e também quando o "x" limpa o campo
-    input.addEventListener('input', filter);
+    // "input": cada letra digitada, apagada ou colada (e o "x" de limpar)
+    input?.addEventListener('input', filter);
+    // "change": troca de filtro (Todas, Fotos, Vídeos, Favoritas)
+    typeRadios.forEach((radio) => radio.addEventListener('change', filter));
+
+    filter(); // contagens iniciais corretas
 }
