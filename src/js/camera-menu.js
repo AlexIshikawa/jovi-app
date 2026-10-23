@@ -38,7 +38,7 @@ const VIDEOS = {
     // Caminhos absolutos (começando com /): funcionam em qualquer página que use o menu
     selfie: {
         src: '/src/assets/videos/selfie.mp4',
-        next: '/memorias/',
+        next: '/memorias/galeria/selfie-detail/?foto=persona',
     },
     viagem: {
         src: '/src/assets/videos/viagem.mp4',

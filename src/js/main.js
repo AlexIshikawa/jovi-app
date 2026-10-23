@@ -20,8 +20,10 @@ import { initGestureModeSave } from './gesture-mode-save.js';
 import { initWelcome } from './welcome.js';
 import { initLoginForm } from './login-form.js';
 import { initSyncScreen } from './sync-screen.js';
+import { initAlbumGrid } from './album-grid.js';
 
-
+initAlbumGrid();
+initGalleryFilter();
 initWelcome();
 initLoginForm();
 initSyncScreen();

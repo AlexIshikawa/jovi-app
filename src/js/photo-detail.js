@@ -3,21 +3,25 @@
  *
  * Lê o id da foto no endereço (?foto=cristo), busca os dados na lista certa
  * e preenche a página. A lista vem de <body data-photo-set="...">:
- * "viagens" (photos.js, padrão) ou "estudos" (study-photos.js). Também cuida de:
+ * "viagens" (photos.js, padrão), "estudos" (study-photos.js) ou "selfies" (selfie-photos.js).
+ * Também cuida de:
  * - tela cheia num <dialog> ([data-viewer-open] / [data-viewer-close]);
  * - favoritar ([data-favorite-toggle]);
  * - compartilhar ([data-share="native" | "copy" | "whatsapp" | "facebook" | "instagram" | "tiktok"]);
  * - extrair texto ([data-extract-open] abre o painel com photo.text; [data-copy-text] copia);
- * - salvar em apps ([data-save-to="Google Drive"]...): por enquanto, só simula com um aviso.
+ * - salvar em apps ([data-save-to="Google Drive"]...): por enquanto, só simula com um aviso;
+ * - estilos de foto (radios name="photo-filter"): aplica o filtro CSS do estilo escolhido.
  */
 
 import { PHOTOS } from './photos.js';
 import { STUDY_PHOTOS } from './study-photos.js';
+import { SELFIE_PHOTOS } from './selfie-photo.js';
 
 // Conjuntos de fotos disponíveis: a página escolhe com data-photo-set no <body>
 const PHOTO_SETS = {
     viagens: PHOTOS,
     estudos: STUDY_PHOTOS,
+    selfies: SELFIE_PHOTOS,
 };
 
 const TOAST_MS = 1800;
@@ -50,6 +54,11 @@ function renderPhoto(photos, index) {
     document.querySelectorAll('[data-photo-img]').forEach((img) => {
         img.src = photo.src;
         img.alt = photo.alt;
+    });
+
+    // Miniaturas dos estilos: a mesma foto, cada uma com o seu filtro
+    document.querySelectorAll('[data-photo-thumb]').forEach((img) => {
+        img.src = photo.src;
     });
 
     // Textos
@@ -159,6 +168,17 @@ export function initPhotoDetail() {
 
     document.querySelectorAll('[data-save-to]').forEach((button) => {
         button.addEventListener('click', () => showToast(`Salvo em ${button.dataset.saveTo}`));
+    });
+
+    /* ---------- Estilos da foto ---------- */
+
+    // Cada estilo define o próprio filtro em --filter no <label>; o escolhido vai para
+    // --photo-filter no <body>, que a foto principal e a tela cheia usam
+    document.querySelectorAll('input[name="photo-filter"]').forEach((radio) => {
+        radio.addEventListener('change', () => {
+            const filter = getComputedStyle(radio.closest('label')).getPropertyValue('--filter').trim();
+            document.body.style.setProperty('--photo-filter', filter || 'none');
+        });
     });
 
     /* ---------- Favoritar ---------- */
