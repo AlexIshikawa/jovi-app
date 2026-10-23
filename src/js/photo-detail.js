@@ -1,14 +1,28 @@
 /**
  * Detalhe da foto (uma página para todas as fotos)
  *
- * Lê o id da foto no endereço (/foto/?foto=cristo), busca os dados em photos.js
- * e preenche a página. Também cuida de:
+ * Lê o id da foto no endereço (?foto=cristo), busca os dados na lista certa
+ * e preenche a página. A lista vem de <body data-photo-set="...">:
+ * "viagens" (photos.js, padrão), "estudos" (study-photos.js) ou "selfies" (selfie-photos.js).
+ * Também cuida de:
  * - tela cheia num <dialog> ([data-viewer-open] / [data-viewer-close]);
  * - favoritar ([data-favorite-toggle]);
- * - compartilhar ([data-share="native" | "copy" | "whatsapp" | "facebook" | "instagram" | "tiktok"]).
+ * - compartilhar ([data-share="native" | "copy" | "whatsapp" | "facebook" | "instagram" | "tiktok"]);
+ * - extrair texto ([data-extract-open] abre o painel com photo.text; [data-copy-text] copia);
+ * - salvar em apps ([data-save-to="Google Drive"]...): por enquanto, só simula com um aviso;
+ * - estilos de foto (radios name="photo-filter"): aplica o filtro CSS do estilo escolhido.
  */
 
 import { PHOTOS } from './photos.js';
+import { STUDY_PHOTOS } from './study-photos.js';
+import { SELFIE_PHOTOS } from './selfie-photo.js';
+
+// Conjuntos de fotos disponíveis: a página escolhe com data-photo-set no <body>
+const PHOTO_SETS = {
+    viagens: PHOTOS,
+    estudos: STUDY_PHOTOS,
+    selfies: SELFIE_PHOTOS,
+};
 
 const TOAST_MS = 1800;
 
@@ -29,9 +43,10 @@ function setText(selector, text) {
     if (element) element.textContent = text;
 }
 
-function renderPhoto(photo, index) {
+function renderPhoto(photos, index) {
+    const photo = photos[index];
     const date = new Date(photo.datetime);
-    const nextPhoto = PHOTOS[(index + 1) % PHOTOS.length]; // depois da última, volta à primeira
+    const nextPhoto = photos[(index + 1) % photos.length]; // depois da última, volta à primeira
 
     document.title = photo.title;
 
@@ -41,10 +56,15 @@ function renderPhoto(photo, index) {
         img.alt = photo.alt;
     });
 
+    // Miniaturas dos estilos: a mesma foto, cada uma com o seu filtro
+    document.querySelectorAll('[data-photo-thumb]').forEach((img) => {
+        img.src = photo.src;
+    });
+
     // Textos
     setText('[data-photo-title]', photo.title);
     setText('[data-photo-location]', photo.location);
-    setText('[data-photo-counter]', `${index + 1} / ${PHOTOS.length}`);
+    setText('[data-photo-counter]', `${index + 1} / ${photos.length}`);
     setText('[data-photo-ask]', photo.ask);
 
     const time = document.querySelector('[data-photo-date]');
@@ -73,6 +93,12 @@ function renderPhoto(photo, index) {
     const askLink = document.querySelector('[data-photo-ask-link]');
     if (askLink && photo.askHref) askLink.href = photo.askHref;
 
+    // Texto da anotação: sem texto, o card de "Extrair texto" some
+    setText('[data-photo-text]', photo.text ?? '');
+    document.querySelectorAll('[data-extract-card]').forEach((card) => {
+        card.hidden = !photo.text;
+    });
+
     // Favorito inicial
     document
         .querySelector('[data-favorite-toggle]')
@@ -85,10 +111,12 @@ export function initPhotoDetail() {
 
     /* ---------- Qual foto mostrar ---------- */
 
+    const photos = PHOTO_SETS[document.body.dataset.photoSet] ?? PHOTOS;
+
     // ?foto=cristo -> "cristo"; sem parâmetro ou id desconhecido, mostra a primeira
     const id = new URLSearchParams(window.location.search).get('foto');
-    const index = Math.max(0, PHOTOS.findIndex((photo) => photo.id === id));
-    renderPhoto(PHOTOS[index], index);
+    const index = Math.max(0, photos.findIndex((photo) => photo.id === id));
+    renderPhoto(photos, index);
 
     const toast = document.getElementById('toast');
     let toastTimer = null;
@@ -110,6 +138,47 @@ export function initPhotoDetail() {
 
     viewer.querySelectorAll('[data-viewer-close]').forEach((button) => {
         button.addEventListener('click', () => viewer.close());
+    });
+
+    /* ---------- Extrair texto ---------- */
+
+    const textSheet = document.querySelector('[data-text-sheet]');
+
+    document.querySelectorAll('[data-extract-open]').forEach((button) => {
+        button.addEventListener('click', () => textSheet?.showModal());
+    });
+
+    // Toque no fundo escuro fecha o painel
+    textSheet?.addEventListener('click', (event) => {
+        if (event.target === textSheet) textSheet.close();
+    });
+
+    document.querySelectorAll('[data-copy-text]').forEach((button) => {
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(photos[index].text ?? '');
+                showToast('Texto copiado');
+            } catch {
+                showToast('Não foi possível copiar o texto');
+            }
+        });
+    });
+
+    /* ---------- Salvar em (simulação) ---------- */
+
+    document.querySelectorAll('[data-save-to]').forEach((button) => {
+        button.addEventListener('click', () => showToast(`Salvo em ${button.dataset.saveTo}`));
+    });
+
+    /* ---------- Estilos da foto ---------- */
+
+    // Cada estilo define o próprio filtro em --filter no <label>; o escolhido vai para
+    // --photo-filter no <body>, que a foto principal e a tela cheia usam
+    document.querySelectorAll('input[name="photo-filter"]').forEach((radio) => {
+        radio.addEventListener('change', () => {
+            const filter = getComputedStyle(radio.closest('label')).getPropertyValue('--filter').trim();
+            document.body.style.setProperty('--photo-filter', filter || 'none');
+        });
     });
 
     /* ---------- Favoritar ---------- */

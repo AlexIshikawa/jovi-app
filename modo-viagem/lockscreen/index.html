@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>JOVI AI CAMERA • Modo Viagem</title>
+
+    <!-- Fonte do relógio -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="h-dvh overflow-hidden bg-brand-dark-deep">
+
+    <main class="relative isolate h-dvh w-full overflow-hidden select-none text-white">
+
+        <!-- Wallpaper da viagem + escurecimento para dar leitura -->
+        <img src="/src/assets/gallery/viagens/pao-de-acucar.jpg" alt=""
+            class="absolute inset-0 -z-10 size-full object-cover" draggable="false" />
+
+        <a href="/configuracoes/index.html" aria-label="Configurações"
+            class="absolute right-4 top-[calc(1rem+env(safe-area-inset-top))] z-10 flex size-11 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                    d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+            </svg>
+        </a>
+        <span aria-hidden="true"
+            class="absolute inset-0 -z-10 bg-linear-to-b from-black/20 via-black/35 to-black/80"></span>
+
+        <!-- Linhas de luz decorativas -->
+        <svg aria-hidden="true" viewBox="0 0 400 900" preserveAspectRatio="none" fill="none"
+            class="pointer-events-none absolute inset-0 -z-10 size-full">
+            <path d="M-20 300 C 120 280, 220 330, 300 400" stroke="rgb(251 146 60 / 0.55)" stroke-width="1.5" />
+            <path d="M-20 760 C 120 680, 260 640, 420 520" stroke="rgb(251 146 60 / 0.7)" stroke-width="2" />
+            <path d="M120 700 C 220 650, 330 660, 420 680" stroke="rgb(251 146 60 / 0.45)" stroke-width="1.5" />
+        </svg>
+
+        <!-- Relógio, data e status -->
+        <section class="flex flex-col items-center pt-[14%] text-center">
+            <time id="clock"
+                class="font-clock text-[88px] font-extralight leading-none tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                --:--
+            </time>
+            <p id="date" class="mt-2 font-clock text-[15px] opacity-90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"></p>
+
+            <!-- Selo do modo ativo: leva para a escolha de gestos -->
+            <a href="/meus-gestos/index.html"
+                class="mt-5 flex items-center gap-3 rounded-full border border-orange-400/60 bg-black/40 py-1 pl-1 pr-5 backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                <span
+                    class="flex size-9 items-center justify-center rounded-full border border-orange-400 text-orange-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4.5"
+                        aria-hidden="true">
+                        <path d="M22 2L11 13" />
+                        <path d="M22 2l-7 20-4-9-9-4z" />
+                    </svg>
+                </span>
+                <span class="text-base font-medium">Modo <span class="text-orange-400">Viagem</span> ativado</span>
+            </a>
+            <p class="mt-2 max-w-56 text-sm leading-snug text-white/75">Tudo pronto para registrar sua próxima aventura.
+            </p>
+        </section>
+
+        <!-- Roda de atalhos: aparece só enquanto o botão central é segurado -->
+        <div
+            class="pointer-events-none absolute inset-x-0 top-[57%] mx-auto aspect-square w-[92%] max-w-96 -translate-y-1/2">
+
+            <!-- "group": tudo aqui reage ao estado do menu via aceso: (segurando = data-open) -->
+            <div data-camera-menu class="group absolute inset-0">
+
+                <!-- Anéis -->
+                <span aria-hidden="true"
+                    class="absolute inset-[2%] rounded-full border border-orange-400/40 shadow-[0_0_40px_rgba(251,146,60,0.15)] opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+                <span aria-hidden="true"
+                    class="absolute inset-[27%] rounded-full border border-dashed border-white/20 opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+
+                <!-- Setas ao redor do centro -->
+                <span aria-hidden="true"
+                    class="absolute left-1/2 top-[30%] -translate-1/2 text-white/70 opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true"
+                    class="absolute left-1/2 top-[70%] -translate-1/2 rotate-180 text-white/70 opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true"
+                    class="absolute left-[30%] top-1/2 -translate-1/2 -rotate-90 text-white/70 opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true"
+                    class="absolute left-[70%] top-1/2 -translate-1/2 rotate-90 text-white/70 opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+
+                <!-- Atalhos: invisíveis por padrão, surgem ao segurar o centro -->
+                <!-- Selfie (up) -->
+                <button type="button" data-shortcut="selfie" data-label="Selfie" data-direction="up"
+                    class="group/sat absolute left-1/2 top-[14%] pointer-events-auto -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-orange-400/80 bg-black/50 text-white shadow-[0_0_18px_rgba(251,146,60,0.35)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-orange-500/30 group-data-selected/sat:shadow-[0_0_30px_rgba(251,146,60,0.8)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <circle cx="12" cy="8" r="3.5" />
+                            <path d="M5.5 19c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5" />
+                        </svg>
+                    </span>
+                    <span
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                        Selfie
+                    </span>
+                </button>
+                <!-- Ask Mode (right) -->
+                <button type="button" data-shortcut="viagem" data-label="Ask Mode" data-direction="right"
+                    class="group/sat absolute left-[86%] top-1/2 pointer-events-auto -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[40ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-orange-400/80 bg-black/50 text-white shadow-[0_0_18px_rgba(251,146,60,0.35)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-orange-500/30 group-data-selected/sat:shadow-[0_0_30px_rgba(251,146,60,0.8)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg>
+                    </span>
+                    <span
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                        Ask Mode
+                    </span>
+                </button>
+                <!-- Paisagem (down) -->
+                <button type="button" data-shortcut="paisagem" data-label="Paisagem" data-direction="down"
+                    class="group/sat absolute left-1/2 top-[86%] pointer-events-auto -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[80ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-orange-400/80 bg-black/50 text-white shadow-[0_0_18px_rgba(251,146,60,0.35)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-orange-500/30 group-data-selected/sat:shadow-[0_0_30px_rgba(251,146,60,0.8)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M3 19l5.5-7.5 4 5 2.5-3 6 5.5z" />
+                            <circle cx="16" cy="6.5" r="1.5" />
+                        </svg>
+                    </span>
+                    <span
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                        Paisagem
+                        <span class="block text-[11px] leading-tight text-white/65">Fotos otimizadas para
+                            cenários</span>
+                    </span>
+                </button>
+                <!-- Panorâmica (left) -->
+                <button type="button" data-shortcut="panoramica" data-label="Panorâmica" data-direction="left"
+                    class="group/sat absolute left-[14%] top-1/2 pointer-events-auto -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[120ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-orange-400/80 bg-black/50 text-white shadow-[0_0_18px_rgba(251,146,60,0.35)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-orange-500/30 group-data-selected/sat:shadow-[0_0_30px_rgba(251,146,60,0.8)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7"
+                            aria-hidden="true">
+                            <path d="M3 18l6-8 4 5 2-3 6 6z" />
+                        </svg>
+                    </span>
+                    <span
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                        Panorâmica
+                    </span>
+                </button>
+
+                <!-- Ondas laranja ao redor do centro (discretas em repouso) -->
+                <div aria-hidden="true"
+                    class="absolute left-1/2 top-1/2 size-24 -translate-1/2 opacity-40 transition-opacity duration-300 aceso:opacity-100 motion-reduce:hidden">
+                    <span class="absolute inset-0 rounded-full border border-orange-400 animate-wave"></span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-orange-300 animate-wave [animation-delay:0.8s]"></span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-orange-400 animate-wave [animation-delay:1.6s]"></span>
+                </div>
+
+                <!-- Botão central: toque = câmera frontal; segure e arraste = outros modos -->
+                <span aria-hidden="true"
+                    class="absolute left-1/2 top-1/2 size-28 -translate-1/2 rounded-full bg-black/35 backdrop-blur-sm opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+                <button type="button" aria-label="Câmera frontal (segure e arraste para outros modos)"
+                    data-camera-trigger data-tap-action="camera-frontal" data-tap-label="Câmera frontal"
+                    class="pointer-events-auto absolute left-1/2 top-1/2 flex size-24 -translate-1/2 items-center justify-center rounded-full border-[3px] border-orange-500 bg-black/45 text-white shadow-[0_0_24px_rgba(249,115,22,0.45)] touch-none transition-[scale,box-shadow,background-color] duration-300 aceso:bg-black/70 aceso:shadow-[0_0_44px_rgba(249,115,22,0.85)] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white cursor-pointer [-webkit-touch-callout:none] [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-10"
+                        aria-hidden="true">
+                        <path d="M20 12a8 8 0 0 1-14.3 4.9" />
+                        <path d="M4 12a8 8 0 0 1 14.3-4.9" />
+                        <path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Galeria: miniatura da última foto -->
+        <div class="absolute inset-x-0 bottom-[calc(4%+env(safe-area-inset-bottom))] flex flex-col items-center gap-2">
+            <span aria-hidden="true" class="text-white/80"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="size-5" aria-hidden="true">
+                    <path d="M6 15l6-6 6 6" />
+                </svg></span>
+            <a href="/memorias/index.html" aria-label="Abrir galeria"
+                class="block size-16 overflow-hidden rounded-2xl ring-2 ring-white/40 shadow-[0_0_20px_rgba(251,146,60,0.35)] transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                <img src="/src/assets/gallery/viagens/por-do-sol-praia-2.jpg" alt="" class="size-full object-cover"
+                    draggable="false" />
+            </a>
+        </div>
+
+        <!-- Aviso rápido de qual atalho foi ativado -->
+        <p id="toast" role="status" aria-live="polite"
+            class="invisible absolute bottom-[18%] left-1/2 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-full bg-black/70 px-4 py-2 font-clock text-sm opacity-0 transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+        </p>
+    </main>
+
+    <script>
+        const clockEl = document.getElementById('clock');
+        const dateEl = document.getElementById('date');
+
+        const timeFormatter = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const dateFormatter = new Intl.DateTimeFormat('pt-BR', { weekday: 'short', day: 'numeric', month: 'short' });
+
+        function updateClock() {
+            const now = new Date();
+            clockEl.textContent = timeFormatter.format(now);
+            clockEl.setAttribute('datetime', now.toISOString());
+            dateEl.textContent = dateFormatter.format(now).replace(',', '');
+        }
+
+        function scheduleNextTick() {
+            const now = new Date();
+            const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+            setTimeout(() => { updateClock(); scheduleNextTick(); }, msUntilNextMinute);
+        }
+
+        updateClock();
+        scheduleNextTick();
+
+        // Safari no iOS só aplica :active em toques se existir um listener de touch na página
+        document.addEventListener('touchstart', () => { }, { passive: true });
+    </script>
+</body>
+
+</html>

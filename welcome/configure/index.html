@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Configure seu Jovi</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<!-- Tela clara: fundo próprio, diferente das telas escuras do app -->
+
+<body class="h-dvh overflow-hidden bg-[#f6f5f9] text-slate-900 antialiased">
+
+    <main class="relative isolate flex h-dvh w-full flex-col items-center overflow-hidden">
+
+        <!-- Fundo: celular com ondas de luz; as bordas se dissolvem na cor da página -->
+        <img src="../../src/assets/bg-configure-meujovi.png" alt=""
+            class="pointer-events-none absolute inset-x-0 top-[22%] -z-10 w-full select-none [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_78%,transparent)]"
+            draggable="false" />
+
+        <!-- Barra de status simulada (escura, pois o fundo é claro) -->
+        <div aria-hidden="true"
+            class="flex w-full items-center justify-between px-7 pt-[calc(0.9rem+env(safe-area-inset-top))] text-slate-900">
+            <span data-status-time class="text-[15px] font-semibold">9:41</span>
+            <span class="flex items-center gap-1.5">
+                <svg viewBox="0 0 18 12" class="h-3 w-[18px]" fill="currentColor">
+                    <rect x="0" y="8" width="3" height="4" rx="1" />
+                    <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+                    <rect x="10" y="3" width="3" height="9" rx="1" />
+                    <rect x="15" y="0" width="3" height="12" rx="1" />
+                </svg>
+                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round">
+                    <path d="M2.5 9a14 14 0 0 1 19 0" />
+                    <path d="M6 12.8a9 9 0 0 1 12 0" />
+                    <path d="M9.5 16.5a4 4 0 0 1 5 0" />
+                    <circle cx="12" cy="19.5" r="0.6" fill="currentColor" />
+                </svg>
+                <svg viewBox="0 0 28 13" class="h-3 w-6">
+                    <rect x="0.75" y="0.75" width="23.5" height="11.5" rx="3.5" fill="none" stroke="currentColor"
+                        stroke-opacity="0.4" stroke-width="1.5" />
+                    <rect x="2.5" y="2.5" width="20" height="8" rx="2" fill="currentColor" />
+                    <path d="M26 4.5v4a2 2 0 0 0 0-4z" fill="currentColor" fill-opacity="0.4" />
+                </svg>
+            </span>
+        </div>
+
+        <!-- Voltar: retorna à tela de boas-vindas -->
+        <a href="/"
+            class="mt-3 flex items-center gap-1.5 self-start rounded-lg px-4 py-1 text-lg text-indigo-700 transition-opacity active:opacity-60 focus-visible:outline-2 focus-visible:outline-indigo-700 [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7" />
+            </svg>
+            Voltar
+        </a>
+
+        <!-- Logo, título e descrição (entram em sequência com data-reveal) -->
+        <div class="mt-4 flex flex-col items-center gap-5 px-8 text-center">
+            <!-- brightness-0 deixa o logo branco totalmente preto, para aparecer no fundo claro -->
+            <img src="../../src/assets/logo/logo.png" alt="JOVI" class="w-[38%] max-w-44 brightness-0" draggable="false"
+                data-reveal style="--reveal-order: 0" />
+
+            <h1 class="text-4xl font-semibold leading-tight tracking-tight" data-reveal style="--reveal-order: 1">
+                Configure<br>Seu Jovi
+            </h1>
+
+            <p class="max-w-80 text-base leading-snug text-slate-500" data-reveal style="--reveal-order: 2">
+                Personalize seu Jovi do seu jeito. Defina preferências, explore os recursos e tenha uma
+                experiência feita para você.
+            </p>
+        </div>
+
+        <!-- Ações -->
+        <div class="absolute inset-x-0 bottom-[calc(2.5rem+env(safe-area-inset-bottom))] flex flex-col gap-3 px-7"
+            data-reveal style="--reveal-order: 3">
+            <!-- Próximo passo do cadastro (troque o href quando ele existir) -->
+            <a href="/welcome/login-form/"
+                class="relative flex h-14 items-center justify-center rounded-2xl bg-indigo-700 text-lg font-medium text-white shadow-[0_12px_30px_-8px_rgba(67,56,202,0.6)] transition-[scale,background-color] active:scale-[0.98] active:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-700 [-webkit-tap-highlight-color:transparent]">
+                Configurar
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-5 size-6"
+                    aria-hidden="true">
+                    <path d="M4 12h16M14 6l6 6-6 6" />
+                </svg>
+            </a>
+
+            <a href="/welcome/login-form/"
+                class="flex h-14 items-center justify-center rounded-2xl border border-indigo-400/70 bg-white/40 text-lg text-indigo-700 backdrop-blur-sm transition-colors active:bg-white/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-700 [-webkit-tap-highlight-color:transparent]">
+                Conectar minha conta Jovi
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Hora real na barra de status simulada
+        const statusTime = document.querySelector('[data-status-time]');
+        const format = new Intl.DateTimeFormat('pt-BR', { hour: 'numeric', minute: '2-digit' });
+        const tick = () => { statusTime.textContent = format.format(new Date()); };
+        tick();
+        setInterval(tick, 30000);
+    </script>
+</body>
+
+</html>

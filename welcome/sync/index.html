@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sincronizando • Meu Jovi</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="min-h-dvh bg-[#f6f5f9] text-slate-900 antialiased">
+
+    <main data-sync data-next-page="../../lockscreen/index.html"
+        class="group/sync relative isolate flex min-h-dvh w-full flex-col items-center overflow-hidden px-7 pt-[calc(4rem+env(safe-area-inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))] [--progress:0]">
+
+        <!-- Fundo pastel (mesmo da tela de login) -->
+        <img src="/src/assets/bg-white-color.png" alt=""
+            class="pointer-events-none absolute inset-0 -z-10 size-full select-none object-cover object-top"
+            draggable="false" />
+
+        <img src="/src/assets/logo/logo.png" alt="JOVI" class="w-[30%] max-w-32 brightness-0" draggable="false" />
+
+        <!-- Anel de progresso -->
+        <div role="progressbar" aria-label="Sincronização da conta" aria-valuemin="0" aria-valuemax="100"
+            aria-valuenow="0" class="relative mt-10 size-52">
+
+            <!-- Brilho que gira atrás do anel enquanto sincroniza -->
+            <span aria-hidden="true"
+                class="absolute -inset-4 rounded-full bg-[conic-gradient(from_0deg,#fb923c,#e879f9,#818cf8,#60a5fa,#fb923c)] opacity-30 blur-2xl animate-[spin_4s_linear_infinite] transition-opacity duration-500 group-data-done/sync:opacity-0 motion-reduce:animate-none"></span>
+
+            <!-- SVG: trilha cinza + anel colorido que enche conforme --progress -->
+            <svg viewBox="0 0 120 120" class="relative size-full -rotate-90" aria-hidden="true">
+                <defs>
+                    <linearGradient id="sync-gradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#fb923c" />
+                        <stop offset="50%" stop-color="#c084fc" />
+                        <stop offset="100%" stop-color="#4f46e5" />
+                    </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="52" fill="rgb(255 255 255 / 0.6)" stroke="rgb(148 163 184 / 0.25)"
+                    stroke-width="8" />
+                <!-- pathLength="100": o comprimento do círculo vira 100, igual à porcentagem -->
+                <circle cx="60" cy="60" r="52" fill="none" stroke="url(#sync-gradient)" stroke-width="8"
+                    stroke-linecap="round" pathLength="100" stroke-dasharray="100"
+                    class="[stroke-dashoffset:calc(100_-_var(--progress))] transition-[stroke] duration-500 group-data-done/sync:stroke-emerald-500" />
+            </svg>
+
+            <!-- Centro: porcentagem (sincronizando) ou check (concluído) -->
+            <span aria-hidden="true" data-sync-percent
+                class="absolute inset-0 flex items-center justify-center text-4xl font-semibold tabular-nums group-data-done/sync:hidden">0%</span>
+            <span aria-hidden="true"
+                class="absolute inset-0 hidden items-center justify-center group-data-done/sync:flex">
+                <span
+                    class="flex size-20 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_12px_30px_-8px_rgba(16,185,129,0.7)] animate-pop">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="size-10">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                </span>
+            </span>
+        </div>
+
+        <!-- Títulos: um para cada fase; aria-live anuncia a troca -->
+        <div class="mt-8 flex flex-col items-center gap-2 text-center" aria-live="polite">
+            <h1 class="text-2xl font-semibold tracking-tight group-data-done/sync:hidden">Sincronizando sua conta</h1>
+            <p class="max-w-72 text-base leading-snug text-slate-500 group-data-done/sync:hidden">
+                Estamos trazendo seus dados para este Jovi. Isso leva só alguns segundos.
+            </p>
+
+            <h1 class="hidden text-2xl font-semibold tracking-tight group-data-done/sync:block">Tudo pronto!</h1>
+            <p class="hidden max-w-72 text-base leading-snug text-slate-500 group-data-done/sync:block">
+                Sua conta foi sincronizada. O Meu Jovi já está do seu jeito.
+            </p>
+        </div>
+
+        <!-- Etapas -->
+        <ol class="mt-6 flex w-full flex-col gap-1 transition-opacity duration-500 group-data-done/sync:opacity-60">
+            <li data-sync-step data-state="pending" data-label="Conta Jovi"
+                class="group/step flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-300 data-[state=active]:bg-white/70 data-[state=active]:shadow-[0_6px_20px_-10px_rgba(67,56,202,0.35)]">
+                <!-- Indicador: ponto (aguardando), girando (em andamento), check (concluído) -->
+                <span class="relative flex size-7 shrink-0 items-center justify-center">
+                    <span
+                        class="size-2 rounded-full bg-slate-300 group-data-[state=active]/step:hidden group-data-[state=done]/step:hidden"></span>
+                    <span
+                        class="hidden size-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 group-data-[state=active]/step:block"></span>
+                    <span
+                        class="hidden size-7 items-center justify-center rounded-full bg-emerald-500 text-white animate-pop group-data-[state=done]/step:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </span>
+                <span class="flex min-w-0 flex-col">
+                    <span
+                        class="text-[15px] font-medium text-slate-400 transition-colors group-data-[state=active]/step:text-slate-900 group-data-[state=done]/step:text-slate-900">Conta
+                        Jovi</span>
+                    <span class="text-xs text-slate-400">Verificando seu acesso</span>
+                </span>
+            </li>
+            <li data-sync-step data-state="pending" data-label="Preferências"
+                class="group/step flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-300 data-[state=active]:bg-white/70 data-[state=active]:shadow-[0_6px_20px_-10px_rgba(67,56,202,0.35)]">
+                <!-- Indicador: ponto (aguardando), girando (em andamento), check (concluído) -->
+                <span class="relative flex size-7 shrink-0 items-center justify-center">
+                    <span
+                        class="size-2 rounded-full bg-slate-300 group-data-[state=active]/step:hidden group-data-[state=done]/step:hidden"></span>
+                    <span
+                        class="hidden size-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 group-data-[state=active]/step:block"></span>
+                    <span
+                        class="hidden size-7 items-center justify-center rounded-full bg-emerald-500 text-white animate-pop group-data-[state=done]/step:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </span>
+                <span class="flex min-w-0 flex-col">
+                    <span
+                        class="text-[15px] font-medium text-slate-400 transition-colors group-data-[state=active]/step:text-slate-900 group-data-[state=done]/step:text-slate-900">Preferências</span>
+                    <span class="text-xs text-slate-400">Idioma, tema e notificações</span>
+                </span>
+            </li>
+            <li data-sync-step data-state="pending" data-label="Fotos e memórias"
+                class="group/step flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-300 data-[state=active]:bg-white/70 data-[state=active]:shadow-[0_6px_20px_-10px_rgba(67,56,202,0.35)]">
+                <!-- Indicador: ponto (aguardando), girando (em andamento), check (concluído) -->
+                <span class="relative flex size-7 shrink-0 items-center justify-center">
+                    <span
+                        class="size-2 rounded-full bg-slate-300 group-data-[state=active]/step:hidden group-data-[state=done]/step:hidden"></span>
+                    <span
+                        class="hidden size-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 group-data-[state=active]/step:block"></span>
+                    <span
+                        class="hidden size-7 items-center justify-center rounded-full bg-emerald-500 text-white animate-pop group-data-[state=done]/step:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </span>
+                <span class="flex min-w-0 flex-col">
+                    <span
+                        class="text-[15px] font-medium text-slate-400 transition-colors group-data-[state=active]/step:text-slate-900 group-data-[state=done]/step:text-slate-900">Fotos
+                        e memórias</span>
+                    <span class="text-xs text-slate-400">Álbuns, favoritos e Best Moments</span>
+                </span>
+            </li>
+            <li data-sync-step data-state="pending" data-label="Gestos e modos"
+                class="group/step flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-300 data-[state=active]:bg-white/70 data-[state=active]:shadow-[0_6px_20px_-10px_rgba(67,56,202,0.35)]">
+                <!-- Indicador: ponto (aguardando), girando (em andamento), check (concluído) -->
+                <span class="relative flex size-7 shrink-0 items-center justify-center">
+                    <span
+                        class="size-2 rounded-full bg-slate-300 group-data-[state=active]/step:hidden group-data-[state=done]/step:hidden"></span>
+                    <span
+                        class="hidden size-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 group-data-[state=active]/step:block"></span>
+                    <span
+                        class="hidden size-7 items-center justify-center rounded-full bg-emerald-500 text-white animate-pop group-data-[state=done]/step:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </span>
+                <span class="flex min-w-0 flex-col">
+                    <span
+                        class="text-[15px] font-medium text-slate-400 transition-colors group-data-[state=active]/step:text-slate-900 group-data-[state=done]/step:text-slate-900">Gestos
+                        e modos</span>
+                    <span class="text-xs text-slate-400">Seus atalhos da tela de bloqueio</span>
+                </span>
+            </li>
+            <li data-sync-step data-state="pending" data-label="Meu Jovi"
+                class="group/step flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-300 data-[state=active]:bg-white/70 data-[state=active]:shadow-[0_6px_20px_-10px_rgba(67,56,202,0.35)]">
+                <!-- Indicador: ponto (aguardando), girando (em andamento), check (concluído) -->
+                <span class="relative flex size-7 shrink-0 items-center justify-center">
+                    <span
+                        class="size-2 rounded-full bg-slate-300 group-data-[state=active]/step:hidden group-data-[state=done]/step:hidden"></span>
+                    <span
+                        class="hidden size-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 group-data-[state=active]/step:block"></span>
+                    <span
+                        class="hidden size-7 items-center justify-center rounded-full bg-emerald-500 text-white animate-pop group-data-[state=done]/step:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </span>
+                <span class="flex min-w-0 flex-col">
+                    <span
+                        class="text-[15px] font-medium text-slate-400 transition-colors group-data-[state=active]/step:text-slate-900 group-data-[state=done]/step:text-slate-900">Meu
+                        Jovi</span>
+                    <span class="text-xs text-slate-400">Personalizando sua experiência</span>
+                </span>
+            </li>
+        </ol>
+
+        <!-- Final: contagem e botão para não esperar -->
+        <div class="mt-auto hidden w-full flex-col items-center gap-3 pt-6 group-data-done/sync:flex">
+            <!-- O href é preenchido pelo JS com o mesmo data-next-page -->
+            <a href="#" data-sync-continue
+                class="flex h-14 w-full items-center justify-center rounded-2xl bg-indigo-700 text-lg font-medium text-white shadow-[0_12px_30px_-8px_rgba(67,56,202,0.6)] transition-[scale,background-color] active:scale-[0.98] active:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-700">
+                Começar a usar
+            </a>
+            <p data-sync-countdown class="text-sm text-slate-500"></p>
+        </div>
+    </main>
+</body>
+
+</html>

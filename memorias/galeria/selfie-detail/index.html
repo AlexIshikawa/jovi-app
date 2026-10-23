@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Foto</title>
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<!-- data-photo-set: lista de fotos das selfies; --photo-filter: estilo aplicado à foto -->
+
+<body data-photo-set="selfies" class="min-h-dvh bg-brand-dark-deep text-white antialiased [--photo-filter:none]">
+
+    <!-- Foto com os controles por cima -->
+    <div class="relative h-[55dvh] min-h-80">
+        <!-- src e alt vêm de photos.js -->
+        <img data-photo-img alt=""
+            class="size-full bg-white/5 object-cover transition-[filter] duration-300 [filter:var(--photo-filter)]"
+            decoding="async" />
+
+        <!-- Escurece só o topo, para os botões ficarem legíveis -->
+        <span aria-hidden="true"
+            class="absolute inset-x-0 top-0 h-28 bg-linear-to-b from-black/40 to-transparent"></span>
+
+        <!-- Barra superior -->
+        <div
+            class="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))]">
+            <button type="button" aria-label="Voltar" onclick="history.back()"
+                class="flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" />
+                </svg>
+            </button>
+
+            <div class="flex items-center gap-2">
+                <button type="button" aria-label="Favoritar" aria-pressed="false" data-favorite-toggle
+                    class="group/fav flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5 transition-colors group-aria-pressed/fav:fill-current group-aria-pressed/fav:text-pink-400"
+                        aria-hidden="true">
+                        <path
+                            d="M12 20s-7-4.4-8.8-8.6C1.9 8.3 3.7 5 7 4.7c2-.2 3.8.9 5 2.6 1.2-1.7 3-2.8 5-2.6 3.3.3 5.1 3.6 3.8 6.7C19 15.6 12 20 12 20z" />
+                    </svg>
+                </button>
+                <button type="button" aria-label="Mais opções"
+                    class="flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"
+                        class="size-5" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.6" />
+                        <circle cx="12" cy="12" r="1.6" />
+                        <circle cx="12" cy="19" r="1.6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Próxima foto -->
+        <a href="#" data-photo-next aria-label="Próxima selfie"
+            class="absolute right-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+            </svg>
+        </a>
+
+        <!-- Posição no álbum -->
+        <span
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 rounded-full bg-black/45 px-3.5 py-1 text-sm ring-1 ring-white/10 backdrop-blur-md">
+            <span data-photo-counter></span>
+        </span>
+
+        <!-- Selo de vídeo: só aparece quando a foto é um vídeo -->
+        <span data-video-badge hidden
+            class="absolute bottom-10 left-4 flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1 text-xs ring-1 ring-white/10 backdrop-blur-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-3"
+                aria-hidden="true">
+                <path d="M8 5.5v13l11-6.5z" />
+            </svg>
+            Vídeo
+        </span>
+
+        <!-- Abrir em tela cheia -->
+        <button type="button" aria-label="Ver em tela cheia" data-viewer-open
+            class="absolute bottom-9 right-4 flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path
+                    d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4" />
+                <rect x="9" y="9" width="6" height="6" rx="1.5" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Painel de informações: sobe por cima da foto -->
+    <main
+        class="relative -mt-6 flex flex-col gap-4 rounded-t-3xl border-t border-white/10 bg-brand-dark-deep px-4 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+
+        <!-- Alça do painel -->
+        <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
+
+        <!-- Título e informações -->
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between gap-3">
+                <h1 data-photo-title class="text-2xl font-bold tracking-tight"></h1>
+                <button type="button"
+                    class="flex shrink-0 items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-sm ring-1 ring-white/10 transition-colors active:bg-white/10 cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
+                        <path d="M13.5 6.5l4 4" />
+                    </svg>
+                    Renomear
+                </button>
+            </div>
+
+            <p class="text-sm text-white/70">
+                <time data-photo-date></time>
+            </p>
+
+            <!-- Dados técnicos da foto -->
+            <dl class="mt-1 flex flex-wrap gap-2 text-xs text-white/75">
+                <div
+                    class="flex items-center divide-x divide-white/15 rounded-full bg-white/5 py-1.5 ring-1 ring-white/10">
+                    <div class="flex items-center gap-1.5 px-3">
+                        <dt class="sr-only">Câmera</dt>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path
+                                d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.55 3.5h2.9a1.5 1.5 0 0 1 1.25.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" />
+                            <circle cx="12" cy="12.5" r="3.5" />
+                        </svg>
+                        <dd data-spec="model"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">Distância focal</dt>
+                        <dd data-spec="focal"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">Abertura</dt>
+                        <dd data-spec="aperture"></dd>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center divide-x divide-white/15 rounded-full bg-white/5 py-1.5 ring-1 ring-white/10">
+                    <div class="px-3">
+                        <dt class="sr-only">Velocidade do obturador</dt>
+                        <dd data-spec="shutter"></dd>
+                    </div>
+                    <div class="px-3">
+                        <dt class="sr-only">ISO</dt>
+                        <dd data-spec="iso"></dd>
+                    </div>
+                </div>
+            </dl>
+        </div>
+
+        <!-- Estilos da foto: escolher um aplica o filtro na foto de cima -->
+        <!-- min-w-0: um fieldset não encolhe abaixo do conteúdo por padrão -->
+        <fieldset class="min-w-0">
+            <legend class="sr-only">Estilo da foto</legend>
+            <div
+                class="-mx-4 flex gap-2 overflow-x-auto px-4 py-1 snap-x scroll-px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <!-- Automático: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: none"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="Automático" class="sr-only" checked>
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">Automático</span>
+                </label>
+                <!-- Natural: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: saturate(0.9) contrast(0.95) brightness(1.04)"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="Natural" class="sr-only">
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">Natural</span>
+                </label>
+                <!-- Vibrante: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: saturate(1.55) contrast(1.1)"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="Vibrante" class="sr-only">
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">Vibrante</span>
+                </label>
+                <!-- Praiano: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: sepia(0.3) saturate(1.35) hue-rotate(-10deg) brightness(1.08)"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="Praiano" class="sr-only">
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">Praiano</span>
+                </label>
+                <!-- Retrato: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: contrast(1.12) brightness(1.04) saturate(1.1)"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="Retrato" class="sr-only">
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">Retrato</span>
+                </label>
+                <!-- P&amp;B: o filtro fica em --filter e vale para a miniatura e para a foto -->
+                <label style="--filter: grayscale(1) contrast(1.12)"
+                    class="relative flex w-20 shrink-0 snap-start cursor-pointer flex-col overflow-hidden rounded-2xl border-2 border-white/10 bg-white/[0.04] transition-[border-color,box-shadow] has-checked:border-orange-400 has-checked:shadow-[0_0_18px_rgba(251,146,60,0.45)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="photo-filter" value="P&amp;B" class="sr-only">
+                    <img data-photo-thumb alt="" class="aspect-square w-full object-cover [filter:var(--filter)]"
+                        decoding="async" />
+                    <span class="py-1.5 text-center text-xs">P&amp;B</span>
+                </label>
+            </div>
+        </fieldset>
+
+        <!-- Compartilhar -->
+        <section aria-labelledby="titulo-compartilhar"
+            class="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/[0.03] p-4">
+            <h2 id="titulo-compartilhar" class="text-base font-semibold">Compartilhar</h2>
+            <ul class="grid grid-cols-6 gap-1">
+                <li>
+                    <button type="button" data-share="native"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-12 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/15 transition-transform active:scale-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <circle cx="18" cy="5" r="2.5" />
+                                <circle cx="6" cy="12" r="2.5" />
+                                <circle cx="18" cy="19" r="2.5" />
+                                <path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4" />
+                            </svg>
+                        </span>
+                        <span class="text-[11px] text-white/70">Mais</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="instagram"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/instagram.png" alt=""
+                            class="size-12 rounded-full object-contain transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">Instagram</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="whatsapp"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/whatsapp.png" alt=""
+                            class="size-12 rounded-full object-contain transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">WhatsApp</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="tiktok"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/tiktok.png" alt=""
+                            class="size-12 rounded-full object-contain transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">TikTok</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="facebook"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <img src="/src/assets/icons/share/facebook.png" alt=""
+                            class="size-12 rounded-full object-contain transition-transform active:scale-90" />
+                        <span class="text-[11px] text-white/70">Facebook</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-share="copy"
+                        class="flex w-full flex-col items-center gap-1.5 rounded-xl py-1 focus-visible:outline-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <span
+                            class="flex size-12 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/15 transition-transform active:scale-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                class="size-5" aria-hidden="true">
+                                <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" />
+                                <path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
+                            </svg>
+                        </span>
+                        <span class="text-[11px] text-white/70">Copiar link</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Visualizador em tela cheia -->
+    <dialog data-viewer aria-label="Foto em tela cheia"
+        class="m-auto h-dvh max-h-none w-full max-w-app bg-black p-0 text-white backdrop:bg-black">
+        <img data-photo-img alt="" class="size-full object-contain [filter:var(--photo-filter)]" />
+        <button type="button" aria-label="Fechar tela cheia" data-viewer-close
+            class="absolute right-4 top-[calc(1rem+env(safe-area-inset-top))] flex size-11 items-center justify-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur-md transition-colors active:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+        </button>
+    </dialog>
+
+    <!-- Aviso rápido (link copiado, favoritada...) -->
+    <p id="toast" role="status" aria-live="polite"
+        class="invisible fixed bottom-8 left-1/2 z-50 -translate-x-1/2 translate-y-2 rounded-full bg-white/10 px-4 py-2 text-sm opacity-0 ring-1 ring-white/15 backdrop-blur-md transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+    </p>
+</body>
+
+</html>
