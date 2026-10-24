@@ -13,7 +13,16 @@
 
     <!-- Cabeçalho: título e ações -->
     <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-4">
-        <h1 class="text-3xl font-bold tracking-tight">Galeria</h1>
+        <div class="flex items-center gap-3">
+            <a href="/lockscreen/" aria-label="Voltar para a tela de bloqueio"
+                class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 transition-colors active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" />
+                </svg>
+            </a>
+            <h1 class="text-3xl font-bold tracking-tight">Galeria</h1>
+        </div>
 
         <div class="flex items-center gap-2">
             <button type="button" aria-label="Buscar nas memórias"
@@ -81,9 +90,9 @@
                     </a>
                 </li>
                 <li class="snap-start">
-                    <button type="button" data-album="pets"
+                    <a href="/memorias/galeria/pet-gallery/index.html" data-album="pets"
                         class="group relative block aspect-square w-full overflow-hidden rounded-2xl bg-white/5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../src/assets/gallery/pets/pets.jpg" alt=""
+                        <img src="../src/assets/gallery/pets/tobias1.jpg" alt=""
                             class="absolute inset-0 size-full object-cover transition-transform duration-300 group-active:scale-[1.03]"
                             decoding="async" />
                         <span aria-hidden="true"
@@ -108,7 +117,7 @@
                                 <span class="text-[11px] text-white/75">22 itens</span>
                             </span>
                         </span>
-                    </button>
+                    </a>
                 </li>
                 <li class="snap-start">
                     <a href="./galeria/selfie-gallery/index.html" data-album="selfies"
@@ -258,7 +267,7 @@
                 <li>
                     <button type="button" data-person="tobias"
                         class="flex flex-col items-center gap-1.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
-                        <img src="../src/assets/gallery/pets/pets.jpg" alt=""
+                        <img src="../src/assets/gallery/pets/tobias1.jpg" alt=""
                             class="size-14 rounded-full object-cover ring-2 ring-white/10 transition-transform duration-200 active:scale-95"
                             loading="lazy" decoding="async" />
                         <span class="text-xs text-white/80">Tobias</span>

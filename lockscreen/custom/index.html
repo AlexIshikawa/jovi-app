@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>JOVI AI CAMERA • Meu modo</title>
+
+    <!-- Fonte do relógio -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body class="h-dvh overflow-hidden bg-brand-dark-deep">
+
+    <!--
+        data-custom-lockscreen: o custom-gesture.js preenche esta tela com o gesto salvo.
+        --accent: cor escolhida na paleta (o JS troca; o valor abaixo é o padrão).
+    -->
+    <main data-custom-lockscreen
+        class="relative isolate h-dvh w-full overflow-hidden select-none text-white [--accent:var(--color-violet-400)]">
+
+        <!-- Wallpaper (o escolhido no modal, via custom-gesture.js) + escurecimento para dar leitura -->
+        <img data-custom-wallpaper src="/src/assets/wallpaper2.png" alt=""
+            class="absolute inset-0 -z-10 size-full object-cover" draggable="false" />
+        <span aria-hidden="true"
+            class="absolute inset-0 -z-10 bg-linear-to-b from-black/45 via-black/35 to-black/85"></span>
+
+        <!-- Linha de luz decorativa, na cor do gesto -->
+        <svg aria-hidden="true" viewBox="0 0 400 900" preserveAspectRatio="none" fill="none"
+            class="pointer-events-none absolute inset-0 -z-10 size-full text-(--accent) opacity-60">
+            <path d="M180 900 C 260 860, 340 820, 420 760" stroke="currentColor" stroke-width="2" />
+        </svg>
+
+        <!-- Barra superior: flash, seletor de modo e configurações -->
+        <header class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))]">
+
+            <!-- Flash: liga/desliga (aria-pressed controla o ícone) -->
+            <button type="button" aria-label="Flash" aria-pressed="false" data-flash-toggle
+                class="group/flash flex size-11 items-center justify-center rounded-full bg-black/40 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <span class="group-aria-pressed/flash:hidden"><svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" class="size-5" aria-hidden="true">
+                        <path d="M7.5 9.5L4.5 13.5H12L11 22l4.2-5.7M16.8 13.4l2.7-2.9H12L13 2l-3.3 4.4" />
+                        <path d="M3 3l18 18" />
+                    </svg></span>
+                <span class="hidden text-yellow-300 group-aria-pressed/flash:block"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5"
+                        aria-hidden="true">
+                        <path d="M13 2L4.5 13.5H12L11 22l8.5-11.5H12z" />
+                    </svg></span>
+            </button>
+
+            <!-- Seletor de modo: abre um menu com a Popover API (sem JS) -->
+            <div class="group/mode min-w-0">
+                <button type="button" popovertarget="mode-menu"
+                    class="flex h-11 max-w-52 items-center gap-2.5 rounded-full border border-(--accent)/60 bg-black/40 pl-3.5 pr-3 text-sm font-medium shadow-[0_0_20px_color-mix(in_oklab,var(--accent)_25%,transparent)] backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span data-custom-mode-icon class="size-5 shrink-0 text-(--accent) [&>svg]:size-full"
+                        aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg></span>
+                    <span data-custom-name class="truncate">Meu modo</span>
+                    <span
+                        class="shrink-0 text-(--accent) transition-transform duration-200 group-has-[:popover-open]/mode:rotate-180"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg></span>
+                </button>
+
+                <!-- Menu: aparece por cima de tudo, fecha com Esc ou tocando fora -->
+                <nav id="mode-menu" popover aria-label="Trocar modo"
+                    class="m-0 inset-auto left-1/2 top-[calc(4.5rem+env(safe-area-inset-top))] w-60 -translate-x-1/2 rounded-2xl border border-white/10 bg-brand-dark/95 p-1.5 text-white shadow-[0_16px_40px_rgba(0,0,0,0.5)] backdrop-blur-md">
+                    <a href="/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <rect x="5" y="11" width="14" height="10" rx="2" />
+                            <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
+                        </svg>
+                        <span class="flex-1">Padrão</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/modo-viagem/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M22 2L11 13" />
+                            <path d="M22 2l-7 20-4-9-9-4z" />
+                        </svg>
+                        <span class="flex-1">Modo Viagem</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/modo-estudos/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M22 9L12 4 2 9l10 5 10-5z" />
+                            <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" />
+                            <path d="M22 9v6" />
+                        </svg>
+                        <span class="flex-1">Modo Estudos</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/lockscreen/custom/index.html" aria-current="page"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg>
+                        <span data-custom-name class="flex-1 truncate">Meu modo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Configurações: volta para Meus Gestos, para editar este modo -->
+            <a href="/presets-lockscreen/configure-preset/index.html" aria-label="Editar meus gestos"
+                class="flex size-11 items-center justify-center rounded-full bg-black/40 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+                </svg>
+            </a>
+        </header>
+
+        <!-- Relógio, data e status -->
+        <section class="flex flex-col items-center pt-[6%] text-center">
+            <time id="clock"
+                class="font-clock text-[88px] font-extralight leading-none tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                --:--
+            </time>
+            <p id="date" class="mt-2 font-clock text-[15px] opacity-90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"></p>
+
+            <!-- Selo: "Modo <nome> ativado", na cor do gesto -->
+            <div
+                class="mt-5 flex max-w-[90%] items-center gap-3 rounded-full border border-(--accent)/60 bg-black/40 py-1 pl-1 pr-5 backdrop-blur-md">
+                <span
+                    class="flex size-9 shrink-0 items-center justify-center rounded-full border border-(--accent) text-(--accent)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5"
+                        aria-hidden="true">
+                        <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                        <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                    </svg>
+                </span>
+                <span class="min-w-0 truncate text-base font-medium"><span data-custom-name class="text-(--accent)">Meu
+                        modo</span> ativado</span>
+            </div>
+            <!-- Some enquanto a roda está aberta, abrindo espaço para o rótulo de cima -->
+            <p data-custom-count
+                class="mt-2 max-w-64 text-sm leading-snug text-white/75 transition-opacity duration-300 in-[main:has([data-open])]:opacity-0">
+            </p>
+        </section>
+
+        <!-- Overlay: escurece o fundo enquanto a roda está aberta, destacando os atalhos -->
+        <!-- Overlay: só existe enquanto a roda da câmera está aberta (segurando o botão central) -->
+        <span aria-hidden="true"
+            class="pointer-events-none invisible absolute inset-0 z-20 bg-black/70 opacity-0 transition-[opacity,visibility] duration-300 in-[main:has([data-camera-menu][data-open])]:visible in-[main:has([data-camera-menu][data-open])]:opacity-100 in-[main:has([data-camera-menu][data-open])]:backdrop-blur-[2px]"></span>
+        <!-- Roda de atalhos: aparece só enquanto o botão central é segurado -->
+        <div
+            class="pointer-events-none z-30 absolute inset-x-0 top-[59%] mx-auto aspect-square w-[88%] max-w-96 -translate-y-1/2">
+
+            <!-- "group": tudo aqui reage ao estado do menu via aceso: (segurando = data-open) -->
+            <div data-camera-menu class="group absolute inset-0">
+
+                <!-- Anéis -->
+                <span aria-hidden="true"
+                    class="absolute inset-[2%] rounded-full border border-(--accent)/40 shadow-[0_0_40px_color-mix(in_oklab,var(--accent)_15%,transparent)] opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+                <span aria-hidden="true"
+                    class="absolute inset-[27%] rounded-full border border-dashed border-white/20 opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+
+                <!-- Setas ao redor do centro (a de uma posição vazia é removida pelo JS) -->
+                <span aria-hidden="true" data-arrow="up"
+                    class="absolute left-1/2 top-[30%] -translate-1/2 text-(--accent) opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true" data-arrow="down"
+                    class="absolute left-1/2 top-[70%] rotate-180 -translate-1/2 text-(--accent) opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true" data-arrow="left"
+                    class="absolute left-[30%] top-1/2 -rotate-90 -translate-1/2 text-(--accent) opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+                <span aria-hidden="true" data-arrow="right"
+                    class="absolute left-[70%] top-1/2 rotate-90 -translate-1/2 text-(--accent) opacity-0 transition-opacity duration-300 aceso:opacity-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                        aria-hidden="true">
+                        <path d="M6 15l6-6 6 6" />
+                    </svg></span>
+
+                <!-- Atalhos: invisíveis por padrão, surgem ao segurar o centro -->
+                <!-- Atalho (up): ícone e nome vêm do gesto salvo -->
+                <button type="button" data-shortcut="" data-label="" data-direction="up"
+                    class="group/sat pointer-events-auto absolute left-1/2 top-[14%] -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-(--accent)/80 bg-black/50 text-white shadow-[0_0_18px_color-mix(in_oklab,var(--accent)_35%,transparent)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-(--accent)/30 group-data-selected/sat:shadow-[0_0_30px_color-mix(in_oklab,var(--accent)_80%,transparent)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <span data-icon class="size-7 [&>svg]:size-full" aria-hidden="true"></span>
+                    </span>
+                    <span data-sat-label
+                        class="absolute bottom-full left-1/2 mb-2 w-max max-w-32 -translate-x-1/2 text-center text-base font-medium leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"></span>
+                </button>
+                <!-- Atalho (right): ícone e nome vêm do gesto salvo -->
+                <button type="button" data-shortcut="" data-label="" data-direction="right"
+                    class="group/sat pointer-events-auto absolute left-[86%] top-1/2 -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[40ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-(--accent)/80 bg-black/50 text-white shadow-[0_0_18px_color-mix(in_oklab,var(--accent)_35%,transparent)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-(--accent)/30 group-data-selected/sat:shadow-[0_0_30px_color-mix(in_oklab,var(--accent)_80%,transparent)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <span data-icon class="size-7 [&>svg]:size-full" aria-hidden="true"></span>
+                    </span>
+                    <span data-sat-label
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base font-medium leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"></span>
+                </button>
+                <!-- Atalho (down): ícone e nome vêm do gesto salvo -->
+                <button type="button" data-shortcut="" data-label="" data-direction="down"
+                    class="group/sat pointer-events-auto absolute left-1/2 top-[86%] -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[80ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-(--accent)/80 bg-black/50 text-white shadow-[0_0_18px_color-mix(in_oklab,var(--accent)_35%,transparent)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-(--accent)/30 group-data-selected/sat:shadow-[0_0_30px_color-mix(in_oklab,var(--accent)_80%,transparent)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <span data-icon class="size-7 [&>svg]:size-full" aria-hidden="true"></span>
+                    </span>
+                    <span data-sat-label
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base font-medium leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"></span>
+                </button>
+                <!-- Atalho (left): ícone e nome vêm do gesto salvo -->
+                <button type="button" data-shortcut="" data-label="" data-direction="left"
+                    class="group/sat pointer-events-auto absolute left-[14%] top-1/2 -translate-1/2 rounded-full invisible opacity-0 scale-75 transition-[opacity,scale,visibility] duration-300 aceso:visible aceso:opacity-100 aceso:scale-100 aceso:delay-[120ms] outline-none cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span
+                        class="flex size-16 items-center justify-center rounded-full border-2 border-(--accent)/80 bg-black/50 text-white shadow-[0_0_18px_color-mix(in_oklab,var(--accent)_35%,transparent)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-200 group-data-selected/sat:scale-115 group-data-selected/sat:bg-(--accent)/30 group-data-selected/sat:shadow-[0_0_30px_color-mix(in_oklab,var(--accent)_80%,transparent)] group-focus-visible/sat:outline-2 group-focus-visible/sat:outline-offset-4 group-focus-visible/sat:outline-white">
+                        <span data-icon class="size-7 [&>svg]:size-full" aria-hidden="true"></span>
+                    </span>
+                    <span data-sat-label
+                        class="absolute left-1/2 top-full mt-2 w-max max-w-32 -translate-x-1/2 text-center text-base font-medium leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"></span>
+                </button>
+
+                <!-- Ondas ao redor do centro, na cor do gesto (discretas em repouso) -->
+                <div aria-hidden="true"
+                    class="absolute left-1/2 top-1/2 size-24 -translate-1/2 opacity-40 transition-opacity duration-300 aceso:opacity-100 motion-reduce:hidden">
+                    <span class="absolute inset-0 rounded-full border border-(--accent) animate-wave"></span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-(--accent)/70 animate-wave [animation-delay:0.8s]"></span>
+                    <span
+                        class="absolute inset-0 rounded-full border border-(--accent) animate-wave [animation-delay:1.6s]"></span>
+                </div>
+
+                <!-- Botão central: toque = 1º modo escolhido; segure e arraste = outros modos -->
+                <span aria-hidden="true"
+                    class="absolute left-1/2 top-1/2 size-28 -translate-1/2 rounded-full bg-black/35 backdrop-blur-sm opacity-0 transition-opacity duration-300 aceso:opacity-100"></span>
+                <button type="button" aria-label="Câmera (segure e arraste para outros modos)" data-camera-trigger
+                    data-tap-action="camera" data-tap-label="Câmera"
+                    class="pointer-events-auto absolute left-1/2 top-1/2 flex size-24 -translate-1/2 items-center justify-center rounded-full border-[3px] border-(--accent) bg-black/45 text-white shadow-[0_0_24px_color-mix(in_oklab,var(--accent)_45%,transparent)] touch-none transition-[scale,box-shadow,background-color] duration-300 aceso:bg-black/70 aceso:shadow-[0_0_44px_color-mix(in_oklab,var(--accent)_85%,transparent)] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white cursor-pointer [-webkit-touch-callout:none] [-webkit-tap-highlight-color:transparent]">
+                    <span data-icon class="size-10 [&>svg]:size-full" aria-hidden="true"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.55 3.5h2.9a1.5 1.5 0 0 1 1.25.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" />
+                            <circle cx="12" cy="12.5" r="3.5" />
+                        </svg></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Galeria -->
+        <div class="absolute inset-x-0 bottom-[calc(4%+env(safe-area-inset-bottom))] flex flex-col items-center gap-2">
+            <span aria-hidden="true" class="text-white/80"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="size-5">
+                    <path d="M6 15l6-6 6 6" />
+                </svg></span>
+            <a href="/memorias/index.html" aria-label="Abrir galeria"
+                class="flex size-16 items-center justify-center rounded-2xl bg-white/5 ring-2 ring-(--accent)/50 shadow-[0_0_20px_color-mix(in_oklab,var(--accent)_35%,transparent)] backdrop-blur-sm transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-7" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="2.5" />
+                    <circle cx="8.5" cy="9.5" r="1.5" />
+                    <path d="M21 16l-5-5-9 9" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- Aviso rápido (atalho ativado, flash...) -->
+        <p id="toast" role="status" aria-live="polite"
+            class="invisible absolute z-40 bottom-[18%] left-1/2 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-full bg-black/70 px-4 py-2 font-clock text-sm opacity-0 transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+        </p>
+    </main>
+
+    <script>
+        const clockEl = document.getElementById('clock');
+        const dateEl = document.getElementById('date');
+
+        const timeFormatter = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const dateFormatter = new Intl.DateTimeFormat('pt-BR', { weekday: 'short', day: 'numeric', month: 'short' });
+
+        function updateClock() {
+            const now = new Date();
+            clockEl.textContent = timeFormatter.format(now);
+            clockEl.setAttribute('datetime', now.toISOString());
+            dateEl.textContent = dateFormatter.format(now).replace(',', '');
+        }
+
+        function scheduleNextTick() {
+            const now = new Date();
+            const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+            setTimeout(() => { updateClock(); scheduleNextTick(); }, msUntilNextMinute);
+        }
+
+        updateClock();
+        scheduleNextTick();
+
+        // Safari no iOS só aplica :active em toques se existir um listener de touch na página
+        document.addEventListener('touchstart', () => { }, { passive: true });
+    </script>
+</body>
+
+</html>

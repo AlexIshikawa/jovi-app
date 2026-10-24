@@ -28,6 +28,12 @@ const MAX_ANGLE_DIFF = 45;
 // Pausa (ms) antes de trocar de página, para o aviso aparecer
 const NAVIGATION_DELAY_MS = 1000;
 
+// Aviso para funcionalidades marcadas como null em PAGES
+const BETA_MESSAGE = 'Funcionalidade não disponível no Beta';
+
+// O aviso do Beta é mais longo, então fica mais tempo na tela
+const BETA_TOAST_MS = 2500;
+
 /*
   Vídeos em tela cheia.
   fit (opcional):
@@ -48,10 +54,20 @@ const VIDEOS = {
 
 const PAGES = {
     configuracoes: '/configuracoes/index.html',
-    camera: '/camera/index.html',
-    video: '/video/index.html',
     selfie: '/selfie/index.html',
     viagem: '/modo-viagem/ia-guia/index.html',
+    camera: null,
+    'camera-frontal': null,
+    video: null,
+    panoramica: null,
+    paisagem: null,
+    documento: null,
+    quadro: null,
+    resumo: null,
+    'ask-estudos': null,
+    panorama: null,
+    retrato: null,
+    noturno: null,
 };
 
 // Classes completas por extenso para o Tailwind encontrá-las no build
@@ -161,7 +177,6 @@ export function initCameraMenu() {
     }
 
     /* ---------- Ação ---------- */
-
     function activate(action, label) {
         menu.dispatchEvent(
             new CustomEvent('camera:shortcut', { detail: { action }, bubbles: true }),
@@ -170,6 +185,13 @@ export function initCameraMenu() {
         const player = videoPlayers[action];
         if (player) {
             playVideo(player, VIDEOS[action].next);
+            return;
+        }
+
+        // Ação cadastrada como null: ainda não existe no Beta
+        if (action in PAGES && PAGES[action] === null) {
+            showToast(BETA_MESSAGE, BETA_TOAST_MS);
+            navigator.vibrate?.([10, 60, 10]); // vibração dupla: "não deu"
             return;
         }
 
@@ -183,7 +205,7 @@ export function initCameraMenu() {
         }
     }
 
-    function showToast(message) {
+    function showToast(message, duration = TOAST_MS) {
         if (!toast) return;
 
         toast.textContent = message;
@@ -192,7 +214,7 @@ export function initCameraMenu() {
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
             delete toast.dataset.visible;
-        }, TOAST_MS);
+        }, duration);
     }
 
     /* ---------- Vídeo ---------- */
@@ -237,6 +259,29 @@ export function initCameraMenu() {
             showToast('Não foi possível abrir o vídeo');
         });
     }
+
+    // Esconde e pausa todos os vídeos, voltando a tela ao estado inicial
+    function resetVideos() {
+        Object.values(videoPlayers).forEach((video) => {
+            video.pause();
+            video.currentTime = 0;
+            delete video.dataset.playing;
+        });
+    }
+
+    /* ---------- Voltar para a página (bfcache) ---------- */
+
+    // Ao sair da página, limpa o vídeo: se o navegador guardar a página
+    // congelada e a pessoa voltar, ela reaparece sem o vídeo na frente
+    window.addEventListener('pagehide', resetVideos);
+
+    // Garantia extra: página restaurada do cache (persisted = true) também é limpa,
+    // junto com o menu, caso a pessoa tenha saído com a roda aberta
+    window.addEventListener('pageshow', (event) => {
+        if (!event.persisted) return;
+        resetVideos();
+        endGesture();
+    });
 
     /* ---------- Gesto: segurar, arrastar e soltar ---------- */
 

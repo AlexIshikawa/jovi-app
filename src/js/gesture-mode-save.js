@@ -7,10 +7,11 @@
 const HOMES = {
     viagem: '/modo-viagem/lockscreen/',
     estudos: '/modo-estudos/lockscreen/',
+    custom: '/lockscreen/custom/index.html', // gesto personalizado (custom-gesture.js)
 };
 
 // Modos sem tela própria voltam para a tela de bloqueio padrão
-const DEFAULT_HOME = '/';
+const DEFAULT_HOME = '/lockscreen/';
 
 export function initGestureModeSave() {
     const saveButton = document.querySelector('[data-save-gestures]');

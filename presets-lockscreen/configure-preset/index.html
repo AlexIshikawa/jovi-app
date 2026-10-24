@@ -24,7 +24,7 @@
         <app-gesture-wheel></app-gesture-wheel>
 
         <!-- Nome do gesto: campo discreto, com a aparência do título em gradiente -->
-        <div class="flex flex-wrap items-baseline gap-x-2">
+        <div class="relative z-30 flex flex-wrap items-baseline gap-x-2">
             <label for="gesture-name">Modo para o gesto</label>
             <span class="flex min-w-0 items-baseline gap-1.5">
                 <input id="gesture-name" name="gesture-name" type="text" value="Default 1" maxlength="24"
@@ -41,6 +41,84 @@
                     </svg>
                 </label>
             </span>
+            <!-- Cor do gesto: uma bolinha com a cor atual; tocar abre a paleta -->
+            <div data-color-picker class="relative ml-auto self-center [--picked:var(--color-violet-400)]">
+                <button type="button" data-color-toggle aria-expanded="false" aria-controls="gesture-color-panel"
+                    aria-label="Cor do gesto: Violeta. Tocar para trocar"
+                    class="block size-7 rounded-full bg-(--picked) ring-2 ring-white/80 ring-offset-2 ring-offset-brand-dark-deep transition-[scale,box-shadow] active:scale-90 aria-expanded:ring-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]"></button>
+
+                <!-- Paleta: escondida até tocar na bolinha -->
+                <fieldset id="gesture-color-panel" data-color-panel hidden
+                    class="absolute right-0 top-full z-40 mt-3 flex gap-2.5 rounded-full border border-white/10 bg-brand-dark p-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.5)] animate-pop">
+                    <legend class="sr-only">Cor do gesto</legend>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-violet-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="violet-400" class="peer sr-only" checked>
+                        <span class="sr-only">Violeta</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-sky-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="sky-400" class="peer sr-only">
+                        <span class="sr-only">Azul</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-emerald-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="emerald-400" class="peer sr-only">
+                        <span class="sr-only">Verde</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-amber-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="amber-400" class="peer sr-only">
+                        <span class="sr-only">Amarelo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-orange-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="orange-400" class="peer sr-only">
+                        <span class="sr-only">Laranja</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-rose-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="rose-400" class="peer sr-only">
+                        <span class="sr-only">Rosa</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                </fieldset>
+            </div>
         </div>
 
         <!-- Checkboxes: é possível escolher vários modos (até 5 ficam em uso) -->
@@ -252,7 +330,7 @@
                 <label data-preset-option
                     class="group/card flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 cursor-pointer transition-[border-color,background-color,box-shadow] duration-300 has-checked:border-brand-purple/60 has-checked:bg-white/[0.08] has-checked:shadow-[0_0_24px_rgba(217,119,255,0.25)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
                     <!-- data-setup: ao marcar, abre o formulário do Ask Mode antes de entrar na roda -->
-                    <input type="checkbox" name="preset-mode" value="ask-mode" data-name="Ask Mode"
+                    <input type="checkbox" name="preset-mode" value="ask-mode" data-name="Agente"
                         data-setup="#ask-mode-sheet" class="sr-only">
 
                     <app-icon variant="outline" shape="circle" class="size-10">
@@ -265,7 +343,7 @@
 
                     <span class="flex min-w-0 flex-col gap-0.5">
                         <span class="flex items-center gap-1.5 text-sm font-semibold">
-                            Ask Mode
+                            Agente
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
                                 class="hidden size-3.5 shrink-0 group-has-checked/card:block" aria-hidden="true">
@@ -280,11 +358,12 @@
                 </label>
             </div>
         </fieldset>
-        <app-button class="w-full mt-4" href="./configure-preset/index.html">Salvar meus gestos</app-button>
+        <app-button data-save-custom-gesture class="w-full mt-4" href="/lockscreen/custom/">Salvar meus
+            gestos</app-button>
     </main>
 
     <!-- Bottom sheet: configuração do Ask Mode -->
-    <dialog id="ask-mode-sheet" data-ask-sheet data-success-message="Ask Mode salvo" aria-labelledby="ask-sheet-title"
+    <dialog id="ask-mode-sheet" data-ask-sheet data-success-message="Agente salvo" aria-labelledby="ask-sheet-title"
         class="mx-auto mt-auto mb-0 max-h-[85dvh] w-full max-w-app overflow-y-auto rounded-t-3xl border-t border-white/10 bg-brand-dark p-0 text-white translate-y-full transition-[translate,overlay,display] transition-discrete duration-300 ease-out open:translate-y-0 starting:open:translate-y-full backdrop:bg-black/60">
 
         <!-- method="dialog": o botão clicado fecha o dialog e vira o returnValue ("save" ou "cancel") -->
@@ -292,13 +371,13 @@
             <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
 
             <div class="flex flex-col gap-1">
-                <h2 id="ask-sheet-title" class="text-lg font-semibold">Configurar Ask Mode</h2>
+                <h2 id="ask-sheet-title" class="text-lg font-semibold">Configurar Agente</h2>
                 <p class="text-sm text-white/60">Escolha como a JOVI vai responder quando você usar este gesto.</p>
             </div>
 
             <!-- Radios: sempre exatamente uma das duas opções -->
             <fieldset class="flex flex-col gap-2.5">
-                <legend class="sr-only">Tipo de Ask</legend>
+                <legend class="sr-only">Tipo de Agente</legend>
 
                 <label
                     class="group/opt flex cursor-pointer flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 transition-colors has-checked:border-brand-purple/60 has-checked:bg-brand-purple/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
@@ -310,7 +389,7 @@
                                 class="size-2.5 scale-0 rounded-full bg-brand-purple transition-transform group-has-checked/opt:scale-100"></span>
                         </span>
                         <span class="flex flex-col gap-0.5">
-                            <span class="text-sm font-semibold">Ask Geral</span>
+                            <span class="text-sm font-semibold">Agente Geral</span>
                             <span class="text-xs leading-snug text-white/65">Descreve de forma geral o que a câmera está
                                 vendo.</span>
                         </span>
@@ -328,14 +407,14 @@
                                 class="size-2.5 scale-0 rounded-full bg-brand-purple transition-transform group-has-checked/opt:scale-100"></span>
                         </span>
                         <span class="flex flex-col gap-0.5">
-                            <span class="text-sm font-semibold">Ask com foco personalizado</span>
+                            <span class="text-sm font-semibold">Agente com foco personalizado</span>
                             <span class="text-xs leading-snug text-white/65">Descreva para a IA qual será o foco deste
-                                Ask.</span>
+                                Agente.</span>
                         </span>
                     </label>
 
                     <!-- Somente leitura até esta opção ser marcada; tocar nele já marca a opção -->
-                    <textarea name="ask-focus" rows="3" maxlength="200" readonly aria-label="Foco do Ask Mode"
+                    <textarea name="ask-focus" rows="3" maxlength="200" readonly aria-label="Foco do Agente"
                         placeholder="Ex.: identifique plantas e diga se são seguras para pets"
                         class="w-full resize-none rounded-xl border border-white/10 bg-black/20 p-3 text-base text-white placeholder:text-white/35 outline-none transition-[opacity,border-color] focus:border-brand-purple/60 read-only:opacity-40"></textarea>
                 </div>
@@ -344,9 +423,145 @@
             <div class="flex flex-col gap-2">
                 <button type="submit" value="save"
                     class="w-full rounded-full bg-linear-to-r from-brand-blue to-brand-purple px-4 py-3 text-sm font-semibold text-brand-dark-deep transition-opacity active:opacity-80 cursor-pointer">
-                    Salvar Ask Mode customizado
+                    Salvar Agente customizado
                 </button>
                 <!-- formnovalidate: cancelar não exige o texto preenchido -->
+                <button type="submit" value="cancel" formnovalidate
+                    class="w-full rounded-full px-4 py-3 text-sm text-white/70 transition-colors active:bg-white/5 cursor-pointer">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Bottom sheet: papel de parede do modo criado (abre ao tocar em "Salvar meus gestos") -->
+    <dialog data-wallpaper-sheet aria-labelledby="wallpaper-sheet-title"
+        class="mx-auto mt-auto mb-0 max-h-[85dvh] w-full max-w-app overflow-y-auto rounded-t-3xl border-t border-white/10 bg-brand-dark p-0 text-white translate-y-full transition-[translate,overlay,display] transition-discrete duration-300 ease-out open:translate-y-0 starting:open:translate-y-full backdrop:bg-black/60">
+
+        <!-- method="dialog": o botão clicado fecha o dialog e vira o returnValue ("save" ou "cancel") -->
+        <form method="dialog" class="flex flex-col gap-4 px-4 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <span aria-hidden="true" class="mx-auto h-1 w-10 rounded-full bg-white/20"></span>
+
+            <div class="flex flex-col gap-1">
+                <h2 id="wallpaper-sheet-title" class="text-lg font-semibold">Papel de parede do modo</h2>
+                <p class="text-sm text-white/60">Escolha o fundo da tela de bloqueio deste gesto.</p>
+            </div>
+
+            <!-- Radios: um papel de parede por vez -->
+            <fieldset class="grid grid-cols-3 gap-2.5">
+                <legend class="sr-only">Papéis de parede</legend>
+                <label
+                    class="group/wp relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl ring-2 ring-transparent transition-[box-shadow,scale] active:scale-95 has-checked:ring-brand-purple has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="wallpaper" value="/src/assets/ask-mode-bg/travel.jpg" class="sr-only"
+                        checked>
+                    <img src="/src/assets/ask-mode-bg/travel.jpg" alt="" class="size-full object-cover" loading="lazy"
+                        decoding="async" />
+                    <span
+                        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[11px] font-medium">Viagem</span>
+                    <!-- ✓ no papel de parede escolhido -->
+                    <span aria-hidden="true"
+                        class="absolute right-1.5 top-1.5 flex size-5 scale-0 items-center justify-center rounded-full bg-brand-purple text-brand-dark-deep transition-transform group-has-checked/wp:scale-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </label>
+                <label
+                    class="group/wp relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl ring-2 ring-transparent transition-[box-shadow,scale] active:scale-95 has-checked:ring-brand-purple has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="wallpaper" value="/src/assets/ask-mode-bg/praia.jpg" class="sr-only">
+                    <img src="/src/assets/ask-mode-bg/praia.jpg" alt="" class="size-full object-cover" loading="lazy"
+                        decoding="async" />
+                    <span
+                        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[11px] font-medium">Praia</span>
+                    <!-- ✓ no papel de parede escolhido -->
+                    <span aria-hidden="true"
+                        class="absolute right-1.5 top-1.5 flex size-5 scale-0 items-center justify-center rounded-full bg-brand-purple text-brand-dark-deep transition-transform group-has-checked/wp:scale-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </label>
+                <label
+                    class="group/wp relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl ring-2 ring-transparent transition-[box-shadow,scale] active:scale-95 has-checked:ring-brand-purple has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="wallpaper" value="/src/assets/ask-mode-bg/cyberpunk.jpg" class="sr-only">
+                    <img src="/src/assets/ask-mode-bg/cyberpunk.jpg" alt="" class="size-full object-cover"
+                        loading="lazy" decoding="async" />
+                    <span
+                        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[11px] font-medium">Cyberpunk</span>
+                    <!-- ✓ no papel de parede escolhido -->
+                    <span aria-hidden="true"
+                        class="absolute right-1.5 top-1.5 flex size-5 scale-0 items-center justify-center rounded-full bg-brand-purple text-brand-dark-deep transition-transform group-has-checked/wp:scale-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </label>
+                <label
+                    class="group/wp relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl ring-2 ring-transparent transition-[box-shadow,scale] active:scale-95 has-checked:ring-brand-purple has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="wallpaper" value="/src/assets/ask-mode-bg/car.jpg" class="sr-only">
+                    <img src="/src/assets/ask-mode-bg/car.jpg" alt="" class="size-full object-cover" loading="lazy"
+                        decoding="async" />
+                    <span
+                        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[11px] font-medium">Carro</span>
+                    <!-- ✓ no papel de parede escolhido -->
+                    <span aria-hidden="true"
+                        class="absolute right-1.5 top-1.5 flex size-5 scale-0 items-center justify-center rounded-full bg-brand-purple text-brand-dark-deep transition-transform group-has-checked/wp:scale-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </label>
+                <label
+                    class="group/wp relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl ring-2 ring-transparent transition-[box-shadow,scale] active:scale-95 has-checked:ring-brand-purple has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                    <input type="radio" name="wallpaper" value="/src/assets/ask-mode-bg/bg-biologo.png" class="sr-only">
+                    <img src="/src/assets/ask-mode-bg/bg-biologo.png" alt="" class="size-full object-cover"
+                        loading="lazy" decoding="async" />
+                    <span
+                        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[11px] font-medium">Biólogo</span>
+                    <!-- ✓ no papel de parede escolhido -->
+                    <span aria-hidden="true"
+                        class="absolute right-1.5 top-1.5 flex size-5 scale-0 items-center justify-center rounded-full bg-brand-purple text-brand-dark-deep transition-transform group-has-checked/wp:scale-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </span>
+                </label>
+
+                <!-- Galeria: ainda não disponível (mostra um aviso) -->
+                <div class="relative">
+                    <button type="button" data-wallpaper-gallery aria-describedby="wallpaper-gallery-tip"
+                        class="flex aspect-[9/16] w-full flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-white/20 bg-white/[0.03] text-white/70 transition-colors active:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-6"
+                            aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="16" rx="2.5" />
+                            <circle cx="8.5" cy="9.5" r="1.5" />
+                            <path d="M21 16l-5-5-9 9" />
+                        </svg>
+                        <span class="px-2 text-center text-[11px] leading-tight">Selecionar da galeria</span>
+                    </button>
+
+                    <!-- Aviso em balão: aparece por alguns segundos ao tocar -->
+                    <span id="wallpaper-gallery-tip" data-wallpaper-tip role="status"
+                        class="invisible absolute bottom-full right-0 z-10 mb-2 w-44 translate-y-1 rounded-xl bg-white px-3 py-2 text-xs font-medium text-brand-dark-deep opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-[opacity,translate,visibility] duration-200 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+                        Funcionalidade não disponível no Beta
+                        <!-- Setinha do balão -->
+                        <span aria-hidden="true"
+                            class="absolute right-6 top-full size-2.5 -translate-y-1/2 rotate-45 bg-white"></span>
+                    </span>
+                </div>
+            </fieldset>
+
+            <div class="flex flex-col gap-2">
+                <button type="submit" value="save"
+                    class="w-full rounded-full bg-linear-to-r from-brand-blue to-brand-purple px-4 py-3 text-sm font-semibold text-brand-dark-deep transition-opacity active:opacity-80 cursor-pointer">
+                    Usar este papel de parede
+                </button>
                 <button type="submit" value="cancel" formnovalidate
                     class="w-full rounded-full px-4 py-3 text-sm text-white/70 transition-colors active:bg-white/5 cursor-pointer">
                     Cancelar
