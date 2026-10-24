@@ -1,26 +1,17 @@
-/**
- * Detalhe da foto (uma página para todas as fotos)
- *
- * Lê o id da foto no endereço (?foto=cristo), busca os dados na lista certa
- * e preenche a página. A lista vem de <body data-photo-set="...">:
- * "viagens" (photos.js, padrão), "estudos" (study-photos.js) ou "selfies" (selfie-photos.js).
- * Também cuida de:
- * - tela cheia num <dialog> ([data-viewer-open] / [data-viewer-close]);
- * - favoritar ([data-favorite-toggle]);
- * - compartilhar ([data-share="native" | "copy" | "whatsapp" | "facebook" | "instagram" | "tiktok"]);
- * - extrair texto ([data-extract-open] abre o painel com photo.text; [data-copy-text] copia);
- * - salvar em apps ([data-save-to="Google Drive"]...): por enquanto, só simula com um aviso;
- * - estilos de foto (radios name="photo-filter"): aplica o filtro CSS do estilo escolhido.
- */
 
 import { PHOTOS } from './photos.js';
-import { STUDY_PHOTOS } from './study-photos.js';
 import { SELFIE_PHOTOS } from './selfie-photo.js';
+import { getAlbum, findPhoto } from './travel-data.js';
+import { getSubject, getSubjectPhotos, findStudyItem } from './study-data.js';
+
+// Telas do Ask Mode: guia de viagem e descrição do conteúdo dos estudos
+const GUIDE_PATH = '/modo-viagem/ia-guia/index.html';
+const STUDY_ASK_PATH = '/ask/index.html';
 
 // Conjuntos de fotos disponíveis: a página escolhe com data-photo-set no <body>
 const PHOTO_SETS = {
     viagens: PHOTOS,
-    estudos: STUDY_PHOTOS,
+    estudos: getSubjectPhotos(getSubject('matematica')),
     selfies: SELFIE_PHOTOS,
 };
 
@@ -86,12 +77,30 @@ function renderPhoto(photos, index) {
     // Próxima foto e link do Ask Mode
     const next = document.querySelector('[data-photo-next]');
     if (next) {
-        next.href = `?foto=${nextPhoto.id}`;
+        // Mantém os outros parâmetros do endereço (ex.: ?album=...) e troca só a foto
+        const nextParams = new URLSearchParams(window.location.search);
+        nextParams.set('foto', nextPhoto.id);
+        next.href = `?${nextParams}`;
         next.setAttribute('aria-label', `Próxima foto: ${nextPhoto.title}`);
     }
 
+    // Ask Mode: estudos abrem a "descrição do conteúdo"; viagens abrem o IA Guia.
+    // Funciona mesmo sem ?materia= ou ?album= no endereço: o item é procurado nos dados.
     const askLink = document.querySelector('[data-photo-ask-link]');
-    if (askLink && photo.askHref) askLink.href = photo.askHref;
+    if (askLink) {
+        const params = new URLSearchParams(window.location.search);
+        const isStudy = params.has('materia') || document.body.dataset.photoSet === 'estudos';
+        const subjectId = params.get('materia') ?? findStudyItem(photo.id)?.subject.id;
+        const albumId = params.get('album') ?? findPhoto(photo.id)?.album.id;
+
+        if (photo.askHref) {
+            askLink.href = photo.askHref; // endereço próprio definido nos dados
+        } else if (isStudy && subjectId) {
+            askLink.href = `${STUDY_ASK_PATH}?materia=${subjectId}&foto=${photo.id}`;
+        } else if (albumId) {
+            askLink.href = `${GUIDE_PATH}?album=${albumId}&foto=${photo.id}`;
+        }
+    }
 
     // Texto da anotação: sem texto, o card de "Extrair texto" some
     setText('[data-photo-text]', photo.text ?? '');
@@ -111,7 +120,16 @@ export function initPhotoDetail() {
 
     /* ---------- Qual foto mostrar ---------- */
 
-    const photos = PHOTO_SETS[document.body.dataset.photoSet] ?? PHOTOS;
+    // ?album=ID: fotos do álbum; ?materia=ID: anotações da matéria; senão, a lista do <body>
+    const params = new URLSearchParams(window.location.search);
+    const albumId = params.get('album');
+    const subjectId = params.get('materia');
+
+    let photos;
+    if (albumId) photos = getAlbum(albumId).photos;
+    else if (subjectId) photos = getSubjectPhotos(getSubject(subjectId));
+    else photos = PHOTO_SETS[document.body.dataset.photoSet] ?? PHOTOS;
+    if (photos.length === 0) return; // álbum sem fotos cadastradas
 
     // ?foto=cristo -> "cristo"; sem parâmetro ou id desconhecido, mostra a primeira
     const id = new URLSearchParams(window.location.search).get('foto');

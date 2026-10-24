@@ -28,6 +28,12 @@ const MAX_ANGLE_DIFF = 45;
 // Pausa (ms) antes de trocar de página, para o aviso aparecer
 const NAVIGATION_DELAY_MS = 1000;
 
+// Aviso para funcionalidades marcadas como null em PAGES
+const BETA_MESSAGE = 'Funcionalidade não disponível no Beta';
+
+// O aviso do Beta é mais longo, então fica mais tempo na tela
+const BETA_TOAST_MS = 2500;
+
 /*
   Vídeos em tela cheia.
   fit (opcional):
@@ -48,8 +54,9 @@ const VIDEOS = {
 
 const PAGES = {
     configuracoes: '/configuracoes/index.html',
-    camera: '/camera/index.html',
-    video: '/video/index.html',
+    camera: null,
+    video: null,
+    panoramica: null,
     selfie: '/selfie/index.html',
     viagem: '/modo-viagem/ia-guia/index.html',
 };
@@ -161,7 +168,6 @@ export function initCameraMenu() {
     }
 
     /* ---------- Ação ---------- */
-
     function activate(action, label) {
         menu.dispatchEvent(
             new CustomEvent('camera:shortcut', { detail: { action }, bubbles: true }),
@@ -170,6 +176,13 @@ export function initCameraMenu() {
         const player = videoPlayers[action];
         if (player) {
             playVideo(player, VIDEOS[action].next);
+            return;
+        }
+
+        // Ação cadastrada como null: ainda não existe no Beta
+        if (action in PAGES && PAGES[action] === null) {
+            showToast(BETA_MESSAGE, BETA_TOAST_MS);
+            navigator.vibrate?.([10, 60, 10]); // vibração dupla: "não deu"
             return;
         }
 
@@ -183,7 +196,7 @@ export function initCameraMenu() {
         }
     }
 
-    function showToast(message) {
+    function showToast(message, duration = TOAST_MS) {
         if (!toast) return;
 
         toast.textContent = message;
@@ -192,7 +205,7 @@ export function initCameraMenu() {
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
             delete toast.dataset.visible;
-        }, TOAST_MS);
+        }, duration);
     }
 
     /* ---------- Vídeo ---------- */

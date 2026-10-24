@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modo Viagem - IA GUIA</title>
 
-    <link rel="stylesheet" href="../../dist/output.css">
-    <script src="../../dist/bundle.js" defer></script>
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
 </head>
 
 <body>
@@ -17,10 +17,9 @@
             <app-header title="Modo Viagem - IA GUIA"></app-header>
             <main class="m-4 flex flex-col gap-4">
 
-                <!-- 1º: imagem -->
+                <!-- 1º: imagem (src e alt vêm da foto em ?album=ID&foto=ID) -->
                 <app-feature-card no-padding class="p-0 overflow-hidden" data-reveal style="--reveal-order: 0">
-                    <img src="/src/assets/gallery/viagens/cristo.jpg"
-                        alt="Cristo Redentor visto de baixo, de braços abertos" class="w-full h-96 object-cover">
+                    <img data-guide-img alt="" class="w-full h-96 bg-white/5 object-cover">
                 </app-feature-card>
 
                 <!-- 2º: card do texto (a digitação começa depois de todas as entradas) -->
@@ -28,7 +27,9 @@
                     <div class="flex gap-2">
                         <app-icon icon="/src/assets/icons/points.png" class="w-10 h-10"
                             alt="JOVI Travel Guide"></app-icon>
-                        <div class="flex flex-col gap-2" data-typewriter>
+
+                        <!-- data-guide-body: os parágrafos do campo "guide.paragraphs" entram no final deste bloco -->
+                        <div class="flex flex-col gap-2" data-typewriter data-guide-body>
                             <div>
                                 <app-gradient-text class="text-xs">JOVI Travel Guide</app-gradient-text>
                                 <span class="text-xs text-white/50 bg-gray-800 p-1 rounded-full">IA</span>
@@ -44,24 +45,11 @@
                                         class="size-1.5 rounded-full bg-white/70 animate-bounce [animation-delay:-0.15s]"></span>
                                     <span class="size-1.5 rounded-full bg-white/70 animate-bounce"></span>
                                 </span>
-                                <strong class="text-xs">Cristo Redentor</strong>
+                                <!-- Título e local da foto -->
+                                <strong data-guide-title class="text-xs"></strong>
                                 -
-                                <p class="card-paragraph">
-                                    Rio de Janeiro, Brasil
-                                </p>
+                                <p data-guide-place class="card-paragraph"></p>
                             </div>
-                            <p class="card-paragraph" data-type>
-                                Inaugurado em <strong>12 de outubro de 1931</strong>, no topo do Morro do Corcovado a
-                                710m de altitude. Em estilo Art Déco, mede <strong>38m de altura</strong> e pesa
-                                <strong>1.145 toneladas.</strong> Projeto do engenheiro Heitor da Silva Costa e do
-                                escultor francês Paul Landowski.
-                            </p>
-                            <p class="card-paragraph" data-type>
-                                Eleito uma das 7 Maravilhas do Mundo Moderno em 2007.
-                            </p>
-                            <p class="card-paragraph" data-type>
-                                Melhor horário para visita: amanhecer ou pôr do sol.
-                            </p>
                         </div>
                     </div>
 
@@ -70,8 +58,8 @@
                         <app-button variant="secondary" class="text-[9px]">
                             Ouvir mais
                         </app-button>
-                        <app-button href="../../memorias/galeria/photo-detail/?foto=cristo" variant="secondary"
-                            class="text-[9px]">
+                        <!-- data-guide-save: o link é preenchido com o detalhe desta foto -->
+                        <app-button data-guide-save variant="secondary" class="text-[9px]">
                             Salvar na viagem
                         </app-button>
                         <app-button variant="secondary" class="text-[9px]">
@@ -81,7 +69,7 @@
                 </app-feature-card>
 
                 <!-- 4º: botão principal -->
-                <app-button href="../../not-ready/index.html" data-reveal style="--reveal-order: 3">Tirar outra
+                <app-button href="/not-ready/index.html" data-reveal style="--reveal-order: 3">Tirar outra
                     foto</app-button>
             </main>
         </div>

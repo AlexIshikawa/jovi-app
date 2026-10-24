@@ -49,6 +49,12 @@
             </svg>
         </a>
 
+        <!-- Gesto personalizado: só aparece se houver um gesto salvo (custom-gesture.js) -->
+        <section data-custom-gesture-card hidden class="flex flex-col gap-3">
+            <h2 class="text-lg font-medium text-white/70">Meu gesto</h2>
+            <div data-custom-gesture-content></div>
+        </section>
+
         <!-- Gestos pré-configurados: só um pode ficar selecionado -->
         <fieldset class="flex flex-col gap-3">
             <legend class="mb-3 text-lg font-medium text-white/70">Gestos pré-configurados</legend>

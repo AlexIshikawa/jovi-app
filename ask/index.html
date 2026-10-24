@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Estudos - Ask Mode</title>
+
+    <link rel="stylesheet" href="/dist/output.css">
+    <script src="/dist/bundle.js" defer></script>
+</head>
+
+<body>
+    <div>
+        <div class="absolute inset-0 bg-brand-dark-deep/40"></div>
+        <div class="relative z-10">
+            <app-header title="Modo Estudos - Ask Mode"></app-header>
+            <main class="m-4 flex flex-col gap-4">
+
+                <!-- 1º: imagem (src e alt vêm da anotação em ?materia=ID&foto=ID) -->
+                <app-feature-card no-padding class="p-0 overflow-hidden" data-reveal style="--reveal-order: 0">
+                    <img data-guide-img alt="" class="w-full h-96 bg-white/5 object-cover">
+                </app-feature-card>
+
+                <!-- 2º: card do texto (a digitação começa depois de todas as entradas) -->
+                <app-feature-card no-padding class="p-4" data-reveal style="--reveal-order: 1">
+                    <div class="flex gap-2">
+                        <app-icon icon="/src/assets/icons/points.png" class="w-10 h-10"
+                            alt="Descrição do conteúdo"></app-icon>
+
+                        <!-- data-guide-body: os parágrafos do campo "explanation.paragraphs" entram no final deste bloco -->
+                        <div class="flex flex-col gap-2" data-typewriter data-guide-body>
+                            <div>
+                                <app-gradient-text class="text-xs">Descrição do conteúdo</app-gradient-text>
+                                <span class="text-xs text-white/50 bg-gray-800 p-1 rounded-full">IA</span>
+                            </div>
+                            <div class="relative flex items-center gap-1" data-type>
+                                <!-- Indicador "pensando...": some quando a digitação começa -->
+                                <span data-typewriter-loader role="status"
+                                    class="absolute left-0 top-1/2 flex -translate-y-1/2 items-center gap-1">
+                                    <span class="sr-only">Analisando a anotação</span>
+                                    <span
+                                        class="size-1.5 rounded-full bg-white/70 animate-bounce [animation-delay:-0.3s]"></span>
+                                    <span
+                                        class="size-1.5 rounded-full bg-white/70 animate-bounce [animation-delay:-0.15s]"></span>
+                                    <span class="size-1.5 rounded-full bg-white/70 animate-bounce"></span>
+                                </span>
+                                <!-- Título da anotação e matéria/assunto -->
+                                <strong data-guide-title class="text-xs"></strong>
+                                -
+                                <p data-guide-place class="card-paragraph"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3º: botões do card -->
+                    <div class="flex items-center gap-2 justify-between mt-4" data-reveal style="--reveal-order: 2">
+                        <app-button variant="secondary" class="text-[9px]">
+                            Ouvir explicação
+                        </app-button>
+                        <!-- data-guide-save: o link é preenchido com o detalhe desta anotação -->
+                        <app-button data-guide-save variant="secondary" class="text-[9px]">
+                            Salvar nos estudos
+                        </app-button>
+                        <app-button variant="secondary" class="text-[9px]">
+                            Compartilhar
+                        </app-button>
+                    </div>
+                </app-feature-card>
+
+                <!-- 4º: botão principal -->
+                <app-button href="/not-ready/index.html" data-reveal style="--reveal-order: 3">Digitalizar outra
+                    anotação</app-button>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

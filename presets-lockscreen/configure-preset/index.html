@@ -24,7 +24,7 @@
         <app-gesture-wheel></app-gesture-wheel>
 
         <!-- Nome do gesto: campo discreto, com a aparência do título em gradiente -->
-        <div class="flex flex-wrap items-baseline gap-x-2">
+        <div class="relative z-30 flex flex-wrap items-baseline gap-x-2">
             <label for="gesture-name">Modo para o gesto</label>
             <span class="flex min-w-0 items-baseline gap-1.5">
                 <input id="gesture-name" name="gesture-name" type="text" value="Default 1" maxlength="24"
@@ -41,6 +41,84 @@
                     </svg>
                 </label>
             </span>
+            <!-- Cor do gesto: uma bolinha com a cor atual; tocar abre a paleta -->
+            <div data-color-picker class="relative ml-auto self-center [--picked:var(--color-violet-400)]">
+                <button type="button" data-color-toggle aria-expanded="false" aria-controls="gesture-color-panel"
+                    aria-label="Cor do gesto: Violeta. Tocar para trocar"
+                    class="block size-7 rounded-full bg-(--picked) ring-2 ring-white/80 ring-offset-2 ring-offset-brand-dark-deep transition-[scale,box-shadow] active:scale-90 aria-expanded:ring-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]"></button>
+
+                <!-- Paleta: escondida até tocar na bolinha -->
+                <fieldset id="gesture-color-panel" data-color-panel hidden
+                    class="absolute right-0 top-full z-40 mt-3 flex gap-2.5 rounded-full border border-white/10 bg-brand-dark p-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.5)] animate-pop">
+                    <legend class="sr-only">Cor do gesto</legend>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-violet-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="violet-400" class="peer sr-only" checked>
+                        <span class="sr-only">Violeta</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-sky-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="sky-400" class="peer sr-only">
+                        <span class="sr-only">Azul</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-emerald-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="emerald-400" class="peer sr-only">
+                        <span class="sr-only">Verde</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-amber-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="amber-400" class="peer sr-only">
+                        <span class="sr-only">Amarelo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-orange-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="orange-400" class="peer sr-only">
+                        <span class="sr-only">Laranja</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                    <label
+                        class="relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-rose-400 ring-2 ring-transparent ring-offset-2 ring-offset-brand-dark transition-[box-shadow,scale] active:scale-90 has-checked:ring-white has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <input type="radio" name="gesture-color" value="rose-400" class="peer sr-only">
+                        <span class="sr-only">Rosa</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 text-brand-dark-deep opacity-0 transition-opacity peer-checked:opacity-100"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </label>
+                </fieldset>
+            </div>
         </div>
 
         <!-- Checkboxes: é possível escolher vários modos (até 5 ficam em uso) -->
@@ -280,7 +358,8 @@
                 </label>
             </div>
         </fieldset>
-        <app-button class="w-full mt-4" href="./configure-preset/index.html">Salvar meus gestos</app-button>
+        <app-button data-save-custom-gesture class="w-full mt-4" href="/lockscreen/custom/">Salvar meus
+            gestos</app-button>
     </main>
 
     <!-- Bottom sheet: configuração do Ask Mode -->
