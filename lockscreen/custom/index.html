@@ -24,9 +24,9 @@
     <main data-custom-lockscreen
         class="relative isolate h-dvh w-full overflow-hidden select-none text-white [--accent:var(--color-violet-400)]">
 
-        <!-- Wallpaper + escurecimento para dar leitura -->
-        <img src="/src/assets/bg-biologo.png" alt="" class="absolute inset-0 -z-10 size-full object-cover"
-            draggable="false" />
+        <!-- Wallpaper (o escolhido no modal, via custom-gesture.js) + escurecimento para dar leitura -->
+        <img data-custom-wallpaper src="/src/assets/wallpaper2.png" alt=""
+            class="absolute inset-0 -z-10 size-full object-cover" draggable="false" />
         <span aria-hidden="true"
             class="absolute inset-0 -z-10 bg-linear-to-b from-black/45 via-black/35 to-black/85"></span>
 
@@ -55,10 +55,96 @@
                         <path d="M13 2L4.5 13.5H12L11 22l8.5-11.5H12z" />
                     </svg></span>
             </button>
+
+            <!-- Seletor de modo: abre um menu com a Popover API (sem JS) -->
+            <div class="group/mode min-w-0">
+                <button type="button" popovertarget="mode-menu"
+                    class="flex h-11 max-w-52 items-center gap-2.5 rounded-full border border-(--accent)/60 bg-black/40 pl-3.5 pr-3 text-sm font-medium shadow-[0_0_20px_color-mix(in_oklab,var(--accent)_25%,transparent)] backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
+                    <span data-custom-mode-icon class="size-5 shrink-0 text-(--accent) [&>svg]:size-full"
+                        aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg></span>
+                    <span data-custom-name class="truncate">Meu modo</span>
+                    <span
+                        class="shrink-0 text-(--accent) transition-transform duration-200 group-has-[:popover-open]/mode:rotate-180"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="size-4"
+                            aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg></span>
+                </button>
+
+                <!-- Menu: aparece por cima de tudo, fecha com Esc ou tocando fora -->
+                <nav id="mode-menu" popover aria-label="Trocar modo"
+                    class="m-0 inset-auto left-1/2 top-[calc(4.5rem+env(safe-area-inset-top))] w-60 -translate-x-1/2 rounded-2xl border border-white/10 bg-brand-dark/95 p-1.5 text-white shadow-[0_16px_40px_rgba(0,0,0,0.5)] backdrop-blur-md">
+                    <a href="/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <rect x="5" y="11" width="14" height="10" rx="2" />
+                            <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
+                        </svg>
+                        <span class="flex-1">Padrão</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/modo-viagem/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M22 2L11 13" />
+                            <path d="M22 2l-7 20-4-9-9-4z" />
+                        </svg>
+                        <span class="flex-1">Modo Viagem</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/modo-estudos/lockscreen/"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M22 9L12 4 2 9l10 5 10-5z" />
+                            <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" />
+                            <path d="M22 9v6" />
+                        </svg>
+                        <span class="flex-1">Modo Estudos</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="size-4 shrink-0 invisible" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                    <a href="/lockscreen/custom/index.html" aria-current="page"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors active:bg-white/10 aria-[current=page]:bg-(--accent)/15 aria-[current=page]:text-(--accent) focus-visible:outline-2 focus-visible:outline-white [-webkit-tap-highlight-color:transparent]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0"
+                            aria-hidden="true">
+                            <path d="M11 3l1.8 4.7 4.7 1.8-4.7 1.8L11 16l-1.8-4.7L4.5 9.5l4.7-1.8z" />
+                            <path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                        </svg>
+                        <span data-custom-name class="flex-1 truncate">Meu modo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0"
+                            aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                    </a>
+                </nav>
             </div>
 
             <!-- Configurações: volta para Meus Gestos, para editar este modo -->
-            <a href="/configuracoes/index.html" aria-label="Editar meus gestos"
+            <a href="/presets-lockscreen/configure-preset/index.html" aria-label="Editar meus gestos"
                 class="flex size-11 items-center justify-center rounded-full bg-black/40 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
@@ -98,9 +184,13 @@
             </p>
         </section>
 
+        <!-- Overlay: escurece o fundo enquanto a roda está aberta, destacando os atalhos -->
+        <!-- Overlay: só existe enquanto a roda da câmera está aberta (segurando o botão central) -->
+        <span aria-hidden="true"
+            class="pointer-events-none invisible absolute inset-0 z-20 bg-black/70 opacity-0 transition-[opacity,visibility] duration-300 in-[main:has([data-camera-menu][data-open])]:visible in-[main:has([data-camera-menu][data-open])]:opacity-100 in-[main:has([data-camera-menu][data-open])]:backdrop-blur-[2px]"></span>
         <!-- Roda de atalhos: aparece só enquanto o botão central é segurado -->
         <div
-            class="pointer-events-none absolute inset-x-0 top-[59%] mx-auto aspect-square w-[88%] max-w-96 -translate-y-1/2">
+            class="pointer-events-none z-30 absolute inset-x-0 top-[59%] mx-auto aspect-square w-[88%] max-w-96 -translate-y-1/2">
 
             <!-- "group": tudo aqui reage ao estado do menu via aceso: (segurando = data-open) -->
             <div data-camera-menu class="group absolute inset-0">
@@ -230,7 +320,7 @@
 
         <!-- Aviso rápido (atalho ativado, flash...) -->
         <p id="toast" role="status" aria-live="polite"
-            class="invisible absolute bottom-[18%] left-1/2 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-full bg-black/70 px-4 py-2 font-clock text-sm opacity-0 transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
+            class="invisible absolute z-40 bottom-[18%] left-1/2 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-full bg-black/70 px-4 py-2 font-clock text-sm opacity-0 transition-[opacity,translate,visibility] duration-300 data-visible:visible data-visible:translate-y-0 data-visible:opacity-100">
         </p>
     </main>
 

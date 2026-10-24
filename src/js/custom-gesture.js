@@ -2,8 +2,9 @@
  * Modo de gestos personalizado
  *
  * 1. Na página Meus Gestos (initCustomGestureSave):
- *    o botão [data-save-custom-gesture] guarda o nome, a cor (radios name="gesture-color")
- *    e os modos de cada posição da roda, e abre a lockscreen personalizada.
+ *    o botão [data-save-custom-gesture] abre o modal de papel de parede ([data-wallpaper-sheet]);
+ *    ao confirmar, guarda o nome, a cor (radios name="gesture-color"), o papel de parede
+ *    (radios name="wallpaper") e os modos de cada posição da roda, e abre a lockscreen personalizada.
  *    A cor é escolhida num seletor compacto ([data-color-picker]): uma bolinha com a
  *    cor atual que abre a paleta (initColorPicker, chamado pelo initCustomGestureSave).
  * 2. Na lockscreen personalizada (initCustomLockscreen):
@@ -25,12 +26,16 @@ const DIRECTIONS = [null, 'up', 'right', 'down', 'left'];
 
 // Atalhos que reaproveitam ações existentes do camera-menu.js
 // (ex.: o Ask Mode toca o vídeo do Modo Viagem e abre o IA Guia)
-const SHORTCUT_KEYS = { 'ask-mode': 'viagem' };
+const SHORTCUT_KEYS = { 'agente': 'viagem' };
+
+// Tempo (ms) do aviso "não disponível no Beta" da galeria
+const TIP_MS = 2500;
 
 // Usado quando nada foi salvo ainda
 const DEFAULT_GESTURE = {
     name: 'Meu modo',
     color: 'violet-400',
+    wallpaper: '/src/assets/wallpaper2.png',
     slots: [
         { value: 'selfie', name: 'Selfie', icon: '' },
         { value: 'video', name: 'Vídeo', icon: '' },
@@ -144,26 +149,69 @@ export function initCustomGestureSave() {
         return slots;
     }
 
+    function saveAndOpen(wallpaper) {
+        const name = document.querySelector('#gesture-name')?.value.trim() || DEFAULT_GESTURE.name;
+        const color =
+            document.querySelector('input[name="gesture-color"]:checked')?.value ?? DEFAULT_GESTURE.color;
+
+        try {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify({ name, color, wallpaper: wallpaper ?? DEFAULT_GESTURE.wallpaper, slots: collectSlots() }),
+            );
+        } catch {
+            // Sem armazenamento (ex.: modo privado restrito): segue para a tela com o padrão
+        }
+
+        window.location.href = CUSTOM_LOCKSCREEN;
+    }
+
+    const sheet = document.querySelector('[data-wallpaper-sheet]');
+
     // Captura o clique antes do link interno do <app-button> navegar
     saveButton.addEventListener(
         'click',
         (event) => {
             event.preventDefault();
 
-            const name = document.querySelector('#gesture-name')?.value.trim() || DEFAULT_GESTURE.name;
-            const color =
-                document.querySelector('input[name="gesture-color"]:checked')?.value ?? DEFAULT_GESTURE.color;
-
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({ name, color, slots: collectSlots() }));
-            } catch {
-                // Sem armazenamento (ex.: modo privado restrito): segue para a tela com o padrão
+            // Sem o modal na página, salva direto com o papel de parede padrão
+            if (!sheet) {
+                saveAndOpen(null);
+                return;
             }
-
-            window.location.href = CUSTOM_LOCKSCREEN;
+            sheet.returnValue = '';
+            sheet.showModal();
         },
         { capture: true },
     );
+
+    if (!sheet) return;
+
+    // Fechou o modal: só salva se tocou em "Usar este papel de parede"
+    sheet.addEventListener('close', () => {
+        if (sheet.returnValue !== 'save') return;
+        saveAndOpen(sheet.querySelector('input[name="wallpaper"]:checked')?.value);
+    });
+
+    // Toque no fundo escuro fecha (como "Cancelar")
+    sheet.addEventListener('click', (event) => {
+        if (event.target === sheet) sheet.close('cancel');
+    });
+
+    /* "Selecionar da galeria": ainda não existe no Beta, mostra o balão por alguns segundos */
+    const galleryButton = sheet.querySelector('[data-wallpaper-gallery]');
+    const tip = sheet.querySelector('[data-wallpaper-tip]');
+    let tipTimer = null;
+
+    galleryButton?.addEventListener('click', () => {
+        if (!tip) return;
+        tip.dataset.visible = '';
+        navigator.vibrate?.([10, 60, 10]);
+        clearTimeout(tipTimer);
+        tipTimer = setTimeout(() => {
+            delete tip.dataset.visible;
+        }, TIP_MS);
+    });
 }
 
 /* ---------- 2. Montar a lockscreen personalizada ---------- */
@@ -176,6 +224,10 @@ export function initCustomLockscreen() {
 
     // Cor: vira a variável --accent, usada por todas as classes da tela
     screen.style.setProperty('--accent', `var(--color-${gesture.color})`);
+
+    // Papel de parede escolhido no modal
+    const wallpaper = screen.querySelector('[data-custom-wallpaper]');
+    if (wallpaper && gesture.wallpaper) wallpaper.src = gesture.wallpaper;
 
     document.title = `JOVI AI CAMERA • ${gesture.name}`;
     document.querySelectorAll('[data-custom-name]').forEach((el) => {

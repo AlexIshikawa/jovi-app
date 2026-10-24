@@ -54,11 +54,20 @@ const VIDEOS = {
 
 const PAGES = {
     configuracoes: '/configuracoes/index.html',
-    camera: null,
-    video: null,
-    panoramica: null,
     selfie: '/selfie/index.html',
     viagem: '/modo-viagem/ia-guia/index.html',
+    camera: null,
+    'camera-frontal': null,
+    video: null,
+    panoramica: null,
+    paisagem: null,
+    documento: null,
+    quadro: null,
+    resumo: null,
+    'ask-estudos': null,
+    panorama: null,
+    retrato: null,
+    noturno: null,
 };
 
 // Classes completas por extenso para o Tailwind encontrá-las no build
@@ -250,6 +259,29 @@ export function initCameraMenu() {
             showToast('Não foi possível abrir o vídeo');
         });
     }
+
+    // Esconde e pausa todos os vídeos, voltando a tela ao estado inicial
+    function resetVideos() {
+        Object.values(videoPlayers).forEach((video) => {
+            video.pause();
+            video.currentTime = 0;
+            delete video.dataset.playing;
+        });
+    }
+
+    /* ---------- Voltar para a página (bfcache) ---------- */
+
+    // Ao sair da página, limpa o vídeo: se o navegador guardar a página
+    // congelada e a pessoa voltar, ela reaparece sem o vídeo na frente
+    window.addEventListener('pagehide', resetVideos);
+
+    // Garantia extra: página restaurada do cache (persisted = true) também é limpa,
+    // junto com o menu, caso a pessoa tenha saído com a roda aberta
+    window.addEventListener('pageshow', (event) => {
+        if (!event.persisted) return;
+        resetVideos();
+        endGesture();
+    });
 
     /* ---------- Gesto: segurar, arrastar e soltar ---------- */
 

@@ -14,11 +14,13 @@
 import { PHOTOS } from './photos.js';
 import { STUDY_PHOTOS } from './study-photos.js';
 import { SELFIE_PHOTOS } from './selfie-photo.js';
+import { PET_PHOTOS } from './pet-photos.js';
 
 const PHOTO_SETS = {
   viagens: PHOTOS,
   estudos: STUDY_PHOTOS,
   selfies: SELFIE_PHOTOS,
+  pets: PET_PHOTOS,
 };
 
 // Formato da grade: a posição de cada foto no dia define o tamanho dela (repete a cada 6)

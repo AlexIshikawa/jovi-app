@@ -22,13 +22,13 @@
 
         <!-- Barra superior -->
         <div class="flex items-center justify-between px-4 pt-[calc(1rem+env(safe-area-inset-top))]">
-            <button type="button" aria-label="Voltar" onclick="history.back()"
+            <a type="button" aria-label="Voltar" href="/memorias/galeria/estudos/index.html"
                 class="flex size-10 items-center justify-center rounded-full bg-black/35 ring-1 ring-white/15 backdrop-blur-md transition-colors active:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer [-webkit-tap-highlight-color:transparent]">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
                     <path d="M15 6l-6 6 6 6" />
                 </svg>
-            </button>
+            </a>
 
             <span class="text-xs font-medium uppercase tracking-[0.3em] text-white/60">Estudos</span>
 
@@ -213,7 +213,7 @@
         <section data-study-subject aria-label="Documentos, quadros e resumos da matéria" class="flex flex-col gap-6">
             <!-- Matéria ainda sem itens cadastrados -->
             <p data-subject-empty hidden class="py-12 text-center text-sm text-white/60">
-                Esta matéria ainda não tem anotações por aqui. Adicione-as no study-data.js.
+                Esta matéria ainda não tem anotações por aqui. Comece a criar suas anotações agora.
             </p>
             <!-- Mensagem quando a busca/filtro não encontra nada -->
             <p data-results-empty hidden class="py-12 text-center text-sm text-white/60">

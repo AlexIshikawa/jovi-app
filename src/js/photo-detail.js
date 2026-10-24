@@ -1,6 +1,25 @@
+/**
+ * Detalhe da foto (uma página para todas as fotos)
+ *
+ * Lê o id da foto no endereço (?foto=cristo), busca os dados na lista certa
+ * e preenche a página. Com ?album=ID, a lista é o álbum do travel-data.js;
+ * com ?materia=ID, as anotações da matéria do study-data.js;
+ * sem nenhum dos dois, vem de <body data-photo-set="...">:
+ * "viagens" (photos.js, padrão), "estudos" (Matemática, do study-data.js) ou "selfies" (selfie-photos.js).
+ * Também cuida de:
+ * - tela cheia num <dialog> ([data-viewer-open] / [data-viewer-close]);
+ * - favoritar ([data-favorite-toggle]);
+ * - compartilhar ([data-share="native" | "copy" | "whatsapp" | "facebook" | "instagram" | "tiktok"]);
+ * - extrair texto ([data-extract-open] abre o painel com photo.text; [data-copy-text] copia);
+ * - salvar em apps ([data-save-to="Google Drive"]...): por enquanto, só simula com um aviso;
+ * - estilos de foto (radios name="photo-filter"): aplica o filtro CSS do estilo escolhido;
+ * - momento do pet ([data-photo-mood], campo "mood");
+ * - botões ainda não disponíveis ([data-beta]): mostram o aviso do Beta.
+ */
 
 import { PHOTOS } from './photos.js';
 import { SELFIE_PHOTOS } from './selfie-photo.js';
+import { PET_PHOTOS } from './pet-photos.js';
 import { getAlbum, findPhoto } from './travel-data.js';
 import { getSubject, getSubjectPhotos, findStudyItem } from './study-data.js';
 
@@ -13,6 +32,7 @@ const PHOTO_SETS = {
     viagens: PHOTOS,
     estudos: getSubjectPhotos(getSubject('matematica')),
     selfies: SELFIE_PHOTOS,
+    pets: PET_PHOTOS,
 };
 
 const TOAST_MS = 1800;
@@ -45,6 +65,13 @@ function renderPhoto(photos, index) {
     document.querySelectorAll('[data-photo-img]').forEach((img) => {
         img.src = photo.src;
         img.alt = photo.alt;
+    });
+
+    // Momento do pet (some quando a foto não tem o campo "mood")
+    document.querySelectorAll('[data-photo-mood]').forEach((el) => {
+        el.hidden = !photo.mood;
+        const label = el.querySelector('[data-photo-mood-label]') ?? el;
+        label.textContent = photo.mood ?? '';
     });
 
     // Miniaturas dos estilos: a mesma foto, cada uma com o seu filtro
@@ -186,6 +213,12 @@ export function initPhotoDetail() {
 
     document.querySelectorAll('[data-save-to]').forEach((button) => {
         button.addEventListener('click', () => showToast(`Salvo em ${button.dataset.saveTo}`));
+    });
+
+    /* ---------- Recursos ainda não disponíveis ---------- */
+
+    document.querySelectorAll('[data-beta]').forEach((button) => {
+        button.addEventListener('click', () => showToast('Funcionalidade não disponível no Beta'));
     });
 
     /* ---------- Estilos da foto ---------- */
